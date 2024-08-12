@@ -9,7 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   get: ^4.6.6
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
