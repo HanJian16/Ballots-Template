@@ -1,5 +1,6 @@
 import 'package:ballots_template_flutter/data/formfield_settings.dart';
 import 'package:ballots_template_flutter/controllers/form_controller.dart';
+import 'package:ballots_template_flutter/screens/signature_screens.dart';
 import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:ballots_template_flutter/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,8 @@ class FormRegisterScreen extends StatelessWidget {
               onPressed: () => print('Logo'),
             ),
             const SizedBox(height: 20),
-            Expanded(
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.6,
               child: ListView.builder(
                 itemCount: formFieldSettings.length,
                 itemBuilder: (context, index) {
@@ -79,7 +81,17 @@ class FormRegisterScreen extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
+            CustomBtn(
+              text: 'Firmar',
+              customWidth: double.infinity,
+              customHeight: 50,
+              customColor: Colors.teal.shade400,
+              onPressed: () => Get.to(const SignatureScreen()),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             CustomBtn(
               text: 'Guardar',
               customWidth: double.infinity,

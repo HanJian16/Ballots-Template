@@ -1,12 +1,13 @@
-import 'package:ballots_template_flutter/screens/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:ballots_template_flutter/screens/form_register.dart';
+import 'package:ballots_template_flutter/screens/home_screen.dart';
 
 class AppRoutes {
   static const initial = '/';
-  static const details = '/details';
+  static const formRegister = '/form-register';
 
   static final routes = [
-    GetPage(name: initial, page: () => const HomeScreen()),
+    GetPage(name: initial, page: () => const FormRegisterScreen()),
+    GetPage(name: formRegister, page: () => const FormRegisterScreen()),
   ];
 }
