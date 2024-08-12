@@ -1,6 +1,6 @@
 import 'package:ballots_template_flutter/widgets/backup_row.dart';
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/widgets/screenContainer.dart';
+import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FormRegisterScreen extends StatelessWidget {
