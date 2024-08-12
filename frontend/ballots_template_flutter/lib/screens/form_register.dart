@@ -37,7 +37,7 @@ class FormRegisterScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 25),
+            // const SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -70,7 +70,29 @@ class FormRegisterScreen extends StatelessWidget {
                 ),
               ],
             ),
-            // Agrega más widgets aquí
+            const SizedBox(height: 15),
+            Container(
+              height: 2,
+              color: Colors.black,
+            ),
+            const SizedBox(height: 25),
+            Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.teal.shade500,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: 35,
+              width: 100,
+              child: Text(
+                "Añadir logotipo",
+                style: GoogleFonts.onest(
+                  fontSize: 12,
+                  color: Color(0xFFFFFFFF),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
