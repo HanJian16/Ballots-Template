@@ -1,4 +1,7 @@
+import 'package:ballots_template_flutter/screens/form_register.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -77,6 +80,14 @@ class HomeScreen extends StatelessWidget {
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 10);
                 },
+              ),
+            ),
+            GestureDetector(
+              onTap: () =>  Get.to(const FormRegisterScreen()),
+              child: const SizedBox(
+                height: 32,
+                width: 32,
+                child: Text("hola"),
               ),
             )
           ],
