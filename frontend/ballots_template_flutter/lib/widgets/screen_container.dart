@@ -8,14 +8,12 @@ class ScreenContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: child,
-          ),
+      child: Scaffold(
+        //  resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.white,
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          child: child,
         ),
       ),
     );
