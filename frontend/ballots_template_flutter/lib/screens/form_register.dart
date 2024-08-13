@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:ballots_template_flutter/controllers/form_controller.dart';
 import 'package:ballots_template_flutter/screens/signature_screens.dart';
@@ -6,6 +8,8 @@ import 'package:ballots_template_flutter/widgets/custom_textformfield.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:ballots_template_flutter/widgets/custom_icon_btn.dart';
 import 'package:ballots_template_flutter/widgets/backup_row.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FormRegisterScreen extends StatelessWidget {
   const FormRegisterScreen({super.key});
