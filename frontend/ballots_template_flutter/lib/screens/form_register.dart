@@ -42,7 +42,7 @@ class FormRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FormController controller = Get.put(FormController());
-    final formKey = GlobalKey<FormState>();
+    // final formKey = GlobalKey<FormState>();
 
     // final List formFieldSettings = createDataForTextFormField(controller);
     final List formFieldSettings = createDataForTextFormField(controller);
@@ -69,14 +69,13 @@ class FormRegisterScreen extends StatelessWidget {
                     text: 'Añadir logotipo',
                     customWidth: 110,
                     customColor: Colors.teal.shade400,
-                    onPressed: () => print('Logo'),
+                    onPressed: () => {},
                     status: 0,
                   ),
                   const SizedBox(height: 20),
                   // Muestra la firma si está disponible
                   Obx(() {
                     final signaturePath = controller.signaturePath.value;
-                    print(signaturePath);
                     return Container(
                       alignment: Alignment.center,
                       height: 300,
@@ -99,8 +98,7 @@ class FormRegisterScreen extends StatelessWidget {
                               onChanged: field['onChanged'],
                               keyboardType: field['keyboardType'],
                             ),
-                          ))
-                      .toList(),
+                          )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -117,7 +115,7 @@ class FormRegisterScreen extends StatelessWidget {
                           },
                           status: 0,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomBtn(
                           text: 'Guardar',
                           customWidth: double.infinity,
