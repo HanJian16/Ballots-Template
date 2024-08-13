@@ -20,22 +20,22 @@ getListTileData() {
     {
       'title': 'Presupuestos',
       'subtitle': 'Presupuestos de productos y servicios',
-      'icon': Icons.format_list_bulleted_add,
+      'icon': Icons.calculate_outlined,
     },
     {
       'title': 'Clientes',
       'subtitle': 'Lista de clientes',
-      'icon': Icons.format_list_bulleted_add
+      'icon': Icons.people_outline,
     },
     {
       'title': 'Historial',
       'subtitle': 'Historial de recibos',
-      'icon': Icons.format_list_bulleted_add,
+      'icon': Icons.history,
     },
     {
       'title': 'Ajustes',
       'subtitle': 'Configuraciones de la aplicación',
-      'icon': Icons.format_list_bulleted_add,
+      'icon': Icons.settings_sharp,
     }
   ];
 
