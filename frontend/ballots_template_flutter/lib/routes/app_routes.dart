@@ -7,7 +7,7 @@ class AppRoutes {
   static const formRegister = '/form-register';
 
   static final routes = [
-    GetPage(name: initial, page: () => const FormRegisterScreen()),
+    GetPage(name: initial, page: () => const HomeScreen()),
     GetPage(name: formRegister, page: () => const FormRegisterScreen()),
   ];
 }
