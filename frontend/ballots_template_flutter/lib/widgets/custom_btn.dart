@@ -32,7 +32,7 @@ class CustomBtn extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: status == 0 ? customColor.withOpacity(0.5) : customColor,
+          color: status == 0 ? Colors.grey.withOpacity(0.5) : customColor,
           borderRadius: BorderRadius.circular(intRadius),
         ),
         height: customHeight,
@@ -41,7 +41,7 @@ class CustomBtn extends StatelessWidget {
           text,
           style: GoogleFonts.onest(
             fontSize: 12,
-            color: const Color(0xFFFFFFFF),
+            color: status == 0 ?  Colors.grey : const Color(0xFFFFFFFF),
           ),
           textAlign: TextAlign.center,
         ),

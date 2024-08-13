@@ -115,7 +115,7 @@ class FormRegisterScreen extends StatelessWidget {
                             // Después de volver de SignatureScreen, actualizar el estado
                             controller.updateSignaturePath();
                           },
-                          status: 1,
+                          status: 0,
                         ),
                         SizedBox(height: 10),
                         CustomBtn(
