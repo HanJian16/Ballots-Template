@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,9 +41,6 @@ class FormRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FormController controller = Get.put(FormController());
-    final formKey = GlobalKey<FormState>();
-
-    // final List formFieldSettings = createDataForTextFormField(controller);
     final List formFieldSettings = createDataForTextFormField(controller);
 
     return ScreenContainer(
