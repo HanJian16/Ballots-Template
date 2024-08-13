@@ -1,0 +1,28 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directorio de entorno
+.env
+
+# Editor de código
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Despliegues
+dist/
+build/
+
+# Caches
+*.cache
