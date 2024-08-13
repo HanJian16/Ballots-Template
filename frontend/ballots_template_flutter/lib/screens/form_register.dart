@@ -1,4 +1,4 @@
-import 'package:ballots_template_flutter/data/formfield_settings.dart';
+import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:ballots_template_flutter/controllers/form_controller.dart';
 import 'package:ballots_template_flutter/screens/signature_screens.dart';
 import 'package:ballots_template_flutter/widgets/custom_btn.dart';
