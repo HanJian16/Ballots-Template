@@ -8,7 +8,7 @@ class CustomBtn extends StatelessWidget {
     this.intRadius = 20,
     required this.customColor,
     this.customHeight = 35,
-    this.customWidth = 100, this.onPressed,
+    this.customWidth = 100, this.onPressed, required this.status,
   });
 
   final String text;
@@ -17,15 +17,22 @@ class CustomBtn extends StatelessWidget {
   final double customWidth;
   final Color customColor;
   final VoidCallback? onPressed;
+  final int status;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onPressed!(),
+      onTap: () {
+        if (onPressed != null && status == 1) {
+          onPressed!();
+        } else {
+          return;
+        }
+      },
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: customColor,
+          color: status == 0 ? Colors.grey.withOpacity(0.5) : customColor,
           borderRadius: BorderRadius.circular(intRadius),
         ),
         height: customHeight,
@@ -34,7 +41,7 @@ class CustomBtn extends StatelessWidget {
           text,
           style: GoogleFonts.onest(
             fontSize: 12,
-            color: const Color(0xFFFFFFFF),
+            color: status == 0 ?  Colors.grey : const Color(0xFFFFFFFF),
           ),
           textAlign: TextAlign.center,
         ),

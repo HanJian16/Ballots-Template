@@ -1,11 +1,12 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:ballots_template_flutter/controllers/form_controller.dart';
 
 class SignatureScreen extends StatefulWidget {
   const SignatureScreen({super.key});
@@ -20,6 +21,23 @@ class _SignatureScreenState extends State<SignatureScreen> {
     penStrokeWidth: 5,
     exportBackgroundColor: Colors.transparent,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _requestPermissions();
+  }
+
+  Future<void> _requestPermissions() async {
+    // Solicita permisos para almacenamiento y cámara
+    final statusStorage = await Permission.storage.request();
+    // final statusCamera = await Permission.camera.request();
+
+    if (!statusStorage.isGranted) {
+      Get.snackbar("Permisos necesarios",
+          "Necesitamos permisos para guardar imágenes y usar la cámara.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +56,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
           Expanded(
             child: Signature(
               controller: _signatureController,
-              height: 300,
+              height: double.infinity,
               backgroundColor: Colors.white,
             ),
           ),
@@ -66,50 +84,42 @@ class _SignatureScreenState extends State<SignatureScreen> {
   Future<void> _saveSignature() async {
     if (_signatureController.isNotEmpty) {
       try {
-        // Convert the signature to an image
         final ui.Image? image = await _signatureController.toImage();
-        
+
         if (image != null) {
-          final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+          final ByteData? byteData =
+              await image.toByteData(format: ui.ImageByteFormat.png);
 
           if (byteData != null) {
             final Uint8List pngBytes = byteData.buffer.asUint8List();
-
-            // Get the directory to save the image
             final directory = await getApplicationDocumentsDirectory();
             final imagePath = '${directory.path}/signature.png';
 
-            // Save the image
             final file = File(imagePath);
-            await file.writeAsBytes(pngBytes);
+            if (await file.exists()) {
+              await file.delete();
+            }
 
-            // Optionally, save to gallery
-            final result = await ImageGallerySaver.saveImage(pngBytes);
-            print('Image saved to gallery: $result');
+            await file.writeAsBytes(pngBytes, flush: true);
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Firma guardada como imagen')),
-            );
+            Get.snackbar("Firma", "Firma guardada como imagen");
+
+            final FormController controller = Get.find();
+            controller.signaturePath.value = imagePath;
+
+            Navigator.pop(context);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error al convertir la firma a imagen')),
-            );
+            Get.snackbar("Firma", "Error al convertir la firma a imagen");
           }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error al capturar la imagen de la firma')),
-          );
+          Get.snackbar("Firma", "Error al capturar la imagen de la firma");
         }
       } catch (e) {
         print('Error al guardar la firma: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al guardar la firma')),
-        );
+        Get.snackbar("Firma", "Error al guardar la firma a imagen");
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No hay firma para guardar')),
-      );
+      Get.snackbar("Firma", "No hay firma para guardar");
     }
   }
 }
