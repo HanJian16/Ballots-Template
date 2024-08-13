@@ -1,19 +1,24 @@
 import 'package:ballots_template_flutter/screens/form_register.dart';
+import 'package:ballots_template_flutter/utils/homescreen_datalist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List listTileData = getListTileData();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Generador de Recibo"),
+        title: const Text(
+          "Generador de Recibo",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: const [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Icon(Icons.info_outline),
           )
         ],
@@ -25,25 +30,28 @@ class HomeScreen extends StatelessWidget {
           children: [
             Container(
               decoration: const BoxDecoration(color: Colors.white),
-              child: const ListTile(
-                title: Text(
+              child: ListTile(
+                onTap: () {},
+                title: const Text(
                   'Opciones',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
-                trailing: Row(
+                trailing: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CustomButton(
-                        icon: Icons.print_disabled,
-                        backgroundColor: Colors.red,
-                        color: Colors.white),
+                      icon: Icons.print_disabled,
+                      backgroundColor: Colors.red,
+                      color: Colors.white,
+                    ),
                     CustomButton(
-                        icon: Icons.format_list_bulleted_add,
-                        backgroundColor: Color(0xFFCCCCCC),
-                        color: Colors.black),
+                      icon: Icons.format_list_bulleted_add,
+                      backgroundColor: Color(0xFFCCCCCC),
+                      color: Colors.black,
+                    ),
                   ],
                 ),
               ),
@@ -51,30 +59,30 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.separated(
-                itemCount: 20,
+                itemCount: listTileData.length,
                 itemBuilder: (context, index) {
-                  return const ListTile(
-                    shape: BeveledRectangleBorder(
+                  return ListTile(
+                    shape: const BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
                     ),
-                    tileColor: Color(0xFFCCCCCC),
+                    tileColor: const Color(0xFFCCCCCC),
                     title: Text(
-                      'Titulo',
-                      style: TextStyle(
+                      listTileData[index]['title'],
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     subtitle: Text(
-                      'Subtitulo',
-                      style: TextStyle(
+                      listTileData[index]['subtitle'],
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    leading: Icon(Icons.format_list_bulleted_add),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                    leading: Icon(listTileData[index]['icon']),
+                    trailing: const Icon(Icons.arrow_forward_ios),
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -83,7 +91,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () =>  Get.to(const FormRegisterScreen()),
+              onTap: () => Get.to(const FormRegisterScreen()),
               child: const SizedBox(
                 height: 32,
                 width: 32,
