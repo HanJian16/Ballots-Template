@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 
 class ScreenContainer extends StatelessWidget {
-  const ScreenContainer({super.key, required this.child});
+  const ScreenContainer(
+      {super.key,
+      required this.children,
+      this.appBarChildren,
+      this.appBarActions,
+      this.backgroundColor = Colors.white});
 
-  final Widget child;
+  final Widget children;
+  final Widget? appBarChildren;
+  final List<Widget>? appBarActions;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        //  resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.white,
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: child,
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: backgroundColor,
+      appBar: appBarChildren != null
+          ? AppBar(
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              backgroundColor: backgroundColor,
+              title: appBarChildren,
+              actions: appBarActions ?? [],
+            )
+          : null,
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            // padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: children,
+          ),
         ),
       ),
     );

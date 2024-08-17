@@ -44,7 +44,7 @@ class FormRegisterScreen extends StatelessWidget {
     final List formFieldSettings = createDataForTextFormField(controller);
 
     return ScreenContainer(
-      child: Column(
+      children: Column(
         children: [
           CustomIconButton(
             text: "Ajustes",
