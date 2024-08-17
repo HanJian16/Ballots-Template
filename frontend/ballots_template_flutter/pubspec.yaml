@@ -25,7 +25,10 @@ dev_dependencies:
   
 launcher_name:
   default: "Receipt\nGenerator"
-  es: "Generador de\nRecibos"
+  es: "Generador de\nRecibos" 
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/gifs/
