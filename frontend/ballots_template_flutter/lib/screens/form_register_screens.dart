@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ballots_template_flutter/screens/company_logo_upload_screens.dart';
 import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,19 +45,25 @@ class FormRegisterScreen extends StatelessWidget {
     final List formFieldSettings = createDataForTextFormField(controller);
 
     return ScreenContainer(
+      // backgroundColor: Colors.white,
+      appBarChildren: CustomIconButton(
+        text: "Ajustes",
+        icon: Icons.cloud_upload_sharp,
+        onPressed: () => _showBottomSheet(context),
+      ),
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            CustomIconButton(
-              text: "Ajustes",
-              icon: Icons.cloud_upload_sharp,
-              onPressed: () => _showBottomSheet(context),
-            ),
-            const SizedBox(height: 15),
+            // CustomIconButton(
+            //   text: "Ajustes",
+            //   icon: Icons.cloud_upload_sharp,
+            //   onPressed: () => _showBottomSheet(context),
+            // ),
+            const SizedBox(height: 8),
             Container(
-              height: 2,
-              color: Colors.black,
+              height: 1.5,
+              color: Colors.black.withOpacity(0.2),
             ),
             const SizedBox(height: 25),
             Expanded(
@@ -67,23 +74,25 @@ class FormRegisterScreen extends StatelessWidget {
                       text: 'Añadir logotipo',
                       customWidth: 110,
                       customColor: Colors.teal.shade400,
-                      onPressed: () {},
-                      status: 0,
+                      onPressed: () {
+                        Get.to(() => const CompanyLogoUploadScreen());
+                      },
+                      status: 1,
                     ),
                     const SizedBox(height: 20),
                     // Muestra la firma si está disponible
-                    Obx(() {
-                      final signaturePath = controller.signaturePath.value;
-                      return Container(
-                        alignment: Alignment.center,
-                        height: 300,
-                        width: double.infinity,
-                        color: Colors.red,
-                        child: signaturePath.isNotEmpty
-                            ? Image.file(File(signaturePath))
-                            : const Text('No hay firma, añade una.'),
-                      );
-                    }),
+                    // Obx(() {
+                    //   final signaturePath = controller.signaturePath.value;
+                    //   return Container(
+                    //     alignment: Alignment.center,
+                    //     height: 300,
+                    //     width: double.infinity,
+                    //     color: Colors.red,
+                    //     child: signaturePath.isNotEmpty
+                    //         ? Image.file(File(signaturePath))
+                    //         : const Text('No hay firma, añade una.'),
+                    //   );
+                    // }),
                     const SizedBox(height: 20),
                     // Lista de campos de formulario
                     ...formFieldSettings.map(
