@@ -66,7 +66,8 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
                       ),
-                      tileColor: const Color(0xFFCCCCCC),
+                      // tileColor: const Color(0xFFCCCCCC),
+                      tileColor:  const Color(0xFFE0E0E0),
                       title: Text(
                         listTileData[index]['title'],
                         style: const TextStyle(

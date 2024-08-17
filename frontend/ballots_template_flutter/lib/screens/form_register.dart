@@ -44,92 +44,95 @@ class FormRegisterScreen extends StatelessWidget {
     final List formFieldSettings = createDataForTextFormField(controller);
 
     return ScreenContainer(
-      children: Column(
-        children: [
-          CustomIconButton(
-            text: "Ajustes",
-            icon: Icons.cloud_upload_sharp,
-            onPressed: () => _showBottomSheet(context),
-          ),
-          const SizedBox(height: 15),
-          Container(
-            height: 2,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 25),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomBtn(
-                    text: 'Añadir logotipo',
-                    customWidth: 110,
-                    customColor: Colors.teal.shade400,
-                    onPressed: () {},
-                    status: 0,
-                  ),
-                  const SizedBox(height: 20),
-                  // Muestra la firma si está disponible
-                  Obx(() {
-                    final signaturePath = controller.signaturePath.value;
-                    return Container(
-                      alignment: Alignment.center,
-                      height: 300,
-                      width: double.infinity,
-                      color: Colors.red,
-                      child: signaturePath.isNotEmpty
-                          ? Image.file(File(signaturePath))
-                          : const Text('No hay firma, añade una.'),
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                  // Lista de campos de formulario
-                  ...formFieldSettings.map(
-                    (field) => Padding(
-                      padding: const EdgeInsets.only(bottom: 15.0),
-                      child: CustomTextFormField(
-                        customBackgroundColor: field['customBackgroundColor'],
-                        placeHolder: field['placeHolder'],
-                        onChanged: field['onChanged'],
-                        keyboardType: field['keyboardType'],
+      children: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            CustomIconButton(
+              text: "Ajustes",
+              icon: Icons.cloud_upload_sharp,
+              onPressed: () => _showBottomSheet(context),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              height: 2,
+              color: Colors.black,
+            ),
+            const SizedBox(height: 25),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CustomBtn(
+                      text: 'Añadir logotipo',
+                      customWidth: 110,
+                      customColor: Colors.teal.shade400,
+                      onPressed: () {},
+                      status: 0,
+                    ),
+                    const SizedBox(height: 20),
+                    // Muestra la firma si está disponible
+                    Obx(() {
+                      final signaturePath = controller.signaturePath.value;
+                      return Container(
+                        alignment: Alignment.center,
+                        height: 300,
+                        width: double.infinity,
+                        color: Colors.red,
+                        child: signaturePath.isNotEmpty
+                            ? Image.file(File(signaturePath))
+                            : const Text('No hay firma, añade una.'),
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    // Lista de campos de formulario
+                    ...formFieldSettings.map(
+                      (field) => Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: CustomTextFormField(
+                          customBackgroundColor: field['customBackgroundColor'],
+                          placeHolder: field['placeHolder'],
+                          onChanged: field['onChanged'],
+                          keyboardType: field['keyboardType'],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        CustomBtn(
-                          text: 'Firmar',
-                          customWidth: double.infinity,
-                          customHeight: 50,
-                          customColor: Colors.teal.shade400,
-                          onPressed: () async {
-                            await Get.to(() => const SignatureScreen());
-                            // Después de volver de SignatureScreen, actualizar el estado
-                            controller.updateSignaturePath();
-                          },
-                          status: 0,
-                        ),
-                        const SizedBox(height: 10),
-                        CustomBtn(
-                          text: 'Guardar',
-                          customWidth: double.infinity,
-                          customHeight: 50,
-                          customColor: Colors.teal.shade400,
-                          onPressed: () {
-                            controller.submitForm();
-                          },
-                          status: 1,
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          CustomBtn(
+                            text: 'Firmar',
+                            customWidth: double.infinity,
+                            customHeight: 50,
+                            customColor: Colors.teal.shade400,
+                            onPressed: () async {
+                              await Get.to(() => const SignatureScreen());
+                              // Después de volver de SignatureScreen, actualizar el estado
+                              controller.updateSignaturePath();
+                            },
+                            status: 0,
+                          ),
+                          const SizedBox(height: 10),
+                          CustomBtn(
+                            text: 'Guardar',
+                            customWidth: double.infinity,
+                            customHeight: 50,
+                            customColor: Colors.teal.shade400,
+                            onPressed: () {
+                              controller.submitForm();
+                            },
+                            status: 1,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
