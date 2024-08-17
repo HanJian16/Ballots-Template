@@ -10,7 +10,7 @@ class FormController extends GetxController {
   var ruc = ''.obs;
   var nameOfFirm = ''.obs;
   var positionOfFirm = ''.obs;
-  var signaturePath = ''.obs; // Ruta de la firma guardada
+  var signaturePath = ''.obs;
 
   void updateName(String value) => name.value = value;
   void updatePhone(String value) => phone.value = value;
@@ -40,24 +40,14 @@ class FormController extends GetxController {
 
   void submitForm() {
     if (isFormValid) {
-      print('Form is valid. Submitting...');
-      // Lógica para manejar el formulario
-      print('Name: ${name.value}');
-      print('Phone: ${phone.value}');
-      print('Direction: ${direction.value}');
-      print('Email: ${email.value}');
-      print('RUC: ${ruc.value}');
-      print('Name of firm: ${nameOfFirm.value}');
-      print('Position of firm: ${positionOfFirm.value}');
-      print('Signature path: ${signaturePath.value}');
-      // Aquí puedes añadir más lógica, como enviar datos a un servidor.
+      
     } else {
       Get.snackbar(
         'Error',
         'Por favor, complete todos los campos y añada una firma',
         snackPosition: SnackPosition.BOTTOM,
         colorText: Colors.black,
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       );
     }
   }

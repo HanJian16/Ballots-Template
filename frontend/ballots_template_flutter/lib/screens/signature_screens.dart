@@ -12,10 +12,10 @@ class SignatureScreen extends StatefulWidget {
   const SignatureScreen({super.key});
 
   @override
-  _SignatureScreenState createState() => _SignatureScreenState();
+  SignatureScreenState createState() => SignatureScreenState();
 }
 
-class _SignatureScreenState extends State<SignatureScreen> {
+class SignatureScreenState extends State<SignatureScreen> {
   final SignatureController _signatureController = SignatureController(
     penColor: Colors.black,
     penStrokeWidth: 5,
@@ -31,11 +31,12 @@ class _SignatureScreenState extends State<SignatureScreen> {
   Future<void> _requestPermissions() async {
     // Solicita permisos para almacenamiento y cámara
     final statusStorage = await Permission.storage.request();
-    // final statusCamera = await Permission.camera.request();
 
     if (!statusStorage.isGranted) {
-      Get.snackbar("Permisos necesarios",
-          "Necesitamos permisos para guardar imágenes y usar la cámara.");
+      Get.snackbar(
+        "Permisos necesarios",
+        "Necesitamos permisos para guardar imágenes y usar la cámara.",
+      );
     }
   }
 
@@ -107,7 +108,10 @@ class _SignatureScreenState extends State<SignatureScreen> {
             final FormController controller = Get.find();
             controller.signaturePath.value = imagePath;
 
-            Navigator.pop(context);
+            // Verificar si el widget sigue montado antes de usar 'context'
+            if (mounted) {
+              Navigator.pop(context);
+            }
           } else {
             Get.snackbar("Firma", "Error al convertir la firma a imagen");
           }
@@ -115,7 +119,6 @@ class _SignatureScreenState extends State<SignatureScreen> {
           Get.snackbar("Firma", "Error al capturar la imagen de la firma");
         }
       } catch (e) {
-        print('Error al guardar la firma: $e');
         Get.snackbar("Firma", "Error al guardar la firma a imagen");
       }
     } else {
