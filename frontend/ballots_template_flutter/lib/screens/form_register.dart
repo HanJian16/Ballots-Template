@@ -65,14 +65,13 @@ class FormRegisterScreen extends StatelessWidget {
                     text: 'Añadir logotipo',
                     customWidth: 110,
                     customColor: Colors.teal.shade400,
-                    onPressed: () => print('Logo'),
+                    onPressed: () {},
                     status: 0,
                   ),
                   const SizedBox(height: 20),
                   // Muestra la firma si está disponible
                   Obx(() {
                     final signaturePath = controller.signaturePath.value;
-                    print(signaturePath);
                     return Container(
                       alignment: Alignment.center,
                       height: 300,
@@ -85,18 +84,17 @@ class FormRegisterScreen extends StatelessWidget {
                   }),
                   const SizedBox(height: 20),
                   // Lista de campos de formulario
-                  ...formFieldSettings
-                      .map((field) => Padding(
-                            padding: const EdgeInsets.only(bottom: 15.0),
-                            child: CustomTextFormField(
-                              customBackgroundColor:
-                                  field['customBackgroundColor'],
-                              placeHolder: field['placeHolder'],
-                              onChanged: field['onChanged'],
-                              keyboardType: field['keyboardType'],
-                            ),
-                          ))
-                      .toList(),
+                  ...formFieldSettings.map(
+                    (field) => Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: CustomTextFormField(
+                        customBackgroundColor: field['customBackgroundColor'],
+                        placeHolder: field['placeHolder'],
+                        onChanged: field['onChanged'],
+                        keyboardType: field['keyboardType'],
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -113,7 +111,7 @@ class FormRegisterScreen extends StatelessWidget {
                           },
                           status: 0,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomBtn(
                           text: 'Guardar',
                           customWidth: double.infinity,
