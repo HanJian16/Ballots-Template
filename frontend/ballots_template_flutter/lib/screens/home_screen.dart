@@ -1,4 +1,4 @@
-import 'package:ballots_template_flutter/screens/form_register.dart';
+import 'package:ballots_template_flutter/screens/form_register_screens.dart';
 import 'package:ballots_template_flutter/utils/homescreen_datalist.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
