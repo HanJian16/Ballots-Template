@@ -16,7 +16,8 @@ class ListController extends GetxController {
   void toggleSelection(int index, bool? value) {
     if (index >= 0 && index < listTileData.length) {
       listTileData[index]['selected'] = value;
-      listTileData.refresh(); // Actualizar la lista
+      update();
+      // listTileData.refresh(); // Actualizar la lista
     }
   }
 
@@ -32,6 +33,7 @@ class ListController extends GetxController {
       listTileData[index]['selected'] = value;
       //* Notifica a los observadores de la actualización
       update();
+      listTileData.refresh();
     }
   }
 }
