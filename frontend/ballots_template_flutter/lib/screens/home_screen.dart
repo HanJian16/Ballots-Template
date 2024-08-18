@@ -1,5 +1,4 @@
 import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/screens/form_register_screens.dart';
 import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           Checkbox(
                             value: item['selected'],
                             onChanged: (bool? value) {
-                              print("item[$index]['selected'] $value");
                               controller.updateSelection(
                                   index, value); // Actualiza la selección
                             },
@@ -95,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomBtn(
                   text: 'Confirmar',
                   status: 1,
-                  customFontSize: 15,
                   onPressed: () {
                     setState(() {});
                     Navigator.pop(context);
@@ -228,7 +225,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton.filled(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(backgroundColor),
+        backgroundColor: WidgetStateProperty.all(backgroundColor),
       ),
       color: color,
       onPressed: onPressed,
