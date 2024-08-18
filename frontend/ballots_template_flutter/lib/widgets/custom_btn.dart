@@ -6,10 +6,10 @@ class CustomBtn extends StatelessWidget {
     super.key,
     required this.text,
     this.intRadius = 20,
-    this.customColor = const Color.fromRGBO(38, 166, 154, 1),
+    this.customColor = const Color(0xFFAF30BF),
     this.customHeight = 50,
     this.onPressed,
-    required this.status, this.customFontSize = 12,
+    required this.status, this.customFontSize = 15,
   });
 
   final String text;
