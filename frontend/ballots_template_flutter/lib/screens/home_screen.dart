@@ -1,5 +1,5 @@
 import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/widgets/custom_btn.dart';
+// import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Get.put(ListController());
+  }
+
   void showBottomSheet(BuildContext context) {
     final ListController controller = Get.find();
 
@@ -67,12 +73,34 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 15,
                             ),
                           ),
+                          // Container(
+                          //   padding: const EdgeInsets.all(1.5),
+                          //   width: 20,
+                          //   height: 20,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(4),
+                          //     border: Border.all(
+                          //         color: const Color(0xFFAF30BF), width: 1.5),
+                          //   ),
+                          //   child: Container(
+                          //     color: item['selected']
+                          //         ? const Color(0xFFAF30BF)
+                          //         : Colors.white,
+                          //   ),
+                          // )
                           Checkbox(
-                            value: item['selected'],
+                            value: controller.listTileData[index]['selected'],
                             onChanged: (bool? value) {
                               controller.updateSelection(
                                   index, value); // Actualiza la selección
+                              // setState(() {});
                             },
+                            activeColor:
+                                item['selected'] ? const Color(0xFFAF30BF) : Colors.white,
+                            checkColor: Colors.white,
+                            // activeColor:
+                            //     item['selected'] ? Colors.green : Colors.red,
+                            // checkColor: Colors.white,
                           )
                         ],
                       ),
@@ -81,25 +109,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
-                ),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: CustomBtn(
-                  text: 'Confirmar',
-                  status: 1,
-                  onPressed: () {
-                    setState(() {});
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            )
+            // Container(
+            //   decoration: const BoxDecoration(
+            //     border: Border(
+            //       top: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
+            //     ),
+            //   ),
+            //   child: Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            //     child: CustomBtn(
+            //       text: 'Confirmar',
+            //       status: 1,
+            //       onPressed: () {
+            //         setState(() {});
+            //         Navigator.pop(context);
+            //       },
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
@@ -108,8 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ListController controller = Get.put(ListController());
-
+    final ListController controller = Get.find();
     return ScreenContainer(
       backgroundColor: Colors.white,
       appBarChildren: const Text(
