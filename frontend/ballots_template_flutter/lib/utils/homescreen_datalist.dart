@@ -6,37 +6,104 @@ getListTileData() {
       'title': 'Recibo',
       'subtitle': 'Crear recibos de productos o servicios',
       'icon': Icons.receipt_long_outlined,
+      "selected": false,
+    },
+    {
+      'title': 'Recibo del servicio',
+      'subtitle': 'Crear recibo del servicio',
+      'icon': Icons.receipt_rounded,
+      "selected": false,
+    },
+    {
+      'title': 'Recibo del producto',
+      'subtitle': 'Crear recibo del producto',
+      'icon': Icons.receipt_rounded,
+      "selected": false,
     },
     {
       'title': 'Registros',
       'subtitle': 'Registros de productos y servicios',
       'icon': Icons.content_paste_rounded,
+      "selected": false,
     },
     {
-      'title': 'Lista de productos/servicios',
+      'title': 'Registro del producto',
+      'subtitle': 'Registrar producto',
+      'icon': Icons.content_paste_go,
+      "selected": false,
+    },
+    {
+      'title': 'Registro de servicio',
+      'subtitle': 'Registrar servicio',
+      'icon': Icons.content_paste_go,
+      "selected": false,
+    },
+    {
+      'title': 'Lista de Productos / Servicios',
       'subtitle': 'Lista de productos y servicios',
       'icon': Icons.content_paste_search,
+      "selected": false,
+    },
+    {
+      'title': 'Lista de Productos',
+      'subtitle': 'Listar todos los productos',
+      'icon': Icons.list,
+      "selected": false,
+    },
+    {
+      'title': 'Lista de servicios',
+      'subtitle': 'Listar todos los servicios',
+      'icon': Icons.list,
+      "selected": false,
     },
     {
       'title': 'Presupuestos',
       'subtitle': 'Presupuestos de productos y servicios',
       'icon': Icons.calculate_outlined,
+      "selected": false,
     },
     {
       'title': 'Clientes',
       'subtitle': 'Lista de clientes',
       'icon': Icons.people_outline,
+      "selected": false,
     },
     {
       'title': 'Historial',
-      'subtitle': 'Historial de recibos',
+      'subtitle': 'Historial de productos y servicios',
       'icon': Icons.history,
+      "selected": false,
+    },
+    {
+      'title': 'Historial de recepción de productos',
+      'subtitle': 'Historial de recepción de productos',
+      'icon': Icons.history,
+      "selected": false,
+    },
+    {
+      'title': 'Historial de recibos de servicio',
+      'subtitle': 'Historial de recepción de servicios',
+      'icon': Icons.history,
+      "selected": false,
+    },
+    {
+      'title': 'Historial de presupuesto',
+      'subtitle': 'Presupuesto de productos o s...',
+      'icon': Icons.history,
+      "selected": false,
+    },
+    {
+      'title': 'Planes Premium',
+      'subtitle': 'Conviértase en un usuario premium y 0...',
+      'icon': Icons.workspace_premium,
+      "selected": false,
     },
     {
       'title': 'Ajustes',
       'subtitle': 'Configuraciones de la aplicación',
       'icon': Icons.settings_sharp,
-    }
+      "selected": false,
+    },
   ];
 
   return listTileData;
