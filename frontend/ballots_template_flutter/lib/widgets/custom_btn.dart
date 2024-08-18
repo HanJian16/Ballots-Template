@@ -6,17 +6,19 @@ class CustomBtn extends StatelessWidget {
     super.key,
     required this.text,
     this.intRadius = 20,
-    required this.customColor,
-    this.customHeight = 35,
-    this.customWidth = 100, this.onPressed, required this.status,
+    this.customColor = const Color.fromRGBO(38, 166, 154, 1),
+    this.customHeight = 50,
+    this.onPressed,
+    required this.status, this.customFontSize = 12,
   });
 
   final String text;
   final double intRadius;
   final double customHeight;
   final double customWidth;
-  final Color customColor;
+  final Color? customColor;
   final VoidCallback? onPressed;
+  final double? customFontSize;
   final int status;
 
   @override
@@ -36,12 +38,11 @@ class CustomBtn extends StatelessWidget {
           borderRadius: BorderRadius.circular(intRadius),
         ),
         height: customHeight,
-        width: customWidth,
         child: Text(
           text,
           style: GoogleFonts.onest(
-            fontSize: 12,
-            color: status == 0 ?  Colors.grey : const Color(0xFFFFFFFF),
+            fontSize: customFontSize,
+            color: status == 0 ? Colors.grey : const Color(0xFFFFFFFF),
           ),
           textAlign: TextAlign.center,
         ),

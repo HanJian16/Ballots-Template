@@ -7,7 +7,9 @@
     "homescreen",
     "Ionicons",
     "onest",
+    "RGBO",
     "textformfield",
-    "unfocus"
+    "unfocus",
+    "vsync"
   ]
 }
