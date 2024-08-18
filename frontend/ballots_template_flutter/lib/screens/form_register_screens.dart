@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:ballots_template_flutter/screens/company_logo_upload_screens.dart';
+import 'package:ballots_template_flutter/utils/bottom_sheet.dart';
 import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,26 +15,25 @@ class FormRegisterScreen extends StatelessWidget {
   const FormRegisterScreen({super.key});
 
   void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+    showCustomBottomSheet(
       context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.12,
-          color: Colors.white,
-          child: const Column(
-            children: [
-              BackupRow(
-                text: "Realizar copia de seguridad",
-                icon: Icons.cloud_upload,
-              ),
-              BackupRow(
-                text: "Restaurar copia de seguridad",
-                icon: Icons.cloud_upload_outlined,
-              ),
-            ],
-          ),
-        );
-      },
+      content: Container(
+        height: MediaQuery.of(context).size.height * 0.12,
+        color: Colors.white,
+        child: const Column(
+          children: [
+            BackupRow(
+              text: "Realizar copia de seguridad",
+              icon: Icons.cloud_upload,
+            ),
+            BackupRow(
+              text: "Restaurar copia de seguridad",
+              icon: Icons.cloud_upload_outlined,
+            ),
+          ],
+        ),
+      ),
+      heightPercentage: 0.12,
     );
   }
 
@@ -55,11 +53,6 @@ class FormRegisterScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            // CustomIconButton(
-            //   text: "Ajustes",
-            //   icon: Icons.cloud_upload_sharp,
-            //   onPressed: () => _showBottomSheet(context),
-            // ),
             const SizedBox(height: 8),
             Container(
               height: 1.5,
@@ -72,7 +65,6 @@ class FormRegisterScreen extends StatelessWidget {
                   children: [
                     CustomBtn(
                       text: 'Añadir logotipo',
-                      customWidth: 110,
                       customColor: Colors.teal.shade400,
                       onPressed: () {
                         Get.to(() => const CompanyLogoUploadScreen());
@@ -112,7 +104,6 @@ class FormRegisterScreen extends StatelessWidget {
                         children: [
                           CustomBtn(
                             text: 'Firmar',
-                            customWidth: double.infinity,
                             customHeight: 50,
                             customColor: Colors.teal.shade400,
                             onPressed: () async {
@@ -125,7 +116,6 @@ class FormRegisterScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           CustomBtn(
                             text: 'Guardar',
-                            customWidth: double.infinity,
                             customHeight: 50,
                             customColor: Colors.teal.shade400,
                             onPressed: () {
