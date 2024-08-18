@@ -65,7 +65,7 @@ class FormRegisterScreen extends StatelessWidget {
                   children: [
                     CustomBtn(
                       text: 'Añadir logotipo',
-                      customColor: Colors.teal.shade400,
+                      // customColor: Colors.teal.shade400,
                       onPressed: () {
                         Get.to(() => const CompanyLogoUploadScreen());
                       },
@@ -98,34 +98,32 @@ class FormRegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          CustomBtn(
-                            text: 'Firmar',
-                            customHeight: 50,
-                            customColor: Colors.teal.shade400,
-                            onPressed: () async {
-                              await Get.to(() => const SignatureScreen());
-                              // Después de volver de SignatureScreen, actualizar el estado
-                              controller.updateSignaturePath();
-                            },
-                            status: 0,
-                          ),
-                          const SizedBox(height: 10),
-                          CustomBtn(
-                            text: 'Guardar',
-                            customHeight: 50,
-                            customColor: Colors.teal.shade400,
-                            onPressed: () {
-                              controller.submitForm();
-                            },
-                            status: 1,
-                          ),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        CustomBtn(
+                          text: 'Firmar',
+                          customHeight: 50,
+                          // customColor: Colors.teal.shade400,
+                          onPressed: () async {
+                            await Get.to(() => const SignatureScreen());
+                            // Después de volver de SignatureScreen, actualizar el estado
+                            controller.updateSignaturePath();
+                          },
+                          status: 0,
+                        ),
+                        const SizedBox(height: 10),
+                        CustomBtn(
+                          text: 'Guardar',
+                          customHeight: 50,
+                          // customColor: Colors.teal.shade400,
+                          onPressed: () {
+                            controller.submitForm();
+                          },
+                          status: 1,
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:ballots_template_flutter/widgets/custom_icon_btn.dart';
 
 class CompanyLogoUploadScreen extends StatefulWidget {
@@ -18,8 +17,7 @@ class _CompanyLogoUploadScreenState extends State<CompanyLogoUploadScreen> {
   }
 
   Future<void> uploadLogo() async {
-    var status = await Permission.photos.request();
-    print("Status: $status");
+    // var status = await Permission.photos.request();
     // var storageStatus = await Permission.storage.request();
     // print("Storage status: $storageStatus");
     // if (storageStatus == PermissionStatus.granted) {
