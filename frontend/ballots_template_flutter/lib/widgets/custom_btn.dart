@@ -15,7 +15,6 @@ class CustomBtn extends StatelessWidget {
   final String text;
   final double intRadius;
   final double customHeight;
-  final double customWidth;
   final Color? customColor;
   final VoidCallback? onPressed;
   final double? customFontSize;
