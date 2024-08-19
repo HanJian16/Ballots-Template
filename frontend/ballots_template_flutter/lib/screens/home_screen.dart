@@ -27,8 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final FormController formController = Get.find();
 
     if (formController.isFormValid) {
+      print("entre Valid");
       action();
     } else {
+      print("entre No Valid");
       Get.defaultDialog(
         title: '',
         titleStyle: GoogleFonts.onest(
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPress: () {
             Get.back();
             Get.to(() => const FormRegisterScreen());
-          },
+          },  
         ),
       );
     }
@@ -121,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     final item = listTileData[index];
                     return GestureDetector(
                       onTap: () {
-                        navigateToAnotherScreen(item['onTap']());
+                        navigateToAnotherScreen(item['onTap']);
                       },
                       child: ListTile(
                         shape: const BeveledRectangleBorder(
