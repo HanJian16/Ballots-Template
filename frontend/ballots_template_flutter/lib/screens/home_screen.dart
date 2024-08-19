@@ -27,10 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final FormController formController = Get.find();
 
     if (formController.isFormValid) {
-      print("entre Valid");
       action();
     } else {
-      print("entre No Valid");
       Get.defaultDialog(
         title: '',
         titleStyle: GoogleFonts.onest(
@@ -50,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void showBottomSheet(BuildContext context) {
     final ListController controller = Get.find();
-    print("Controller: ${controller.runtimeType}");
 
     showModalBottomSheet(
       context: context,
