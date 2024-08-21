@@ -1,23 +1,16 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db';
 
-const User = sequelize.define('User', {
-    username: {
+const History = sequelize.define('History', {
+    action: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    logo: {
-        type: DataTypes.BLOB('long'),
-    },
-    createdAt: {
+    actionDate: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
 });
 
-export default User;
+export default History;
