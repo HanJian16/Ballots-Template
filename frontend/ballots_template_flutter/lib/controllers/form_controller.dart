@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:ballots_template_flutter/network/api/api_client.dart';
+import 'package:ballots_template_flutter/widgets/notification_helper.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -11,6 +12,20 @@ class FormController extends GetxController {
   var nameOfFirm = ''.obs;
   var positionOfFirm = ''.obs;
   var signaturePath = ''.obs;
+
+  @override
+  void onClose() {
+    // Limpiar los datos cuando la pantalla se destruye
+    name.value = '';
+    phone.value = '';
+    direction.value = '';
+    email.value = '';
+    ruc.value = '';
+    nameOfFirm.value = '';
+    positionOfFirm.value = '';
+    signaturePath.value = '';
+    super.onClose();
+  }
 
   void updateName(String value) => name.value = value;
   void updatePhone(String value) => phone.value = value;
@@ -34,20 +49,52 @@ class FormController extends GetxController {
         email.isNotEmpty &&
         ruc.isNotEmpty &&
         nameOfFirm.isNotEmpty &&
-        positionOfFirm.isNotEmpty &&
-        signaturePath.isNotEmpty; // Verificar si hay firma
+        positionOfFirm.isNotEmpty;
+    // && signaturePath.isNotEmpty; // Verificar si hay firma
   }
 
-  void submitForm() {
+  void submitForm() async {
     if (isFormValid) {
-      
+      final ApiClient apiClient = ApiClient();
+      final storeData = {
+        'nameStore': name.value,
+        'phoneStore': phone.value,
+        'addressStore': direction.value,
+        'emailStore': email.value,
+        'rucStore': ruc.value,
+        'signerName': nameOfFirm.value,
+        'signerRole': positionOfFirm.value,
+        // 'logo': signaturePath.value,
+      };
+
+      try {
+        final response = await apiClient.postSore(storeData);
+
+        if (response.statusCode == 201) {
+          NotificationHelper.show(
+            title: 'Éxito',
+            message: 'El establecimiento se ha guardado correctamente',
+            isError: false,
+          );
+        } else {
+          NotificationHelper.show(
+            title: 'Error',
+            message: 'No se pudo enviar el establecimiento',
+            isError: true,
+          );
+        }
+      } catch (e) {
+        NotificationHelper.show(
+          title: 'Error',
+          message: 'No se puedo guardar el establecimiento',
+          isError: true,
+        );
+      }
     } else {
-      Get.snackbar(
-        'Error',
-        'Por favor, complete todos los campos y añada una firma',
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: Colors.black,
-        duration: const Duration(seconds: 3),
+      NotificationHelper.show(
+        title: 'Error',
+        message: 'Por favor, complete todos los campos',
+        isError: true,
       );
     }
   }
