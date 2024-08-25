@@ -23,10 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Get.put(FormController());
   }
 
-  void navigateToAnotherScreen(action) {
+  void navigateToAnotherScreen(action, String title) {
     final FormController formController = Get.find();
 
-    if (formController.isFormValid) {
+    if (formController.isFormValid || title == 'Ajustes') {
       action();
     } else {
       Get.defaultDialog(
@@ -118,9 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: listTileData.length,
                   itemBuilder: (context, index) {
                     final item = listTileData[index];
+                    String title = item['title'] ?? '';
+                    String subtitle = item['subtitle'] ?? '';
                     return GestureDetector(
                       onTap: () {
-                        navigateToAnotherScreen(item['onTap']);
+                        navigateToAnotherScreen(item['onTap'], title);
                       },
                       child: ListTile(
                         shape: const BeveledRectangleBorder(
@@ -129,14 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         tileColor: const Color(0xFFE0E0E0),
                         title: Text(
-                          item['title'],
+                          title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
                         subtitle: Text(
-                          item['subtitle'],
+                          subtitle,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 11,
