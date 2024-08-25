@@ -11,8 +11,28 @@ import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:ballots_template_flutter/widgets/custom_icon_btn.dart';
 import 'package:ballots_template_flutter/widgets/backup_row.dart';
 
-class FormRegisterScreen extends StatelessWidget {
+class FormRegisterScreen extends StatefulWidget {
   const FormRegisterScreen({super.key});
+
+  @override
+  State<FormRegisterScreen> createState() => _FormRegisterScreenState();
+}
+
+class _FormRegisterScreenState extends State<FormRegisterScreen> {
+  List formFieldSettings = [];
+  late final FormController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(FormController());
+    formFieldSettings = createDataForTextFormField(controller);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.onClose();
+  }
 
   void _showBottomSheet(BuildContext context) {
     showCustomBottomSheet(
@@ -39,8 +59,7 @@ class FormRegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FormController controller = Get.put(FormController());
-    final List formFieldSettings = createDataForTextFormField(controller);
+    // final FormController controller = Get.put(FormController());
 
     return ScreenContainer(
       // backgroundColor: Colors.white,
@@ -86,7 +105,6 @@ class FormRegisterScreen extends StatelessWidget {
                     //   );
                     // }),
                     const SizedBox(height: 20),
-                    // Lista de campos de formulario
                     ...formFieldSettings.map(
                       (field) => Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
@@ -116,7 +134,7 @@ class FormRegisterScreen extends StatelessWidget {
                           text: 'Guardar',
                           customHeight: 50,
                           // customColor: Colors.teal.shade400,
-                          onPressed: () {
+                          onPressed: () async {
                             controller.submitForm();
                           },
                           status: 1,
