@@ -1,8 +1,11 @@
 import {Sequelize} from 'sequelize';
+import dotenv from "dotenv";
 
-const sequelize = new Sequelize('ballots-backend', 'postgres', '567123', {
-    host: 'localhost',
-    dialect: 'postgres',
+dotenv.config();
+
+const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.USER_DB_NAME, process.env.USER_DB_PASSWORD, {
+    host: process.env.DATABASE_HOST,
+    dialect: process.env.DATABASE_DIALECT,
 });
 
 export default sequelize;
