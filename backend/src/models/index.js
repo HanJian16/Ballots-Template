@@ -1,16 +1,16 @@
 import sequelize from '../config/database.js';
-import User from './User.js';
+import Store from './Store.js';
 import History from './History.js';
 import Clients from './Clients.js';
 
-User.hasMany(History, {foreignKey: 'user_id', onDelete: 'CASCADE'});
-History.belongsTo(User, {foreignKey: 'user_id'});
+Store.hasMany(History, {foreignKey: 'store_id', onDelete: 'CASCADE'});
+History.belongsTo(Store, {foreignKey: 'store_id'});
 
-User.hasMany(Clients, {foreignKey: 'user_id', onDelete: 'CASCADE'});
-Clients.belongsTo(User, {foreignKey: 'user_id'});
+Store.hasMany(Clients, {foreignKey: 'store_id', onDelete: 'CASCADE'});
+Clients.belongsTo(Store, {foreignKey: 'store_id'});
 
 sequelize.sync({force: false}).then(() => {
-  console.log('Tablas sinconizadas');
+  console.log('Tablas sincronizadas');
 });
 
-export {User, History, Clients};
+export {Store, History, Clients};
