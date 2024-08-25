@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../db";
+import sequelize from "../config/database.js";
 
-const User = sequelize.define("Store", {
+const Store = sequelize.define("Store", {
   nameStore: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -16,9 +16,14 @@ const User = sequelize.define("Store", {
   },
   emailStore: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   rucStore: {
     type: DataTypes.STRING,
+    validate: {
+        len: [8, 11],
+    },
+    allowNull: false,
   },
   signerName:{
       type: DataTypes.STRING,
@@ -28,9 +33,10 @@ const User = sequelize.define("Store", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  logo: {
-    type: DataTypes.BLOB("long"),
-  },
+//   logo: {
+//     type: DataTypes.BLOB("long"),
+//     allowNull: false,
+//   },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -38,4 +44,4 @@ const User = sequelize.define("Store", {
   },
 });
 
-export default User;
+export default Store;
