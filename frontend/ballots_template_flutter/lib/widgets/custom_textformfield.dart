@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,12 +7,11 @@ class CustomTextFormField extends StatelessWidget {
     super.key,
     this.onChanged,
     this.placeHolder = 'Coloca algo',
-    this.customBackgroundColor = Colors.grey, this.keyboardType = TextInputType.text,
+    this.keyboardType = TextInputType.text,
   });
 
   final dynamic onChanged;
   final String placeHolder;
-  final Color customBackgroundColor;
   final TextInputType? keyboardType;
 
   @override
@@ -19,34 +19,11 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          style: GoogleFonts.onest(fontSize: 18, color: Colors.black),
+          style: GoogleFonts.onest(fontSize: 18, color: AppColors.blackColor),
           keyboardType: keyboardType,
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: placeHolder,
-            filled: true,
-            fillColor: customBackgroundColor,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: customBackgroundColor,
-                width: 1.5,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: customBackgroundColor,
-                width: 1.5,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: customBackgroundColor, // Color del borde cuando está habilitado
-                width: 1.5,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-            ),
           ),
         ),
         const SizedBox(height: 15),

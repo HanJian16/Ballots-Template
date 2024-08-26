@@ -1,4 +1,5 @@
 import 'package:ballots_template_flutter/screens/company_logo_upload_screens.dart';
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/utils/bottom_sheet.dart';
 import 'package:ballots_template_flutter/utils/formfield_settings.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
       context: context,
       content: Container(
         height: MediaQuery.of(context).size.height * 0.12,
-        color: Colors.white,
+        color: AppColors.whiteColor,
         child: const Column(
           children: [
             BackupRow(
@@ -62,7 +63,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
     // final FormController controller = Get.put(FormController());
 
     return ScreenContainer(
-      // backgroundColor: Colors.white,
       appBarChildren: CustomIconButton(
         text: "Ajustes",
         icon: Icons.cloud_upload_sharp,
@@ -72,11 +72,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            const SizedBox(height: 8),
-            Container(
-              height: 1.5,
-              color: Colors.black.withOpacity(0.2),
-            ),
             const SizedBox(height: 25),
             Expanded(
               child: SingleChildScrollView(
@@ -84,7 +79,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                   children: [
                     CustomBtn(
                       text: 'Añadir logotipo',
-                      // customColor: Colors.teal.shade400,
                       onPressed: () {
                         Get.to(() => const CompanyLogoUploadScreen());
                       },
@@ -109,7 +103,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                       (field) => Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: CustomTextFormField(
-                          customBackgroundColor: field['customBackgroundColor'],
                           placeHolder: field['placeHolder'],
                           onChanged: field['onChanged'],
                           keyboardType: field['keyboardType'],
@@ -121,7 +114,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                         CustomBtn(
                           text: 'Firmar',
                           customHeight: 50,
-                          // customColor: Colors.teal.shade400,
                           onPressed: () async {
                             await Get.to(() => const SignatureScreen());
                             // Después de volver de SignatureScreen, actualizar el estado
@@ -129,11 +121,10 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                           },
                           status: 0,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         CustomBtn(
                           text: 'Guardar',
                           customHeight: 50,
-                          // customColor: Colors.teal.shade400,
                           onPressed: () async {
                             controller.submitForm();
                           },

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ScreenContainer extends StatelessWidget {
-  const ScreenContainer(
-      {super.key,
-      required this.children,
-      this.appBarChildren,
-      this.appBarActions,
-      this.backgroundColor = Colors.white});
+  const ScreenContainer({
+    super.key,
+    required this.children,
+    this.appBarChildren,
+    this.appBarActions,
+    this.backgroundColor,
+  });
 
   final Widget children;
   final Widget? appBarChildren;

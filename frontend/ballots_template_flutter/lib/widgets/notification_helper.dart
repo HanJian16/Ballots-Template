@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,12 +14,13 @@ class NotificationHelper {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      colorText: isError ? Colors.white : Colors.black,
-      backgroundColor: backgroundColor ?? (isError ? Colors.redAccent : Colors.greenAccent),
+      colorText: isError ? AppColors.whiteColor : AppColors.blackColor,
+      backgroundColor: backgroundColor ??
+          (isError ? AppColors.errorColor : AppColors.successColor),
       duration: const Duration(seconds: 3),
       icon: Icon(
         icon ?? (isError ? Icons.error : Icons.check_circle),
-        color: isError ? Colors.white : Colors.black,
+        color: isError ? AppColors.whiteColor : AppColors.blackColor,
       ),
       borderRadius: 8,
     );

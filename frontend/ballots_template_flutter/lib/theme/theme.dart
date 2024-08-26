@@ -1,45 +1,69 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData buildTheme() {
   return ThemeData(
+    primaryColor: AppColors.primaryColor, // Color principal
+    hintColor: AppColors.greyColor,
     // Configuración de fuentes
     textTheme: GoogleFonts.onestTextTheme(
-      ThemeData.light()
-          .textTheme
-          .apply(bodyColor: Colors.black, displayColor: Colors.black),
+      ThemeData.light().textTheme.apply(
+            bodyColor: AppColors.blackColor,
+            displayColor: AppColors.blackColor,
+          ),
     ),
-    primaryColor: Colors.blueGrey[800], // Color principal
-    hintColor: Colors.tealAccent[400],
-    scaffoldBackgroundColor: Colors.grey[50],
+    useMaterial3: true,
+    scaffoldBackgroundColor: AppColors.greyColor,
     appBarTheme: AppBarTheme(
-      color: Colors.blueGrey[800], // Color de la AppBar
-      iconTheme: const IconThemeData(color: Colors.white),
+      color: AppColors.primaryColor, // Color de la AppBar
+      iconTheme: const IconThemeData(color: AppColors.whiteColor),
     ),
     buttonTheme: ButtonThemeData(
-      buttonColor: Colors.tealAccent[400], // Color de botones
+      buttonColor: AppColors.buttonColor, // Color de botones
       textTheme: ButtonTextTheme.primary,
     ),
     // Configuración de texto
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: Colors.tealAccent[400]),
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.buttonTextColor,
+        backgroundColor: AppColors.buttonColor,
+        minimumSize: const Size(double.infinity, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.tealAccent[400],
+        foregroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.buttonColor,
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(),
+      filled: true,
+      fillColor: AppColors.greyColor,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.greyColor,
+          width: 1.5,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+      ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.tealAccent),
+        borderSide: BorderSide(
+          color: AppColors.greyColor,
+          width: 1.5,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.greyColor, // Color del borde cuando está habilitado
+          width: 1.5,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
     ),
-    colorScheme: const ColorScheme.light(
-      primary: Colors.blueGrey,
-      secondary: Colors.tealAccent,
-      surface: Colors.grey,
-    ).copyWith(primary: Colors.blue, surface: Colors.white),
   );
 }

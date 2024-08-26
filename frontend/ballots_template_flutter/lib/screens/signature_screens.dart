@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,9 +18,9 @@ class SignatureScreen extends StatefulWidget {
 
 class SignatureScreenState extends State<SignatureScreen> {
   final SignatureController _signatureController = SignatureController(
-    penColor: Colors.black,
+    penColor: AppColors.blackColor,
     penStrokeWidth: 5,
-    exportBackgroundColor: Colors.transparent,
+    exportBackgroundColor: AppColors.transparentColor,
   );
 
   @override
@@ -58,7 +59,7 @@ class SignatureScreenState extends State<SignatureScreen> {
             child: Signature(
               controller: _signatureController,
               height: double.infinity,
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.whiteColor,
             ),
           ),
           Padding(

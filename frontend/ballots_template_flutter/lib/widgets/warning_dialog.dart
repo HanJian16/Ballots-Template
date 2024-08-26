@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,11 @@ class WarningDialog extends StatelessWidget {
       height: 150,
       child: Column(
         children: [
-          const Icon(Icons.warning_sharp, size: 55, color: Color(0xFFff8248)),
+          const Icon(
+            Icons.warning_sharp,
+            size: 55,
+            color: AppColors.warningColor,
+          ),
           const SizedBox(height: 10),
           Text(
             title,
