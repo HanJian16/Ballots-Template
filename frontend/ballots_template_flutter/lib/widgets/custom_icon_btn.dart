@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,13 +33,13 @@ class CustomIconButton extends StatelessWidget {
             height: 40,
             width: 40,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: AppColors.greyColor,
               shape: BoxShape.circle,
             ),
             child: IconButton(
               icon: Icon(
                 icon,
-                color: Colors.black,
+                color: AppColors.blackColor,
                 size: 25,
               ),
               onPressed: () => onPressed(),

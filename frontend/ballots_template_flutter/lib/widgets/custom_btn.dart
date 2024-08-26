@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,10 +7,11 @@ class CustomBtn extends StatelessWidget {
     super.key,
     required this.text,
     this.intRadius = 20,
-    this.customColor = const Color(0xFFAF30BF),
+    this.customColor = AppColors.primaryColor,
     this.customHeight = 50,
     this.onPressed,
-    required this.status, this.customFontSize = 15,
+    required this.status,
+    this.customFontSize = 15,
   });
 
   final String text;
@@ -22,29 +24,25 @@ class CustomBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return TextButton(
+      onPressed: () {
         if (onPressed != null && status == 1) {
           onPressed!();
         } else {
           return;
         }
       },
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: status == 0 ? Colors.grey.withOpacity(0.5) : customColor,
-          borderRadius: BorderRadius.circular(intRadius),
+      child: Text(
+        text,
+        style: GoogleFonts.onest(
+          fontSize: customFontSize,
+          color: status == 0 ? AppColors.greyColor : AppColors.whiteColor,
         ),
-        height: customHeight,
-        child: Text(
-          text,
-          style: GoogleFonts.onest(
-            fontSize: customFontSize,
-            color: status == 0 ? Colors.grey : const Color(0xFFFFFFFF),
-          ),
-          textAlign: TextAlign.center,
-        ),
+      ),
+      style: TextButton.styleFrom(
+        backgroundColor: status == 0
+            ? AppColors.greyColor.withOpacity(0.5)
+            : Theme.of(context).primaryColor,
       ),
     );
   }

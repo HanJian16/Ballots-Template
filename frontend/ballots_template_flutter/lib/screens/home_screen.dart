@@ -1,6 +1,7 @@
 import 'package:ballots_template_flutter/controllers/form_controller.dart';
 import 'package:ballots_template_flutter/controllers/list_controller.dart';
 import 'package:ballots_template_flutter/screens/form_register_screens.dart';
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/bottom_sheet.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:ballots_template_flutter/widgets/warning_dialog.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPress: () {
             Get.back();
             Get.to(() => const FormRegisterScreen());
-          },  
+          },
         ),
       );
     }
@@ -62,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final ListController controller = Get.find();
     return ScreenContainer(
-      backgroundColor: Colors.white,
       appBarChildren: const Text(
         "Generador de Recibo",
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: AppColors.whiteColor),
               child: ListTile(
                 onTap: () {},
                 title: const Text(
@@ -94,14 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     CustomButton(
                       icon: Icons.print_disabled,
-                      backgroundColor: Colors.red,
-                      color: Colors.white,
+                      backgroundColor: AppColors.buttonColor,
+                      color: AppColors.whiteColor,
                       onPressed: () {},
                     ),
                     CustomButton(
                       icon: Icons.format_list_bulleted_add,
-                      backgroundColor: const Color(0xFFCCCCCC),
-                      color: Colors.black,
+                      backgroundColor: AppColors.buttonColorSecondary,
+                      color: AppColors.blackColor,
                       onPressed: () {
                         showBottomSheet(context);
                       },
@@ -127,9 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
+                          side:
+                              BorderSide(width: 1, color: AppColors.greyColor),
                         ),
-                        tileColor: const Color(0xFFE0E0E0),
+                        tileColor: AppColors.cardColorSecondary,
                         title: Text(
                           title,
                           style: const TextStyle(

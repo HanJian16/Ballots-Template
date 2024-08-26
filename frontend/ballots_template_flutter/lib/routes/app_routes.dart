@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:ballots_template_flutter/screens/form_register_screens.dart';
 import 'package:ballots_template_flutter/screens/home_screen.dart';
@@ -5,9 +6,11 @@ import 'package:ballots_template_flutter/screens/home_screen.dart';
 class AppRoutes {
   static const initial = '/';
   static const formRegister = '/form-register';
+  static const login = '/login';
 
   static final routes = [
     GetPage(name: initial, page: () => const HomeScreen()),
     GetPage(name: formRegister, page: () => const FormRegisterScreen()),
+    GetPage(name: login, page: () => const LoginScreen()),
   ];
 }
