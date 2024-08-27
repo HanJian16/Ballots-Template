@@ -32,17 +32,17 @@ class CustomBtn extends StatelessWidget {
           return;
         }
       },
+      style: TextButton.styleFrom(
+        backgroundColor: status == 0
+            ? AppColors.greyColor.withOpacity(0.5)
+            : Theme.of(context).primaryColor,
+      ),
       child: Text(
         text,
         style: GoogleFonts.onest(
           fontSize: customFontSize,
           color: status == 0 ? AppColors.greyColor : AppColors.whiteColor,
         ),
-      ),
-      style: TextButton.styleFrom(
-        backgroundColor: status == 0
-            ? AppColors.greyColor.withOpacity(0.5)
-            : Theme.of(context).primaryColor,
       ),
     );
   }

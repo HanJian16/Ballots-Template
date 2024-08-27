@@ -32,7 +32,7 @@ class CustomIconButton extends StatelessWidget {
           child: Container(
             height: 40,
             width: 40,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.greyColor,
               shape: BoxShape.circle,
             ),
