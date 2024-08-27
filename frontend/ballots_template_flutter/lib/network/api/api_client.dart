@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:ballots_template_flutter/network/models/store_model.dart';
+// import 'package:ballots_template_flutter/network/models/store_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
@@ -24,8 +24,8 @@ class ApiClient {
   Future<Response> postSore(Map<String, dynamic> storeData) async {
     try {
       final response = await dio.post('/users', data: storeData);
-      StoreModel storeModel = StoreModel.fromJson(response.data);
-      print(storeModel);
+      // StoreModel storeModel = StoreModel.fromJson(response.data);
+      // print(storeModel);
       return response;
     } catch (e) {
       rethrow;

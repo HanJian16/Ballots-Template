@@ -15,11 +15,11 @@ ThemeData buildTheme() {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.greyColor,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color: AppColors.primaryColor, // Color de la AppBar
-      iconTheme: const IconThemeData(color: AppColors.whiteColor),
+      iconTheme: IconThemeData(color: AppColors.whiteColor),
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.buttonColor, // Color de botones
       textTheme: ButtonTextTheme.primary,
     ),
@@ -48,21 +48,21 @@ ThemeData buildTheme() {
           color: AppColors.greyColor,
           width: 1.5,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor,
           width: 1.5,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor, // Color del borde cuando está habilitado
           width: 1.5,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
   );
