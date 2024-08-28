@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class BubbleCustom extends StatelessWidget {
   const BubbleCustom({
     super.key,
-    this.top = null,
-    this.left = null,
-    this.right = null,
-    this.bottom = null,
+    this.top,
+    this.left,
+    this.right,
+    this.bottom,
   });
   final double? top;
   final double? left;
