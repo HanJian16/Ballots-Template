@@ -14,10 +14,11 @@ ThemeData buildTheme() {
           ),
     ),
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.greyColor,
+    scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: const AppBarTheme(
       color: AppColors.primaryColor, // Color de la AppBar
       iconTheme: IconThemeData(color: AppColors.whiteColor),
+      titleTextStyle: TextStyle(color: AppColors.whiteColor),
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.buttonColor, // Color de botones
@@ -40,29 +41,34 @@ ThemeData buildTheme() {
         backgroundColor: AppColors.buttonColor,
       ),
     ),
-    inputDecorationTheme: const InputDecorationTheme(
+    inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.greyColor,
-      border: OutlineInputBorder(
+      border: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor,
           width: 1.5,
         ),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      focusedBorder: OutlineInputBorder(
+      focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor,
           width: 1.5,
         ),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor, // Color del borde cuando está habilitado
           width: 1.5,
         ),
         borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      hintStyle: GoogleFonts.onest(
+        color: AppColors.blackColor,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
       ),
     ),
   );
