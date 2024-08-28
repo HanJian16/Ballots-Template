@@ -18,7 +18,7 @@ ThemeData buildTheme() {
     appBarTheme: const AppBarTheme(
       color: AppColors.primaryColor, // Color de la AppBar
       iconTheme: IconThemeData(color: AppColors.whiteColor),
-      titleTextStyle: TextStyle(color: AppColors.whiteColor),
+      titleTextStyle: TextStyle(color: AppColors.whiteColor, fontSize: 20),
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.buttonColor, // Color de botones
