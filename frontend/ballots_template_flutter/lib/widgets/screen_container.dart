@@ -7,26 +7,30 @@ class ScreenContainer extends StatelessWidget {
     this.appBarChildren,
     this.appBarActions,
     this.backgroundColor,
+     this.appBarHeight = kToolbarHeight,
   });
 
   final Widget children;
   final Widget? appBarChildren;
   final List<Widget>? appBarActions;
   final Color? backgroundColor;
+  final double appBarHeight;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: backgroundColor,
       appBar: appBarChildren != null
-          ? AppBar(
-              elevation: 0,
-              scrolledUnderElevation: 0,
-              backgroundColor: backgroundColor,
-              title: appBarChildren,
-              actions: appBarActions ?? [],
-            )
+          ? PreferredSize(
+            preferredSize: Size.fromHeight(appBarHeight),
+            child: AppBar(
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                backgroundColor: backgroundColor,
+                title: appBarChildren,
+                actions: appBarActions ?? [],
+              ),
+          )
           : null,
       body: SafeArea(
         child: GestureDetector(
