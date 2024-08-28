@@ -1,9 +1,12 @@
 import 'package:ballots_template_flutter/network/api/api_client.dart';
 import 'package:ballots_template_flutter/widgets/notification_helper.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FormController extends GetxController {
+  final box = GetStorage();
+
   var name = ''.obs;
   var phone = ''.obs;
   var direction = ''.obs;
@@ -12,6 +15,19 @@ class FormController extends GetxController {
   var nameOfFirm = ''.obs;
   var positionOfFirm = ''.obs;
   var signaturePath = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    name.value = box.read('name') ?? '';
+    phone.value = box.read('phone') ?? '';
+    direction.value = box.read('direction') ?? '';
+    email.value = box.read('email') ?? '';
+    ruc.value = box.read('ruc') ?? '';
+    nameOfFirm.value = box.read('nameOfFirm') ?? '';
+    positionOfFirm.value = box.read('positionOfFirm') ?? '';
+    // signaturePath.value = box.read('signaturePath') ?? '';
+  }
 
   @override
   void onClose() {
@@ -66,10 +82,21 @@ class FormController extends GetxController {
         'signerRole': positionOfFirm.value,
         // 'logo': signaturePath.value,
       };
+      final formData = {
+        'nameStore': name.value,
+        'phoneStore': phone.value,
+        'addressStore': direction.value,
+        'emailStore': email.value,
+        'rucStore': ruc.value,
+        'signerName': nameOfFirm.value,
+        'signerRole': positionOfFirm.value,
+        // 'signaturePath': signaturePath.value,
+      };
+      await box.write('storeData', formData);
+      //  box.remove('storeData');
 
       try {
         final response = await apiClient.postSore(storeData);
-
         if (response.statusCode == 201) {
           NotificationHelper.show(
             title: 'Éxito',
