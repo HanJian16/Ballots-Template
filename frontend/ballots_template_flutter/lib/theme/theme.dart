@@ -70,6 +70,10 @@ ThemeData buildTheme() {
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
+      errorStyle: GoogleFonts.onest(
+        color: Colors.red,
+        fontSize: 13,
+      ),
     ),
   );
 }
