@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:ballots_template_flutter/widgets/custom_icon_btn.dart';
+import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
 
 class CompanyLogoUploadScreen extends StatefulWidget {
   const CompanyLogoUploadScreen({super.key});
@@ -51,7 +51,7 @@ class _CompanyLogoUploadScreenState extends State<CompanyLogoUploadScreen> {
     return ScreenContainer(
       appBarChildren: Column(
         children: [
-          CustomIconButton(
+          AppBarTitleWithIcon(
             text: "Seleccionar imagen",
             icon: Icons.search,
             onPressed: () => uploadLogo(),
