@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     this.placeHolder = 'Coloca algo',
     this.keyboardType = TextInputType.text,
     required this.error,
-    this.maxLength,
+    this.maxLength, required this.initialValue,
   });
 
   final dynamic onChanged;
@@ -20,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final RxString error;
   final int? maxLength;
+  final String initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
       return Column(
         children: [
           TextFormField(
+            initialValue: initialValue,
             style: GoogleFonts.onest(fontSize: 18, color: AppColors.blackColor),
             keyboardType: keyboardType,
             onChanged: onChanged,

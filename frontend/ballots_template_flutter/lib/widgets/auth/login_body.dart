@@ -22,7 +22,7 @@ class _LoginBodyState extends State<LoginBody> {
       child: Card(
         child: Container(
           width: Get.width * 0.8,
-          height: Get.height * 0.35,
+          height: Get.height * 0.37,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

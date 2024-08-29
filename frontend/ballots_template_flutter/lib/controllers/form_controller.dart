@@ -1,6 +1,6 @@
-import 'package:ballots_template_flutter/network/api/api_client.dart';
+// import 'package:ballots_template_flutter/network/api/api_client.dart';
 import 'package:ballots_template_flutter/widgets/notification_helper.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,29 +26,25 @@ class FormController extends GetxController {
   var positionOfFirmError = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    name.value = box.read('nameStore') ?? '';
-    phone.value = box.read('phoneStore') ?? '';
-    direction.value = box.read('addressStore') ?? '';
-    email.value = box.read('emailStore') ?? '';
-    ruc.value = box.read('rucStore') ?? '';
-    nameOfFirm.value = box.read('signerName') ?? '';
-    positionOfFirm.value = box.read('signerRole') ?? '';
+    _loadData();
     // signaturePath.value = box.read('signaturePath') ?? '';
+  }
+
+  Future<void> _loadData() async {
+    final dynamic store = await box.read('storeData');
+    name.value = store['nameStore'] ?? '';
+    phone.value = store['phoneStore'] ?? '';
+    direction.value = store['addressStore'] ?? '';
+    email.value = store['emailStore'] ?? '';
+    ruc.value = store['rucStore'] ?? '';
+    nameOfFirm.value = store['signerName'] ?? '';
+    positionOfFirm.value = store['signerRole'] ?? '';
   }
 
   @override
   void onClose() {
-    // Limpiar los datos cuando la pantalla se destruye
-    name.value = '';
-    phone.value = '';
-    direction.value = '';
-    email.value = '';
-    ruc.value = '';
-    nameOfFirm.value = '';
-    positionOfFirm.value = '';
-    signaturePath.value = '';
     super.onClose();
   }
 
@@ -95,20 +91,20 @@ class FormController extends GetxController {
   }
 
   bool get isFormValid {
-     return nameError.isEmpty &&
-           phoneError.isEmpty &&
-           directionError.isEmpty &&
-           emailError.isEmpty &&
-           rucError.isEmpty &&
-           nameOfFirmError.isEmpty &&
-           positionOfFirmError.isEmpty &&
-           name.value.isNotEmpty &&
-           phone.value.isNotEmpty &&
-           direction.value.isNotEmpty &&
-           email.value.isNotEmpty &&
-           ruc.value.isNotEmpty &&
-           nameOfFirm.value.isNotEmpty &&
-           positionOfFirm.value.isNotEmpty;
+    return nameError.isEmpty &&
+        phoneError.isEmpty &&
+        directionError.isEmpty &&
+        emailError.isEmpty &&
+        rucError.isEmpty &&
+        nameOfFirmError.isEmpty &&
+        positionOfFirmError.isEmpty &&
+        name.value.isNotEmpty &&
+        phone.value.isNotEmpty &&
+        direction.value.isNotEmpty &&
+        email.value.isNotEmpty &&
+        ruc.value.isNotEmpty &&
+        nameOfFirm.value.isNotEmpty &&
+        positionOfFirm.value.isNotEmpty;
     // // && signaturePath.isNotEmpty; // Verificar si hay firma
   }
 
@@ -120,9 +116,11 @@ class FormController extends GetxController {
   }
 
   String _validatePhone(String value) {
-     final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
+    final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
     if (cleanedValue.isEmpty) return 'El número de teléfono es requerido';
-    if (cleanedValue.length != 9) return 'El número de teléfono debe tener 9 dígitos';
+    if (cleanedValue.length != 9) {
+      return 'El número de teléfono debe tener 9 dígitos';
+    }
     return '';
   }
 
@@ -134,26 +132,27 @@ class FormController extends GetxController {
   }
 
   String _validateEmail(String value) {
-  if (value.isEmpty) {
-    return 'El correo electrónico es requerido';
+    if (value.isEmpty) {
+      return 'El correo electrónico es requerido';
+    }
+
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+      caseSensitive: false,
+    );
+
+    if (!emailRegex.hasMatch(value)) {
+      return 'Introduce un correo electrónico válido';
+    }
+
+    return '';
   }
-
-  final emailRegex = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    caseSensitive: false,
-  );
-
-  if (!emailRegex.hasMatch(value)) {
-    return 'Introduce un correo electrónico válido';
-  }
-
-  return '';
-}
-
 
   String _validateRuc(String value) {
     if (value.isEmpty) return 'La RUC es requerida';
-    if (value.length < 8 || value.length > 11) return 'El RUC debe tener entre 8 y 11 caracteres';
+    if (value.length < 8 || value.length > 11) {
+      return 'El RUC debe tener entre 8 y 11 caracteres';
+    }
     return '';
   }
 
@@ -173,8 +172,9 @@ class FormController extends GetxController {
 
   void submitForm() async {
     if (isFormValid) {
-      final ApiClient apiClient = ApiClient();
-      final storeData = {
+
+      try {
+      final formData = {
         'nameStore': name.value,
         'phoneStore': phone.value,
         'addressStore': direction.value,
@@ -182,44 +182,16 @@ class FormController extends GetxController {
         'rucStore': ruc.value,
         'signerName': nameOfFirm.value,
         'signerRole': positionOfFirm.value,
-        // 'logo': signaturePath.value,
+        // 'signaturePath': signaturePath.value,
       };
-      // final formData = {
-      //   'nameStore': name.value,
-      //   'phoneStore': phone.value,
-      //   'addressStore': direction.value,
-      //   'emailStore': email.value,
-      //   'rucStore': ruc.value,
-      //   'signerName': nameOfFirm.value,
-      //   'signerRole': positionOfFirm.value,
-      //   // 'signaturePath': signaturePath.value,
-      // };
-      // await box.write('storeData', formData);
-      //  box.remove('storeData');
-
-      try {
-        final response = await apiClient.postSore(storeData);
-        if (response.statusCode == 201) {
+      await box.write('storeData', formData);
           NotificationHelper.show(
             title: 'Éxito',
             message: 'El establecimiento se ha guardado correctamente',
             isError: false,
           );
-        } else {
-          NotificationHelper.show(
-            title: 'Error',
-            message: 'No se pudo enviar el establecimiento',
-            isError: true,
-          );
-        }
       } catch (e) {
-        if (e is DioException) {
-          NotificationHelper.show(
-            title: 'Error',
-            message: '${e.response?.data['message']}',
-            isError: true,
-          );
-        }
+        print('Error: $e');
       }
     } else {
       NotificationHelper.show(
