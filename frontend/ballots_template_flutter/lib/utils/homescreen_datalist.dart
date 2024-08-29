@@ -1,6 +1,6 @@
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ballots_template_flutter/screens/form_register_screens.dart';
 
 getListTileData() {
   List<Map<String, dynamic>> listTileData = [
@@ -9,7 +9,9 @@ getListTileData() {
       'subtitle': 'Crear recibos de productos o servicios',
       'icon': Icons.receipt_long_outlined,
       "selected": true,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.invoice);
+      }
     },
     {
       'title': 'Recibo del servicio',
@@ -122,7 +124,8 @@ getListTileData() {
       'icon': Icons.settings_sharp,
       "selected": true,
       "onTap": () {
-        Get.to(() => const FormRegisterScreen());
+        // Get.to(() => const FormRegisterScreen());
+        Get.toNamed('/form-register');
       }
     },
   ];

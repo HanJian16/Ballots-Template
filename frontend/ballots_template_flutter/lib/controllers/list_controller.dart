@@ -17,7 +17,6 @@ class ListController extends GetxController {
     if (index >= 0 && index < listTileData.length) {
       listTileData[index]['selected'] = value;
       update();
-      // listTileData.refresh(); // Actualizar la lista
     }
   }
 

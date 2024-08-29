@@ -27,6 +27,7 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
     super.initState();
     controller = Get.put(FormController());
     formFieldSettings = createDataForTextFormField(controller);
+    controller.onInit();
   }
 
   @override
@@ -106,6 +107,7 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 15.0),
                               child: CustomTextFormField(
+                                initialValue: field['initialValue'],
                                 placeHolder: field['placeHolder'],
                                 onChanged: field['onChanged'],
                                 keyboardType: field['keyboardType'],
