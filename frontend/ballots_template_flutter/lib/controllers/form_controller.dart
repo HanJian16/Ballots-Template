@@ -33,19 +33,28 @@ class FormController extends GetxController {
   }
 
   Future<void> _loadData() async {
-    final dynamic store = await box.read('storeData');
-    name.value = store['nameStore'] ?? '';
-    phone.value = store['phoneStore'] ?? '';
-    direction.value = store['addressStore'] ?? '';
-    email.value = store['emailStore'] ?? '';
-    ruc.value = store['rucStore'] ?? '';
-    nameOfFirm.value = store['signerName'] ?? '';
-    positionOfFirm.value = store['signerRole'] ?? '';
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
+    try {
+      final dynamic store = await box.read('storeData');
+      if (store != null) {
+        name.value = store['nameStore'] ?? '';
+        phone.value = store['phoneStore'] ?? '';
+        direction.value = store['addressStore'] ?? '';
+        email.value = store['emailStore'] ?? '';
+        ruc.value = store['rucStore'] ?? '';
+        nameOfFirm.value = store['signerName'] ?? '';
+        positionOfFirm.value = store['signerRole'] ?? '';
+      } else {
+        name.value = '';
+        phone.value = '';
+        direction.value = '';
+        email.value = '';
+        ruc.value = '';
+        nameOfFirm.value = '';
+        positionOfFirm.value = '';
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   void updateName(String value) {
@@ -172,26 +181,29 @@ class FormController extends GetxController {
 
   void submitForm() async {
     if (isFormValid) {
-
       try {
-      final formData = {
-        'nameStore': name.value,
-        'phoneStore': phone.value,
-        'addressStore': direction.value,
-        'emailStore': email.value,
-        'rucStore': ruc.value,
-        'signerName': nameOfFirm.value,
-        'signerRole': positionOfFirm.value,
-        // 'signaturePath': signaturePath.value,
-      };
-      await box.write('storeData', formData);
-          NotificationHelper.show(
-            title: 'Éxito',
-            message: 'El establecimiento se ha guardado correctamente',
-            isError: false,
-          );
+        final formData = {
+          'nameStore': name.value,
+          'phoneStore': phone.value,
+          'addressStore': direction.value,
+          'emailStore': email.value,
+          'rucStore': ruc.value,
+          'signerName': nameOfFirm.value,
+          'signerRole': positionOfFirm.value,
+          // 'signaturePath': signaturePath.value,
+        };
+        await box.write('storeData', formData);
+        NotificationHelper.show(
+          title: 'Éxito',
+          message: 'El establecimiento se ha guardado correctamente',
+          isError: false,
+        );
       } catch (e) {
-        print('Error: $e');
+        NotificationHelper.show(
+          title: 'Error',
+          message: '$e',
+          isError: true,
+        );
       }
     } else {
       NotificationHelper.show(
