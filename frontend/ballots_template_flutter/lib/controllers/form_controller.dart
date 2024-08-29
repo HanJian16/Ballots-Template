@@ -1,5 +1,6 @@
 import 'package:ballots_template_flutter/network/api/api_client.dart';
 import 'package:ballots_template_flutter/widgets/notification_helper.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,16 +17,24 @@ class FormController extends GetxController {
   var positionOfFirm = ''.obs;
   var signaturePath = ''.obs;
 
+  var nameError = ''.obs;
+  var phoneError = ''.obs;
+  var directionError = ''.obs;
+  var emailError = ''.obs;
+  var rucError = ''.obs;
+  var nameOfFirmError = ''.obs;
+  var positionOfFirmError = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
-    name.value = box.read('name') ?? '';
-    phone.value = box.read('phone') ?? '';
-    direction.value = box.read('direction') ?? '';
-    email.value = box.read('email') ?? '';
-    ruc.value = box.read('ruc') ?? '';
-    nameOfFirm.value = box.read('nameOfFirm') ?? '';
-    positionOfFirm.value = box.read('positionOfFirm') ?? '';
+    name.value = box.read('nameStore') ?? '';
+    phone.value = box.read('phoneStore') ?? '';
+    direction.value = box.read('addressStore') ?? '';
+    email.value = box.read('emailStore') ?? '';
+    ruc.value = box.read('rucStore') ?? '';
+    nameOfFirm.value = box.read('signerName') ?? '';
+    positionOfFirm.value = box.read('signerRole') ?? '';
     // signaturePath.value = box.read('signaturePath') ?? '';
   }
 
@@ -43,13 +52,40 @@ class FormController extends GetxController {
     super.onClose();
   }
 
-  void updateName(String value) => name.value = value;
-  void updatePhone(String value) => phone.value = value;
-  void updateDirection(String value) => direction.value = value;
-  void updateEmail(String value) => email.value = value;
-  void updateRuc(String value) => ruc.value = value;
-  void updateNameOfFirm(String value) => nameOfFirm.value = value;
-  void updatePositionOfFirm(String value) => positionOfFirm.value = value;
+  void updateName(String value) {
+    name.value = value;
+    nameError.value = _validateName(value);
+  }
+
+  void updatePhone(String value) {
+    phone.value = value;
+    phoneError.value = _validatePhone(value);
+  }
+
+  void updateDirection(String value) {
+    direction.value = value;
+    directionError.value = _validateDirection(value);
+  }
+
+  void updateEmail(String value) {
+    email.value = value;
+    emailError.value = _validateEmail(value);
+  }
+
+  void updateRuc(String value) {
+    ruc.value = value;
+    rucError.value = _validateRuc(value);
+  }
+
+  void updateNameOfFirm(String value) {
+    nameOfFirm.value = value;
+    nameOfFirmError.value = _validateNameOfFirm(value);
+  }
+
+  void updatePositionOfFirm(String value) {
+    positionOfFirm.value = value;
+    positionOfFirmError.value = _validatePositionOfFirm(value);
+  }
 
   void updateSignaturePath() async {
     // Actualiza la ruta de la firma si existe
@@ -59,14 +95,80 @@ class FormController extends GetxController {
   }
 
   bool get isFormValid {
-    return name.isNotEmpty &&
-        phone.isNotEmpty &&
-        direction.isNotEmpty &&
-        email.isNotEmpty &&
-        ruc.isNotEmpty &&
-        nameOfFirm.isNotEmpty &&
-        positionOfFirm.isNotEmpty;
-    // && signaturePath.isNotEmpty; // Verificar si hay firma
+     return nameError.isEmpty &&
+           phoneError.isEmpty &&
+           directionError.isEmpty &&
+           emailError.isEmpty &&
+           rucError.isEmpty &&
+           nameOfFirmError.isEmpty &&
+           positionOfFirmError.isEmpty &&
+           name.value.isNotEmpty &&
+           phone.value.isNotEmpty &&
+           direction.value.isNotEmpty &&
+           email.value.isNotEmpty &&
+           ruc.value.isNotEmpty &&
+           nameOfFirm.value.isNotEmpty &&
+           positionOfFirm.value.isNotEmpty;
+    // // && signaturePath.isNotEmpty; // Verificar si hay firma
+  }
+
+  String _validateName(String value) {
+    if (value.isEmpty) {
+      return 'El nombre es requerido';
+    }
+    return '';
+  }
+
+  String _validatePhone(String value) {
+     final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
+    if (cleanedValue.isEmpty) return 'El número de teléfono es requerido';
+    if (cleanedValue.length != 9) return 'El número de teléfono debe tener 9 dígitos';
+    return '';
+  }
+
+  String _validateDirection(String value) {
+    if (value.isEmpty) {
+      return 'La dirección es requerida';
+    }
+    return '';
+  }
+
+  String _validateEmail(String value) {
+  if (value.isEmpty) {
+    return 'El correo electrónico es requerido';
+  }
+
+  final emailRegex = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    caseSensitive: false,
+  );
+
+  if (!emailRegex.hasMatch(value)) {
+    return 'Introduce un correo electrónico válido';
+  }
+
+  return '';
+}
+
+
+  String _validateRuc(String value) {
+    if (value.isEmpty) return 'La RUC es requerida';
+    if (value.length < 8 || value.length > 11) return 'El RUC debe tener entre 8 y 11 caracteres';
+    return '';
+  }
+
+  String _validateNameOfFirm(String value) {
+    if (value.isEmpty) {
+      return 'Nombre del firmante es obligatorio';
+    }
+    return '';
+  }
+
+  String _validatePositionOfFirm(String value) {
+    if (value.isEmpty) {
+      return 'Rol del firmante es obligatorio';
+    }
+    return '';
   }
 
   void submitForm() async {
@@ -82,17 +184,17 @@ class FormController extends GetxController {
         'signerRole': positionOfFirm.value,
         // 'logo': signaturePath.value,
       };
-      final formData = {
-        'nameStore': name.value,
-        'phoneStore': phone.value,
-        'addressStore': direction.value,
-        'emailStore': email.value,
-        'rucStore': ruc.value,
-        'signerName': nameOfFirm.value,
-        'signerRole': positionOfFirm.value,
-        // 'signaturePath': signaturePath.value,
-      };
-      await box.write('storeData', formData);
+      // final formData = {
+      //   'nameStore': name.value,
+      //   'phoneStore': phone.value,
+      //   'addressStore': direction.value,
+      //   'emailStore': email.value,
+      //   'rucStore': ruc.value,
+      //   'signerName': nameOfFirm.value,
+      //   'signerRole': positionOfFirm.value,
+      //   // 'signaturePath': signaturePath.value,
+      // };
+      // await box.write('storeData', formData);
       //  box.remove('storeData');
 
       try {
@@ -111,11 +213,13 @@ class FormController extends GetxController {
           );
         }
       } catch (e) {
-        NotificationHelper.show(
-          title: 'Error',
-          message: 'No se puedo guardar el establecimiento',
-          isError: true,
-        );
+        if (e is DioException) {
+          NotificationHelper.show(
+            title: 'Error',
+            message: '${e.response?.data['message']}',
+            isError: true,
+          );
+        }
       }
     } else {
       NotificationHelper.show(
