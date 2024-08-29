@@ -1,4 +1,4 @@
-import 'package:ballots_template_flutter/screens/login_screen.dart';
+import 'package:ballots_template_flutter/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:ballots_template_flutter/screens/form_register_screens.dart';
 import 'package:ballots_template_flutter/screens/home_screen.dart';
