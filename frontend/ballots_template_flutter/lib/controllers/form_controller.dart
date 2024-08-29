@@ -1,4 +1,7 @@
 // import 'package:ballots_template_flutter/network/api/api_client.dart';
+import 'package:ballots_template_flutter/db/CRUD/get.dart';
+import 'package:ballots_template_flutter/db/CRUD/post.dart';
+import 'package:ballots_template_flutter/db/CRUD/put.dart';
 import 'package:ballots_template_flutter/widgets/notification_helper.dart';
 // import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -63,7 +66,8 @@ class FormController extends GetxController {
   }
 
   void updatePhone(String value) {
-    phone.value = value;
+    final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
+    phone.value = cleanedValue;
     phoneError.value = _validatePhone(value);
   }
 
@@ -193,6 +197,30 @@ class FormController extends GetxController {
           // 'signaturePath': signaturePath.value,
         };
         await box.write('storeData', formData);
+
+        final store = await getStore();
+        if (store.length == 0) {
+          await insertStore(
+            name.value,
+            email.value,
+            phone.value,
+            direction.value,
+            ruc.value,
+            nameOfFirm.value,
+            positionOfFirm.value,
+          );
+        } else {
+          await updateStore(
+            name.value,
+            email.value,
+            phone.value,
+            direction.value,
+            ruc.value,
+            nameOfFirm.value,
+            positionOfFirm.value,
+          );
+        }
+
         NotificationHelper.show(
           title: 'Éxito',
           message: 'El establecimiento se ha guardado correctamente',
