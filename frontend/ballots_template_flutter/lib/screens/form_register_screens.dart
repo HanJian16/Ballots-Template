@@ -100,14 +100,23 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                     // }),
                     const SizedBox(height: 20),
                     ...formFieldSettings.map(
-                      (field) => Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
-                        child: CustomTextFormField(
-                          placeHolder: field['placeHolder'],
-                          onChanged: field['onChanged'],
-                          keyboardType: field['keyboardType'],
-                        ),
-                      ),
+                      (field) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15.0),
+                              child: CustomTextFormField(
+                                placeHolder: field['placeHolder'],
+                                onChanged: field['onChanged'],
+                                keyboardType: field['keyboardType'],
+                                error: field['error'],
+                                maxLength: field['maxLength'],
+                              ),
+                            ),
+                           
+                          ],
+                        );
+                      },
                     ),
                     Column(
                       children: [
