@@ -27,15 +27,24 @@ class DatabaseHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS store (
         id INTEGER PRIMARY KEY,
-        name TEXT,
-        phone NUMBER,
-        address TEXT,
-        email TEXT,
-        ruc TEXT,
+        nameStore TEXT,
+        phoneStore TEXT,
+        addressStore TEXT,
+        emailStore TEXT,
+        rucStore TEXT,
         signerName TEXT,
         signerRole TEXT
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS history (
+        id INTEGER PRIMARY KEY,
+        storeId INTEGER,
+        date TEXT,
+        total TEXT
       )
     ''');
   }

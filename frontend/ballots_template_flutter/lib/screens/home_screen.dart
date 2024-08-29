@@ -96,11 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.print_disabled,
                       backgroundColor: AppColors.buttonColor,
                       color: AppColors.whiteColor,
-                      onPressed: () async {
-                        // await insertUser('prueba', 'prueba@prueba.com');
-                        // final prueba = await getUsers();
-                        // print(prueba);
-                      },
+                      onPressed: () {},
                     ),
                     CustomButton(
                       icon: Icons.format_list_bulleted_add,
