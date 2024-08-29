@@ -62,10 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final ListController controller = Get.find();
+    TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
-      appBarChildren: const Text(
+      appBarChildren: Text(
         "Generador de Recibo",
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: theme.headlineLarge
+            ?.copyWith(color: AppColors.whiteColor),
       ),
       appBarActions: const [
         Padding(
