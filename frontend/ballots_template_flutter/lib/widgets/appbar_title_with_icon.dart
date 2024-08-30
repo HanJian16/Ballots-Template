@@ -27,26 +27,6 @@ class AppBarTitleWithIcon extends StatelessWidget {
             color: AppColors.whiteColor,
           ),
         ),
-        // Material(
-        //   elevation: 5.0,
-        //   borderRadius: BorderRadius.circular(100),
-        //   child: Container(
-        //     height: 40,
-        //     width: 40,
-        //     decoration: const BoxDecoration(
-        //       color: AppColors.greyColor,
-        //       shape: BoxShape.circle,
-        //     ),
-        //     child: IconButton(
-        //       icon: Icon(
-        //         icon,
-        //         color: AppColors.blackColor,
-        //         size: 25,
-        //       ),
-        //       onPressed: () => onPressed(),
-        //     ),
-        //   ),
-        // ),
         if (list != null)
           Row(
             children: list!.map((item) {

@@ -35,4 +35,50 @@ class InvoiceResources {
       }
     ];
   }
+
+  static List<Map<String, dynamic>> getInvoiceActionIcons(
+      {bool isService = false}) {
+    List<Map<String, dynamic>> icons = [
+      {
+        'icon': Icons.person_search_rounded,
+        'onPressed': () {
+          print('1');
+        },
+        'color': AppColors.blackColor,
+      },
+      {
+        'icon': Icons.monetization_on,
+        'onPressed': () {
+          print('2');
+        },
+        'color': AppColors.blackColor
+      },
+      {
+        'icon': Icons.discount,
+        'onPressed': () {
+          print('3');
+        },
+        'color': AppColors.blackColor
+      },
+      {
+        'icon': Icons.info,
+        'onPressed': () {
+          print('4');
+        },
+        'color': AppColors.blackColor,
+      },
+    ];
+
+    if (isService) {
+      icons.add({
+        'icon': Icons.settings,
+        'onPressed': () {
+          print('5');
+        },
+        'color': AppColors.blackColor
+      });
+    }
+
+    return icons;
+  }
 }
