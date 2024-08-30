@@ -1,33 +1,14 @@
-import 'package:ballots_template_flutter/routes/app_routes.dart';
+import 'package:flutter/material.dart';
 import 'package:ballots_template_flutter/theme/colors.dart';
+import 'package:ballots_template_flutter/utils/invoice_resources/invoice_data.dart';
 import 'package:ballots_template_flutter/widgets/menu_list.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> list = [
-      {
-        'title': 'Recibo del producto',
-        'subtitle': 'Crear recibo del producto',
-        'icon': Icons.receipt_rounded,
-        'onTap': () {
-          Get.toNamed(AppRoutes.productInvoice);
-        }
-      },
-      {
-        'title': 'Recibo del servicio',
-        'subtitle': 'Crear recibo del servicio',
-        'icon': Icons.receipt_outlined,
-        'onTap': () {
-          Get.toNamed(AppRoutes.serviceInvoice);
-        }
-      }
-    ];
     final TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
       appBarChildren: Text(
@@ -47,7 +28,7 @@ class InvoiceScreen extends StatelessWidget {
             const SizedBox(height: 20),
             SizedBox(
               height: 200,
-              child: MenuList(list: list),
+              child: MenuList(list: InvoiceResources.invoiceMenuOptions),
             ),
           ],
         ),
