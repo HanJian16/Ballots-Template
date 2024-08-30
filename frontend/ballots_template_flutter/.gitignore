@@ -12,6 +12,48 @@ migrate_working_dir/
 .pubspec.lock
 .pubspec.lock/
 pubspec.lock
+.flutter-plugins
+.flutter-plugins-deps
+.flutter-versions
+.packages
+pubspec.lock
+.dart_tool/
+build/
+*.env
+.env
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Pods/
+ios/Podfile.lock
+ios/DerivedData/
+
+# Android
+local.properties
+*.iml
+build/
+
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+.vscode/
+.git/
+/ios/Pods/
+/android/private_key
+/android/upload_certificate.pem
+.firebase/
+app.*.symbols
+app.*.map.json
+/android/app/debug
+/android/app/profile
+/android/app/release
 
 # IntelliJ related
 *.iml
