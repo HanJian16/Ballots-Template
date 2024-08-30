@@ -5,6 +5,36 @@ gradle-wrapper.jar
 /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
+# Ignorar archivos generados para Linux, macOS y Windows
+*.dSYM
+*.app
+*.exe
+*.dll
+*.so
+*.dylib
+# Ignorar archivos generados para Linux
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugins.cmake
+
+# Ignorar archivos generados para macOS
+macos/Flutter/GeneratedPluginRegistrant.h
+macos/Flutter/GeneratedPluginRegistrant.m
+macos/Flutter/FlutterPluginRegistrant.m
+macos/Flutter/flutter_export_environment.sh
+
+# Ignorar archivos generados para Windows
+windows/flutter/GeneratedPluginRegistrant.cpp
+windows/flutter/GeneratedPluginRegistrant.h
+windows/flutter/flutter_export_environment.sh
+
+
+# Ignorar archivos generados por el sistema de construcción
+build/
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-plugins-de
+
 
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
