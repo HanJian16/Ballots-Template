@@ -62,7 +62,6 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final FormController controller = Get.put(FormController());
 
     return ScreenContainer(
       appBarChildren: AppBarTitleWithIcon(

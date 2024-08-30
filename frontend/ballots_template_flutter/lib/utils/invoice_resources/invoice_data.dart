@@ -41,30 +41,22 @@ class InvoiceResources {
     List<Map<String, dynamic>> icons = [
       {
         'icon': Icons.person_search_rounded,
-        'onPressed': () {
-          print('1');
-        },
+        'onPressed': () {},
         'color': AppColors.blackColor,
       },
       {
         'icon': Icons.monetization_on,
-        'onPressed': () {
-          print('2');
-        },
+        'onPressed': () {},
         'color': AppColors.blackColor
       },
       {
         'icon': Icons.discount,
-        'onPressed': () {
-          print('3');
-        },
+        'onPressed': () {},
         'color': AppColors.blackColor
       },
       {
         'icon': Icons.info,
-        'onPressed': () {
-          print('4');
-        },
+        'onPressed': () {},
         'color': AppColors.blackColor,
       },
     ];
@@ -72,9 +64,7 @@ class InvoiceResources {
     if (isService) {
       icons.add({
         'icon': Icons.settings,
-        'onPressed': () {
-          print('5');
-        },
+        'onPressed': () {},
         'color': AppColors.blackColor
       });
     }
