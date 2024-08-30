@@ -56,7 +56,11 @@ class FormController extends GetxController {
         positionOfFirm.value = '';
       }
     } catch (error) {
-      print('Error: $error');
+      NotificationHelper.show(
+        title: 'Error',
+        message: '$error',
+        isError: true,
+      );
     }
   }
 
