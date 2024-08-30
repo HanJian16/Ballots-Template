@@ -199,7 +199,7 @@ class FormController extends GetxController {
         await box.write('storeData', formData);
 
         final store = await getStore();
-        if (store.length == 0) {
+        if (store.isEmpty) {
           await insertStore(
             name.value,
             email.value,

@@ -31,7 +31,7 @@ class RegistrationsScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            Container(
+            SizedBox(
               height: 200,
               child: MenuList(list: list),
             ),

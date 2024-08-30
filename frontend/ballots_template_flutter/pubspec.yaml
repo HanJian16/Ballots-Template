@@ -18,7 +18,10 @@ dependencies:
   image_gallery_saver: ^2.0.3
   path: ^1.9.0
   path_provider: ^2.1.4
+  pdf: ^3.11.1
   permission_handler: ^11.3.1
+  printing: ^5.13.2
+  share_plus: ^10.0.2
   signature: ^5.5.0
   sqflite: ^2.3.3+1
 

@@ -16,7 +16,6 @@ class InvoiceScreen extends StatelessWidget {
         'subtitle': 'Crear recibo del producto',
         'icon': Icons.receipt_rounded,
         'onTap': () {
-          print('Navegando a ${AppRoutes.productInvoice}');
           Get.toNamed(AppRoutes.productInvoice);
         }
       },
@@ -46,7 +45,7 @@ class InvoiceScreen extends StatelessWidget {
               style: theme.titleLarge,
             ),
             const SizedBox(height: 20),
-            Container(
+            SizedBox(
               height: 200,
               child: MenuList(list: list),
             ),
