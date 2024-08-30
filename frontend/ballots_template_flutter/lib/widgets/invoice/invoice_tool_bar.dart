@@ -15,7 +15,6 @@ class InvoiceToolBar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            print('hola');
           },
           icon: const Icon(
             Icons.delete,

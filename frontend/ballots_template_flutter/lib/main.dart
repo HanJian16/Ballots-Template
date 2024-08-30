@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.circularReveal,
       debugShowCheckedModeBanner: false,
       title: "Ballots Template",
-      initialRoute: AppRoutes.initial,
+      initialRoute: AppRoutes.home,
       theme: buildTheme(),
       themeMode: ThemeMode.system,
       getPages: AppRoutes.routes,
