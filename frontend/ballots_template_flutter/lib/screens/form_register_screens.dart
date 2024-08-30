@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/screens/company_logo_upload_screens.dart';
 import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/utils/bottom_sheet.dart';
@@ -9,7 +10,7 @@ import 'package:ballots_template_flutter/screens/signature_screens.dart';
 import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:ballots_template_flutter/widgets/custom_textformfield.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:ballots_template_flutter/widgets/custom_icon_btn.dart';
+import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
 import 'package:ballots_template_flutter/widgets/backup_row.dart';
 
 class FormRegisterScreen extends StatefulWidget {
@@ -64,7 +65,7 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
     // final FormController controller = Get.put(FormController());
 
     return ScreenContainer(
-      appBarChildren: CustomIconButton(
+      appBarChildren: AppBarTitleWithIcon(
         text: "Ajustes",
         icon: Icons.cloud_upload_sharp,
         onPressed: () => _showBottomSheet(context),
@@ -138,6 +139,7 @@ class _FormRegisterScreenState extends State<FormRegisterScreen> {
                           customHeight: 50,
                           onPressed: () async {
                             controller.submitForm();
+                            Get.toNamed(AppRoutes.home);
                           },
                           status: 1,
                         ),
