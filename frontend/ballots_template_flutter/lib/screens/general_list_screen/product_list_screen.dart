@@ -63,7 +63,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 child: products.isEmpty
                     ? const Center(child: Text('No hay productos'))
                     : ListView.separated(
-                        padding: const EdgeInsets.all(8.0),
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           var item = products[index];
@@ -72,7 +71,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           // Aquí puedes personalizar cómo mostrar cada producto
                           return Card(
                             color: AppColors.cardColorSecondary,
-                            elevation: 5,
+                            elevation: 10,
                             child: ListTile(
                               title: Text(productName),
                               subtitle:
