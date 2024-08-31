@@ -50,9 +50,9 @@ class RegisterProductScreen extends StatelessWidget {
                       controller: field['controller'],
                       decoration: InputDecoration(
                         hintText: field['hintText'],
-                        suffixIcon: field['suffixIcon'] ?? null,
+                        suffixIcon: field['suffixIcon'],
                       ),
-                      keyboardType: field['keyboardType'] ?? null,
+                      keyboardType: field['keyboardType'],
                       validator: (value) => field['validator'](value!),
                     ),
                   );
