@@ -9,3 +9,13 @@ Future<List<Map<String, dynamic>>> getHistory() async {
   final db = await DatabaseHelper().database;
   return await db.query('history');
 }
+
+Future<List<Map<String, dynamic>>> getProducts() async {
+  final db = await DatabaseHelper().database;
+  return await db.query('product');
+}
+
+Future<List<Map<String, dynamic>>> getServices() async {
+  final db = await DatabaseHelper().database;
+  return await db.query('service');
+}

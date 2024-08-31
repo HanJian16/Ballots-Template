@@ -22,7 +22,14 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'ballots_template_flutter.db');
-    return await openDatabase(path, version: 1, onCreate: _createDb);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _createDb,
+      onConfigure: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
+    );
   }
 
   void _createDb(Database db, int version) async {
@@ -44,8 +51,32 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         storeId INTEGER,
         date TEXT,
-        total TEXT
+        total TEXT,
+        Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS product (
+        id INTEGER PRIMARY KEY,
+        productName TEXT,
+        productDescription TEXT,
+        productValue NUMERIC,
+        storeId INTEGER,
+        date TEXT,
+        FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
+      )
+      ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS service (
+        id INTEGER PRIMARY KEY,
+        description TEXT,
+        value NUMERIC,
+        storeId INTEGER,
+        date TEXT,
+        FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
+      )
+      ''');
   }
 }

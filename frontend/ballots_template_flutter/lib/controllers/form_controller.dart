@@ -1,9 +1,8 @@
-// import 'package:ballots_template_flutter/network/api/api_client.dart';
 import 'package:ballots_template_flutter/db/CRUD/get.dart';
 import 'package:ballots_template_flutter/db/CRUD/post.dart';
 import 'package:ballots_template_flutter/db/CRUD/put.dart';
 import 'package:ballots_template_flutter/widgets/notification_helper.dart';
-// import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,13 +10,13 @@ import 'package:path_provider/path_provider.dart';
 class FormController extends GetxController {
   final box = GetStorage();
 
-  var name = ''.obs;
-  var phone = ''.obs;
-  var direction = ''.obs;
-  var email = ''.obs;
-  var ruc = ''.obs;
-  var nameOfFirm = ''.obs;
-  var positionOfFirm = ''.obs;
+  var name = TextEditingController();
+  var phone = TextEditingController();
+  var direction = TextEditingController();
+  var email = TextEditingController();
+  var ruc = TextEditingController();
+  var nameOfFirm = TextEditingController();
+  var positionOfFirm = TextEditingController();
   var signaturePath = ''.obs;
 
   var nameError = ''.obs;
@@ -39,21 +38,21 @@ class FormController extends GetxController {
     try {
       final dynamic store = await box.read('storeData');
       if (store != null) {
-        name.value = store['nameStore'] ?? '';
-        phone.value = store['phoneStore'] ?? '';
-        direction.value = store['addressStore'] ?? '';
-        email.value = store['emailStore'] ?? '';
-        ruc.value = store['rucStore'] ?? '';
-        nameOfFirm.value = store['signerName'] ?? '';
-        positionOfFirm.value = store['signerRole'] ?? '';
+        name.text = store['nameStore'] ?? '';
+        phone.text = store['phoneStore'] ?? '';
+        direction.text = store['addressStore'] ?? '';
+        email.text = store['emailStore'] ?? '';
+        ruc.text = store['rucStore'] ?? '';
+        nameOfFirm.text = store['signerName'] ?? '';
+        positionOfFirm.text = store['signerRole'] ?? '';
       } else {
-        name.value = '';
-        phone.value = '';
-        direction.value = '';
-        email.value = '';
-        ruc.value = '';
-        nameOfFirm.value = '';
-        positionOfFirm.value = '';
+        name.text = '';
+        phone.text = '';
+        direction.text = '';
+        email.text = '';
+        ruc.text = '';
+        nameOfFirm.text = '';
+        positionOfFirm.text = '';
       }
     } catch (error) {
       NotificationHelper.show(
@@ -62,42 +61,6 @@ class FormController extends GetxController {
         isError: true,
       );
     }
-  }
-
-  void updateName(String value) {
-    name.value = value;
-    nameError.value = _validateName(value);
-  }
-
-  void updatePhone(String value) {
-    final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
-    phone.value = cleanedValue;
-    phoneError.value = _validatePhone(value);
-  }
-
-  void updateDirection(String value) {
-    direction.value = value;
-    directionError.value = _validateDirection(value);
-  }
-
-  void updateEmail(String value) {
-    email.value = value;
-    emailError.value = _validateEmail(value);
-  }
-
-  void updateRuc(String value) {
-    ruc.value = value;
-    rucError.value = _validateRuc(value);
-  }
-
-  void updateNameOfFirm(String value) {
-    nameOfFirm.value = value;
-    nameOfFirmError.value = _validateNameOfFirm(value);
-  }
-
-  void updatePositionOfFirm(String value) {
-    positionOfFirm.value = value;
-    positionOfFirmError.value = _validatePositionOfFirm(value);
   }
 
   void updateSignaturePath() async {
@@ -115,40 +78,40 @@ class FormController extends GetxController {
         rucError.isEmpty &&
         nameOfFirmError.isEmpty &&
         positionOfFirmError.isEmpty &&
-        name.value.isNotEmpty &&
-        phone.value.isNotEmpty &&
-        direction.value.isNotEmpty &&
-        email.value.isNotEmpty &&
-        ruc.value.isNotEmpty &&
-        nameOfFirm.value.isNotEmpty &&
-        positionOfFirm.value.isNotEmpty;
+        name.text.isNotEmpty &&
+        phone.text.isNotEmpty &&
+        direction.text.isNotEmpty &&
+        email.text.isNotEmpty &&
+        ruc.text.isNotEmpty &&
+        nameOfFirm.text.isNotEmpty &&
+        positionOfFirm.text.isNotEmpty;
     // // && signaturePath.isNotEmpty; // Verificar si hay firma
   }
 
-  String _validateName(String value) {
+  validateName(String value) {
     if (value.isEmpty) {
       return 'El nombre es requerido';
     }
-    return '';
+    return null;
   }
 
-  String _validatePhone(String value) {
+  validatePhone(String value) {
     final cleanedValue = value.replaceAll(RegExp(r'\s+'), '');
     if (cleanedValue.isEmpty) return 'El número de teléfono es requerido';
     if (cleanedValue.length != 9) {
       return 'El número de teléfono debe tener 9 dígitos';
     }
-    return '';
+    return null;
   }
 
-  String _validateDirection(String value) {
+  validateDirection(String value) {
     if (value.isEmpty) {
       return 'La dirección es requerida';
     }
-    return '';
+    return null;
   }
 
-  String _validateEmail(String value) {
+  validateEmail(String value) {
     if (value.isEmpty) {
       return 'El correo electrónico es requerido';
     }
@@ -162,42 +125,42 @@ class FormController extends GetxController {
       return 'Introduce un correo electrónico válido';
     }
 
-    return '';
+    return null;
   }
 
-  String _validateRuc(String value) {
+  validateRuc(String value) {
     if (value.isEmpty) return 'La RUC es requerida';
     if (value.length < 8 || value.length > 11) {
       return 'El RUC debe tener entre 8 y 11 caracteres';
     }
-    return '';
+    return null;
   }
 
-  String _validateNameOfFirm(String value) {
+  validateNameOfFirm(String value) {
     if (value.isEmpty) {
       return 'Nombre del firmante es obligatorio';
     }
-    return '';
+    return null;
   }
 
-  String _validatePositionOfFirm(String value) {
+  validatePositionOfFirm(String value) {
     if (value.isEmpty) {
       return 'Rol del firmante es obligatorio';
     }
-    return '';
+    return null;
   }
 
   void submitForm() async {
     if (isFormValid) {
       try {
         final formData = {
-          'nameStore': name.value,
-          'phoneStore': phone.value,
-          'addressStore': direction.value,
-          'emailStore': email.value,
-          'rucStore': ruc.value,
-          'signerName': nameOfFirm.value,
-          'signerRole': positionOfFirm.value,
+          'nameStore': name.text,
+          'phoneStore': phone.text,
+          'addressStore': direction.text,
+          'emailStore': email.text,
+          'rucStore': ruc.text,
+          'signerName': nameOfFirm.text,
+          'signerRole': positionOfFirm.text,
           // 'signaturePath': signaturePath.value,
         };
         await box.write('storeData', formData);
@@ -205,23 +168,23 @@ class FormController extends GetxController {
         final store = await getStore();
         if (store.isEmpty) {
           await insertStore(
-            name.value,
-            email.value,
-            phone.value,
-            direction.value,
-            ruc.value,
-            nameOfFirm.value,
-            positionOfFirm.value,
+            name.text,
+            email.text,
+            phone.text,
+            direction.text,
+            ruc.text,
+            nameOfFirm.text,
+            positionOfFirm.text,
           );
         } else {
           await updateStore(
-            name.value,
-            email.value,
-            phone.value,
-            direction.value,
-            ruc.value,
-            nameOfFirm.value,
-            positionOfFirm.value,
+            name.text,
+            email.text,
+            phone.text,
+            direction.text,
+            ruc.text,
+            nameOfFirm.text,
+            positionOfFirm.text,
           );
         }
 
