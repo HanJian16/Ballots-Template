@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class ProductInvoiceScreen extends StatefulWidget {
   const ProductInvoiceScreen({super.key});
@@ -50,7 +51,9 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     var invoiceActionIcons = InvoiceResources.getInvoiceActionIcons();
     return ScreenContainer(
       floatingActionButton: AddItemBtn(
-        onPress: () {},
+        onPress: () {
+          Get.toNamed(AppRoutes.addProduct);
+        },
       ),
       appBarChildren: Text(
         'Recibo del producto',
@@ -85,26 +88,23 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        StoreInfoWidget(invoiceData: invoiceData),
+                        const SizedBox(height: 30),
                         Text(
-                          invoiceData['nameStore'] ?? '',
-                          style: theme.headlineLarge,
+                          'Producto',
+                          style: theme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
-                        Text(invoiceData['rucStore'] ?? '',
-                            style: theme.bodySmall),
-                        Text(invoiceData['addressStore'] ?? '',
-                            style: theme.bodySmall),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Teléfono:${invoiceData['phoneStore'] ?? ''}',
-                                style: theme.bodySmall),
-                            Text(
-                              ' | ',
-                              style: theme.bodySmall,
-                            ),
-                            Text('${invoiceData['emailStore'] ?? ''}',
-                                style: theme.bodySmall),
-                          ],
+                        Container(
+                          color: AppColors.blackColor,
+                          height: 1,
+                        ),
+                        const SizedBox(height: 25,),
+                         Container(
+                          color: AppColors.blackColor,
+                          height: 1,
                         )
                       ],
                     ),
@@ -115,6 +115,46 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class StoreInfoWidget extends StatelessWidget {
+  const StoreInfoWidget({
+    super.key,
+    required this.invoiceData,
+  });
+
+  final Map<String, dynamic> invoiceData;
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+    return Column(
+      children: [
+        Text(
+          invoiceData['nameStore'] ?? '',
+          style: theme.headlineLarge,
+        ),
+        Text(invoiceData['rucStore'] ?? '',
+            style: theme.bodySmall),
+        Text(invoiceData['addressStore'] ?? '',
+            style: theme.bodySmall),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+                'Teléfono:${invoiceData['phoneStore'] ?? ''}',
+                style: theme.bodySmall),
+            Text(
+              ' | ',
+              style: theme.bodySmall,
+            ),
+            Text('${invoiceData['emailStore'] ?? ''}',
+                style: theme.bodySmall),
+          ],
+        ),
+      ],
     );
   }
 }

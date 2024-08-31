@@ -18,21 +18,21 @@ class AddItemBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        padding: const EdgeInsets.all(8.0),
-        width: Get.width * 0.25,
-        height: 50,
+        width: Get.width * 0.3,
+        height: 55,
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(50),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.add, color: Colors.white),
             Text(
               ' Agregar',
               style: theme.headlineLarge?.copyWith(
                 color: AppColors.whiteColor,
-                fontSize: 13,
+                fontSize: 14,
               ),
             ),
           ],

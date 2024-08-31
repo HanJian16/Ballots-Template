@@ -1,23 +1,21 @@
+import 'package:ballots_template_flutter/db/CRUD/get.dart';
+import 'package:ballots_template_flutter/models/product_model.dart';
+import 'package:ballots_template_flutter/theme/colors.dart';
+import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/db/index.dart';
-import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/models/index.dart';
-import 'package:ballots_template_flutter/widgets/index.dart';
-
-class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key});
+class AddProductScreen extends StatefulWidget {
+  const AddProductScreen({super.key});
 
   @override
-  State<ProductListScreen> createState() => _ProductListScreenState();
+  State<AddProductScreen> createState() => _AddProductScreenState();
 }
 
-class _ProductListScreenState extends State<ProductListScreen> {
-  List<Product> products = [];
+class _AddProductScreenState extends State<AddProductScreen> {
+   List<Product> products = [];
 
-  @override
+    @override
   void initState() {
     super.initState();
     getDataDB();
@@ -31,34 +29,30 @@ class _ProductListScreenState extends State<ProductListScreen> {
       products = dataConverted;
     });
   }
-
+   
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
-        appBarChildren: Text(
-          'Lista de Productos',
-          style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),
-        ),
-        floatingActionButton: AddItemBtn(
-          onPress: () {},
-        ),
-        children: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                    hintText: 'Buscar producto',
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.qr_code_scanner),
-                    )),
+      appBarChildren: Text(
+        'Buscar producto',
+        style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),
+      ),
+      children: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: 'Buscar producto',
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.qr_code_scanner),
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
+            ),
+            const SizedBox(height: 20,),
+            SizedBox(
                 height: Get.height * 0.65,
                 child: products.isEmpty
                     ? const Center(child: Text('No hay productos'))
@@ -74,9 +68,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             elevation: 10,
                             child: ListTile(
                               title: Text(productName),
-                              subtitle:
-                                  Text('Valor: ${productValue.toString()}'),
-                              trailing: const Icon(Icons.arrow_forward_ios),
+                              subtitle: Text('Valor: ${productValue.toString()}'),
+                              trailing:const  Icon(Icons.arrow_forward_ios),
                             ),
                           );
                         },
@@ -85,8 +78,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         },
                       ),
               )
-            ],
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
