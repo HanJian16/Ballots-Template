@@ -1,4 +1,5 @@
 import 'package:ballots_template_flutter/theme/colors.dart';
+import 'package:ballots_template_flutter/widgets/add_item_btn.dart';
 import 'package:ballots_template_flutter/widgets/invoice/invoice_tool_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
@@ -28,6 +29,9 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     TextTheme theme = Theme.of(context).textTheme;
     var invoiceActionIcons = InvoiceResources.getInvoiceActionIcons();
     return ScreenContainer(
+      floatingActionButton: AddItemBtn(
+        onPress: () {},
+      ),
       appBarChildren: Column(
         children: [
           AppBarTitleWithIcon(
@@ -89,7 +93,7 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
