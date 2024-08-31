@@ -45,7 +45,7 @@ ThemeData buildTheme() {
       style: TextButton.styleFrom(
         foregroundColor: AppColors.buttonTextColor,
         backgroundColor: AppColors.buttonColor,
-        minimumSize: const Size(double.infinity, 50),
+        minimumSize: const Size(double.infinity, 55),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
