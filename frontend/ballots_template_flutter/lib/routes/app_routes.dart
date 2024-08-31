@@ -14,6 +14,7 @@ class AppRoutes {
   static const generalList = '/general-list';
   static const productList = '/general-list/product';
   static const serviceList = '/general-list/service';
+  static const addProduct = '/add-product';
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
@@ -26,5 +27,6 @@ class AppRoutes {
     GetPage(name: registerService, page: () => const RegisterServiceScreen()),
     GetPage(name: generalList, page: () => const GeneralListScreen()),
     GetPage(name: productList, page: () => const ProductListScreen()),
+    GetPage(name: addProduct, page: () => const AddProductScreen()),
   ];
 }
