@@ -1,10 +1,11 @@
-import 'package:ballots_template_flutter/db/CRUD/get.dart';
-import 'package:ballots_template_flutter/models/product_model.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/add_item_btn.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/models/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -74,8 +75,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             elevation: 5,
                             child: ListTile(
                               title: Text(productName),
-                              subtitle: Text('Valor: ${productValue.toString()}'),
-                              trailing:const  Icon(Icons.arrow_forward_ios),
+                              subtitle:
+                                  Text('Valor: ${productValue.toString()}'),
+                              trailing: const Icon(Icons.arrow_forward_ios),
                             ),
                           );
                         },

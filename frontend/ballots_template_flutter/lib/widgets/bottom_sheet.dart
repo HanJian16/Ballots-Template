@@ -1,8 +1,10 @@
-import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   const BottomSheetWidget(

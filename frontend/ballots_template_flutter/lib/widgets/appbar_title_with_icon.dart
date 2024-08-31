@@ -1,5 +1,6 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class AppBarTitleWithIcon extends StatelessWidget {
   final String text;

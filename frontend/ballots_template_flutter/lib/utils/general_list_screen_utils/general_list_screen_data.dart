@@ -1,6 +1,8 @@
-import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class GeneralListScreenResources {
   static List<Map<String, dynamic>> get generalListMenuOptions {

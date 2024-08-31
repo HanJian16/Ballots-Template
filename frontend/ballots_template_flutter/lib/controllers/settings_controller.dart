@@ -1,13 +1,13 @@
-import 'package:ballots_template_flutter/db/CRUD/get.dart';
-import 'package:ballots_template_flutter/db/CRUD/post.dart';
-import 'package:ballots_template_flutter/db/CRUD/put.dart';
-import 'package:ballots_template_flutter/widgets/notification_helper.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FormController extends GetxController {
+import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+
+class SettingsController extends GetxController {
   final box = GetStorage();
 
   var name = TextEditingController();

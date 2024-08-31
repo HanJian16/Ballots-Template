@@ -1,6 +1,8 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class CustomBtn extends StatelessWidget {
   const CustomBtn({
@@ -33,15 +35,16 @@ class CustomBtn extends StatelessWidget {
         }
       },
       style: TextButton.styleFrom(
-        backgroundColor: status == 0
-            ? AppColors.greyColor
-            : Theme.of(context).primaryColor,
+        backgroundColor:
+            status == 0 ? AppColors.greyColor : Theme.of(context).primaryColor,
       ),
       child: Text(
         text,
         style: GoogleFonts.onest(
           fontSize: customFontSize,
-          color: status == 0 ? AppColors.blackColor.withOpacity(0.3) : AppColors.whiteColor,
+          color: status == 0
+              ? AppColors.blackColor.withOpacity(0.3)
+              : AppColors.whiteColor,
         ),
       ),
     );

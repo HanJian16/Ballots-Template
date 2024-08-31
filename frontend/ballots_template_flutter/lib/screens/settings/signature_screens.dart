@@ -1,13 +1,16 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:signature/signature.dart';
+import 'dart:io';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-import 'dart:io';
+
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:signature/signature.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class SignatureScreen extends StatefulWidget {
   const SignatureScreen({super.key});
@@ -106,7 +109,7 @@ class SignatureScreenState extends State<SignatureScreen> {
 
             Get.snackbar("Firma", "Firma guardada como imagen");
 
-            final FormController controller = Get.find();
+            final SettingsController controller = Get.find();
             controller.signaturePath.value = imagePath;
 
             // Verificar si el widget sigue montado antes de usar 'context'

@@ -1,6 +1,8 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class BackupRow extends StatelessWidget {
   const BackupRow({

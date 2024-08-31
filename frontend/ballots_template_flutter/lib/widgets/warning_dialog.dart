@@ -1,7 +1,9 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class WarningDialog extends StatelessWidget {
   const WarningDialog(

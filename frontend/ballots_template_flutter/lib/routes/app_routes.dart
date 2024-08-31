@@ -1,14 +1,6 @@
-import 'package:ballots_template_flutter/screens/general_list_screen/general_list_screen.dart';
-import 'package:ballots_template_flutter/screens/general_list_screen/product_list_screen.dart';
-import 'package:ballots_template_flutter/screens/invoice/invoice_screens.dart';
-import 'package:ballots_template_flutter/screens/invoice/product_invoice_screen.dart';
-import 'package:ballots_template_flutter/screens/invoice/service_invoice_screen.dart';
-import 'package:ballots_template_flutter/screens/registrations/register_product_screen.dart';
-import 'package:ballots_template_flutter/screens/registrations/register_service_screen.dart';
-import 'package:ballots_template_flutter/screens/registrations/registrations_screen.dart';
 import 'package:get/get.dart';
-import 'package:ballots_template_flutter/screens/form_register_screens.dart';
-import 'package:ballots_template_flutter/screens/home_screen.dart';
+
+import 'package:ballots_template_flutter/screens/index.dart';
 
 class AppRoutes {
   static const home = '/home';

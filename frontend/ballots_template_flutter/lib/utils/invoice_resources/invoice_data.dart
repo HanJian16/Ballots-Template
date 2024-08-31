@@ -1,7 +1,9 @@
-import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class InvoiceResources {
   static List<Map<String, dynamic>> get invoiceIcons {

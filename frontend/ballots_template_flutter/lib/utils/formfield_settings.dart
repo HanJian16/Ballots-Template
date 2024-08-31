@@ -1,9 +1,11 @@
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
+import 'package:ballots_template_flutter/controllers/index.dart';
+
 createDataForTextFormField() {
-  final controller = Get.find<FormController>();
+  final controller = Get.find<SettingsController>();
 
   List formFieldSettings = [
     {
