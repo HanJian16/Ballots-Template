@@ -1,3 +1,5 @@
+import 'package:ballots_template_flutter/screens/general_list_screen/general_list_screen.dart';
+import 'package:ballots_template_flutter/screens/general_list_screen/product_list_screen.dart';
 import 'package:ballots_template_flutter/screens/invoice/invoice_screens.dart';
 import 'package:ballots_template_flutter/screens/invoice/product_invoice_screen.dart';
 import 'package:ballots_template_flutter/screens/invoice/service_invoice_screen.dart';
@@ -17,6 +19,9 @@ class AppRoutes {
   static const registrations = '/registrations';
   static const registerProduct = '/registrations/product';
   static const registerService = '/registrations/service';
+  static const generalList = '/general-list';
+  static const productList = '/general-list/product';
+  static const serviceList = '/general-list/service';
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
@@ -27,5 +32,7 @@ class AppRoutes {
     GetPage(name: registrations, page: () => const RegistrationsScreen()),
     GetPage(name: registerProduct, page: () => const RegisterProductScreen()),
     GetPage(name: registerService, page: () => const RegisterServiceScreen()),
+    GetPage(name: generalList, page: () => const GeneralListScreen()),
+    GetPage(name: productList, page: () => const ProductListScreen()),
   ];
 }
