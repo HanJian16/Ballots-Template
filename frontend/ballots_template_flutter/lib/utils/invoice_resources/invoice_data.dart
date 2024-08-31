@@ -6,7 +6,11 @@ import 'package:get/get.dart';
 class InvoiceResources {
   static List<Map<String, dynamic>> get invoiceIcons {
     return [
-      {'icon': Icons.share, 'onPressed': () {}, 'background': Colors.lightBlue},
+      {
+        'icon': Icons.share,
+        'onPressed': () {},
+        'background': Colors.lightBlue,
+      },
       {
         'icon': Icons.print_disabled,
         'onPressed': () {},

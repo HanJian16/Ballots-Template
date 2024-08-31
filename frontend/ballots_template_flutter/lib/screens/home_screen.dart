@@ -33,14 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       appBarActions: const [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Icon(Icons.info_outline),
         )
       ],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
           children: [
             const HeaderHomeScreenBody(),
             const SizedBox(height: 20),

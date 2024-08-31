@@ -2,7 +2,6 @@ import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/add_item_btn.dart';
 import 'package:ballots_template_flutter/widgets/invoice/invoice_tool_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
 import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:ballots_template_flutter/utils/invoice_resources/invoice_data.dart';
 import 'package:get/get.dart';
@@ -24,6 +23,27 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     invoiceData = box.read('storeData') ?? {};
   }
 
+  Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: Row(
+        children: icons.map((iconData) {
+          return IconButton(
+            icon: Icon(
+              iconData['icon'] as IconData,
+              color: iconData['color'] ?? AppColors.whiteColor,
+            ),
+            onPressed: iconData['onPressed'] as VoidCallback?,
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all<Color>(
+                  iconData['background'] ?? AppColors.greyColor),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
@@ -32,16 +52,13 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
       floatingActionButton: AddItemBtn(
         onPress: () {},
       ),
-      appBarChildren: Column(
-        children: [
-          AppBarTitleWithIcon(
-            text: 'Recibo del producto',
-            icon: Icons.receipt_rounded,
-            onPressed: () {},
-            list: InvoiceResources.invoiceIcons,
-          ),
-        ],
+      appBarChildren: Text(
+        'Recibo del producto',
+        style: theme.headlineLarge?.copyWith(
+          color: AppColors.whiteColor,
+        ),
       ),
+      appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(

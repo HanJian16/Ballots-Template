@@ -52,75 +52,77 @@ class FormRegisterScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Form(
           key: formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              CustomBtn(
-                text: 'Añadir logotipo',
-                onPressed: () {
-                  Get.to(() => const CompanyLogoUploadScreen());
-                },
-                status: 1,
-              ),
-              const SizedBox(height: 20),
-              // Muestra la firma si está disponible
-              // Obx(() {
-              //   final signaturePath = controller.signaturePath.value;
-              //   return Container(
-              //     alignment: Alignment.center,
-              //     height: 300,
-              //     width: double.infinity,
-              //     color: Colors.red,
-              //     child: signaturePath.isNotEmpty
-              //         ? Image.file(File(signaturePath))
-              //         : const Text('No hay firma, añade una.'),
-              //   );
-              // }),
-              // const SizedBox(height: 20),
-              ...formFieldSettings.map(
-                (field) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: TextFormField(
-                      controller: field['controller'],
-                      decoration: InputDecoration(
-                          hintText: field['placeHolder'], counterText: ''),
-                      keyboardType: field['keyboardType'] ?? null,
-                      maxLength: field['maxLength'] ?? null,
-                      validator: (value) => field['validator'](value!),
-                      inputFormatters: [
-                        if (field['keyboardType'] != null &&
-                            field['keyboardType'] == TextInputType.phone)
-                          PhoneNumberFormatter(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              CustomBtn(
-                text: 'Firmar',
-                customHeight: 50,
-                onPressed: () async {
-                  await Get.to(() => const SignatureScreen());
-                  // Después de volver de SignatureScreen, actualizar el estado
-                  controller.updateSignaturePath();
-                },
-                status: 0,
-              ),
-              const SizedBox(height: 20),
-              CustomBtn(
-                text: 'Guardar',
-                customHeight: 50,
-                onPressed: () async {
-                  if (validateAndSaveForm(formKey)) {
-                    controller.submitForm();
-                    Get.toNamed(AppRoutes.home);
-                  }
-                },
-                status: 1,
-              ),
-              const SizedBox(height: 20),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 25),
+                CustomBtn(
+                  text: 'Añadir logotipo',
+                  onPressed: () {
+                    Get.to(() => const CompanyLogoUploadScreen());
+                  },
+                  status: 1,
+                ),
+                const SizedBox(height: 20),
+                // Muestra la firma si está disponible
+                // Obx(() {
+                //   final signaturePath = controller.signaturePath.value;
+                //   return Container(
+                //     alignment: Alignment.center,
+                //     height: 300,
+                //     width: double.infinity,
+                //     color: Colors.red,
+                //     child: signaturePath.isNotEmpty
+                //         ? Image.file(File(signaturePath))
+                //         : const Text('No hay firma, añade una.'),
+                //   );
+                // }),
+                // const SizedBox(height: 20),
+                ...formFieldSettings.map(
+                  (field) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: TextFormField(
+                        controller: field['controller'],
+                        decoration: InputDecoration(
+                            hintText: field['placeHolder'], counterText: ''),
+                        keyboardType: field['keyboardType'],
+                        maxLength: field['maxLength'],
+                        validator: (value) => field['validator'](value!),
+                        inputFormatters: [
+                          if (field['keyboardType'] != null &&
+                              field['keyboardType'] == TextInputType.phone)
+                            PhoneNumberFormatter(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                CustomBtn(
+                  text: 'Firmar',
+                  customHeight: 50,
+                  onPressed: () async {
+                    await Get.to(() => const SignatureScreen());
+                    // Después de volver de SignatureScreen, actualizar el estado
+                    controller.updateSignaturePath();
+                  },
+                  status: 0,
+                ),
+                const SizedBox(height: 20),
+                CustomBtn(
+                  text: 'Guardar',
+                  customHeight: 50,
+                  onPressed: () async {
+                    if (validateAndSaveForm(formKey)) {
+                      controller.submitForm();
+                      Get.toNamed(AppRoutes.home);
+                    }
+                  },
+                  status: 1,
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
