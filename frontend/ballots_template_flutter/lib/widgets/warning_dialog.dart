@@ -16,7 +16,7 @@ class WarningDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 160,
       child: Column(
         children: [
           const Icon(
