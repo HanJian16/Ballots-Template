@@ -7,7 +7,7 @@ class ScreenContainer extends StatelessWidget {
     this.appBarChildren,
     this.appBarActions,
     this.backgroundColor,
-     this.appBarHeight = kToolbarHeight,
+     this.appBarHeight = kToolbarHeight, this.floatingActionButton,
   });
 
   final Widget children;
@@ -15,6 +15,7 @@ class ScreenContainer extends StatelessWidget {
   final List<Widget>? appBarActions;
   final Color? backgroundColor;
   final double appBarHeight;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class ScreenContainer extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }
