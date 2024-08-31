@@ -1,11 +1,11 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/add_item_btn.dart';
-import 'package:ballots_template_flutter/widgets/invoice/invoice_tool_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:ballots_template_flutter/utils/invoice_resources/invoice_data.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class ProductInvoiceScreen extends StatefulWidget {
   const ProductInvoiceScreen({super.key});

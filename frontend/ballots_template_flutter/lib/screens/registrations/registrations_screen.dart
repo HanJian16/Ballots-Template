@@ -1,8 +1,9 @@
-import 'package:ballots_template_flutter/routes/app_routes.dart';
-import 'package:ballots_template_flutter/widgets/menu_list.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class RegistrationsScreen extends StatelessWidget {
   const RegistrationsScreen({super.key});

@@ -1,5 +1,6 @@
-import 'package:ballots_template_flutter/utils/homescreen_datalist.dart';
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/utils/index.dart';
 
 class ListController extends GetxController {
   //* Lista de datos con estado de selección

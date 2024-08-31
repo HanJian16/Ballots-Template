@@ -1,4 +1,4 @@
-import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/db/main.dart';
 
 Future<void> insertStore(
   String name,

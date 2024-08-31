@@ -1,4 +1,4 @@
-import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/db/main.dart';
 
 Future<List<Map<String, dynamic>>> getStore() async {
   final db = await DatabaseHelper().database;

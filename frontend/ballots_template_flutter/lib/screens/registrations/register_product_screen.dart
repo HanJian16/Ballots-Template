@@ -1,8 +1,10 @@
-import 'package:ballots_template_flutter/controllers/new_product_controller.dart';
-import 'package:ballots_template_flutter/utils/validate_and_save_form.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class RegisterProductScreen extends StatelessWidget {
   const RegisterProductScreen({super.key});

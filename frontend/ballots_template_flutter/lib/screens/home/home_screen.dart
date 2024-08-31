@@ -1,11 +1,10 @@
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
-import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/homeScreen/header_homescreen_body.dart';
-import 'package:ballots_template_flutter/widgets/menu_list.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Get.put(ListController());
-    Get.put(FormController());
+    Get.put(SettingsController());
   }
 
   @override

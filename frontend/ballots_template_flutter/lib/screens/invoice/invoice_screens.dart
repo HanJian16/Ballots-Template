@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/utils/invoice_resources/invoice_data.dart';
-import 'package:ballots_template_flutter/widgets/menu_list.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({super.key});

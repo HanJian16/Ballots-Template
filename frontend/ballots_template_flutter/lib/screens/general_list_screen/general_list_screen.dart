@@ -1,8 +1,8 @@
-import 'package:ballots_template_flutter/utils/general_list_screen_utils/general_list_screen_data.dart';
-import 'package:ballots_template_flutter/widgets/menu_list.dart';
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class GeneralListScreen extends StatelessWidget {
   const GeneralListScreen({super.key});

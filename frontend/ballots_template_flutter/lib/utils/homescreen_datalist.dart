@@ -1,12 +1,14 @@
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
-import 'package:ballots_template_flutter/routes/app_routes.dart';
-import 'package:ballots_template_flutter/widgets/warning_dialog.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
+
 void navigateToAnotherScreen(action, String title) {
-  final FormController formController = Get.find();
+  final SettingsController formController = Get.find();
 
   if (formController.isFormValid || title == 'Ajustes') {
     action();

@@ -1,6 +1,8 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class AddItemBtn extends StatelessWidget {
   const AddItemBtn({

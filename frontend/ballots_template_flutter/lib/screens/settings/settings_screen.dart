@@ -1,18 +1,13 @@
-import 'package:ballots_template_flutter/routes/app_routes.dart';
-import 'package:ballots_template_flutter/screens/company_logo_upload_screens.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/utils/bottom_sheet.dart';
-import 'package:ballots_template_flutter/utils/formatters/phone_number_formatter.dart';
-import 'package:ballots_template_flutter/utils/formfield_settings.dart';
-import 'package:ballots_template_flutter/utils/validate_and_save_form.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
-import 'package:ballots_template_flutter/screens/signature_screens.dart';
-import 'package:ballots_template_flutter/widgets/custom_btn.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
-import 'package:ballots_template_flutter/widgets/backup_row.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/screens/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class FormRegisterScreen extends StatelessWidget {
   const FormRegisterScreen({super.key});
@@ -20,7 +15,7 @@ class FormRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List formFieldSettings = createDataForTextFormField();
-    late final FormController controller = Get.find<FormController>();
+    late final SettingsController controller = Get.find<SettingsController>();
     final formKey = GlobalKey<FormState>();
 
     return ScreenContainer(

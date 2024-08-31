@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ballots_template_flutter/widgets/screen_container.dart';
-import 'package:ballots_template_flutter/widgets/appbar_title_with_icon.dart';
+
+import 'package:ballots_template_flutter/widgets/index.dart';
 
 class CompanyLogoUploadScreen extends StatefulWidget {
   const CompanyLogoUploadScreen({super.key});
