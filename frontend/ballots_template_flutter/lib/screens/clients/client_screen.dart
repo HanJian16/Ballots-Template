@@ -31,7 +31,6 @@ class ClientsScreen extends StatelessWidget {
               () => Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) => Card(
-                    elevation: 10,
                     child: ListTile(
                       title: Text(listClients[index].name),
                       subtitle: Text(listClients[index].phone),
