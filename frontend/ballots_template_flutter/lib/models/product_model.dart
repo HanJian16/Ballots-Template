@@ -5,7 +5,6 @@ class Product {
   final String productDescription;
   final double productValue;
   final int storeId;
-  final DateTime date;
 
   Product({
     required this.id,
@@ -13,7 +12,6 @@ class Product {
     required this.productDescription,
     required this.productValue,
     required this.storeId,
-    required this.date,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -23,7 +21,6 @@ class Product {
       productDescription: map['productDescription'],
       productValue: map['productValue'].toDouble(),
       storeId: map['storeId'],
-      date: DateTime.parse(map['date']),
     );
   }
 }

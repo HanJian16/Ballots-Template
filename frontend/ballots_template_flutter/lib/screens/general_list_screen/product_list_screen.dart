@@ -70,8 +70,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           var productValue = item.productValue;
                           // Aquí puedes personalizar cómo mostrar cada producto
                           return Card(
-                            color: AppColors.cardColorSecondary,
-                            elevation: 10,
                             child: ListTile(
                               title: Text(productName),
                               subtitle:

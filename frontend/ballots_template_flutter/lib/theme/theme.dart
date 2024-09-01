@@ -91,5 +91,8 @@ ThemeData buildTheme() {
         fontSize: 13,
       ),
     ),
+    cardTheme: const CardTheme(
+      elevation: 10,
+    ),
   );
 }
