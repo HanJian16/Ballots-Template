@@ -19,3 +19,8 @@ Future<List<Map<String, dynamic>>> getServices() async {
   final db = await DatabaseHelper().database;
   return await db.query('service');
 }
+
+Future<List<Map<String, dynamic>>> getClients() async {
+  final db = await DatabaseHelper().database;
+  return await db.query('client');
+}
