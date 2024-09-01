@@ -22,7 +22,7 @@ Future<void> insertStore(
 }
 
 Future<void> insertHistory(
-  String storeId,
+  int storeId,
   String date,
   String total,
 ) async {
@@ -38,8 +38,7 @@ Future<void> insertProduct(
   String productName,
   String productDescription,
   double productValue,
-  String storeId,
-  String date,
+  int storeId,
 ) async {
   final db = await DatabaseHelper().database;
   await db.insert('product', <String, dynamic>{
@@ -47,21 +46,35 @@ Future<void> insertProduct(
     'productDescription': productDescription,
     'productValue': productValue,
     'storeId': storeId,
-    'date': date,
   });
 }
 
 Future<void> insertService(
   String description,
   double value,
-  String storeId,
-  String date,
+  int storeId,
 ) async {
   final db = await DatabaseHelper().database;
   await db.insert('service', <String, dynamic>{
     'description': description,
     'value': value,
     'storeId': storeId,
-    'date': date,
+  });
+}
+
+Future<void> insertClient(
+  String name,
+  String phone,
+  String document,
+  String address,
+  int storeId,
+) async {
+  final db = await DatabaseHelper().database;
+  await db.insert('client', <String, dynamic>{
+    'name': name,
+    'phone': phone,
+    'document': document,
+    'address': address,
+    'storeId': storeId,
   });
 }

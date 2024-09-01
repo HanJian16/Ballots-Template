@@ -23,7 +23,7 @@ void navigateToAnotherScreen(action, String title) {
         titleBtn: "Ir a configurar",
         onPress: () {
           Get.back();
-          Get.toNamed(AppRoutes.formRegister);
+          Get.toNamed(AppRoutes.settings);
         },
       ),
     );
@@ -130,7 +130,10 @@ getListTileData() {
       'subtitle': 'Lista de clientes',
       'icon': Icons.people_outline,
       "selected": true,
-      "onTap": () {}
+      "onTap": () {
+        navigateToAnotherScreen(
+            () => Get.toNamed(AppRoutes.clients), 'Clientes');
+      }
     },
     {
       'title': 'Historial',
@@ -184,7 +187,7 @@ getListTileData() {
       "selected": true,
       "onTap": () {
         navigateToAnotherScreen(
-          () => Get.toNamed(AppRoutes.formRegister),
+          () => Get.toNamed(AppRoutes.settings),
           'Ajustes',
         );
       }

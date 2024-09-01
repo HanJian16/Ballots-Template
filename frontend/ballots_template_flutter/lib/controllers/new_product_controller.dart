@@ -46,8 +46,7 @@ class NewProductController extends GetxController {
         productName.text,
         productDescription.text,
         double.parse(productValue.text),
-        '1',
-        DateTime.now().toIso8601String(),
+        1,
       );
 
       NotificationHelper.show(

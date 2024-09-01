@@ -78,5 +78,17 @@ class DatabaseHelper {
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS client (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        phone TEXT,
+        document TEXT,
+        address TEXT,
+        storeId INTEGER,
+        FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
+      )
+      ''');
   }
 }
