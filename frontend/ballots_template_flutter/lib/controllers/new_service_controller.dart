@@ -36,8 +36,7 @@ class NewServiceController extends GetxController {
       await insertService(
         serviceDescription.text,
         double.parse(serviceValue.text),
-        '1',
-        DateTime.now().toIso8601String(),
+        1,
       );
 
       NotificationHelper.show(
