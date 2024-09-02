@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:ballots_template_flutter/db/index.dart';
 
 class ListClientsController extends GetxController {
-  List listClients = <Client>[].obs;
+  List<Client> listClients = <Client>[].obs;
 
   @override
   void onInit() {
@@ -14,7 +14,6 @@ class ListClientsController extends GetxController {
 
   getDataDB() async {
     final clientsDB = await getClients();
-    final dataConverted = clientsDB.map((client) => Client.fromMap(client));
-    listClients.assignAll(dataConverted);
+    listClients.assignAll(clientsDB);
   }
 }

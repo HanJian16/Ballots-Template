@@ -25,10 +25,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   getDataDB() async {
     final productsDB = await getProducts();
-    var dataConverted =
-        productsDB.map((product) => Product.fromMap(product)).toList();
     setState(() {
-      products = dataConverted;
+      products = productsDB;
     });
   }
 
