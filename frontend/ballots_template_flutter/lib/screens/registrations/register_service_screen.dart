@@ -15,7 +15,7 @@ class RegisterServiceScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
 
     return ScreenContainer(
-      appBarChildren: const Text('Registro de servicio'),
+      title: 'Registro de servicio',
       children: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(

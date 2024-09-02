@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ballots_template_flutter/db/main.dart';
 
 Future<void> insertStore(
@@ -19,6 +21,16 @@ Future<void> insertStore(
     'signerName': nameOfFirm,
     'signerRole': positionOfFirm,
   });
+}
+
+Future<void> insertSignature(int storeId, Uint8List signatureBytes) async {
+  final db = await DatabaseHelper().database;
+  await db.update(
+    'store', 
+    {'signature': signatureBytes}, // Asegúrate de que la columna 'signature' exista en tu tabla
+    where: 'id = ?', 
+    whereArgs: [storeId],
+  );
 }
 
 Future<void> insertHistory(

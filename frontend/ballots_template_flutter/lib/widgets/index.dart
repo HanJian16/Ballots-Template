@@ -5,6 +5,9 @@ export 'homeScreen/header_homescreen_body.dart';
 //* invoice
 export 'invoice/invoice_tool_bar.dart';
 
+//* settingsScreen
+export 'settingsScreen/backup_options.dart';
+
 //* widgets
 export 'add_item_btn.dart';
 export 'appbar_title_with_icon.dart';

@@ -15,7 +15,7 @@ class AddClientScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
 
     return ScreenContainer(
-      appBarChildren: const Text('Agregar cliente'),
+      title: 'Agregar cliente',
       children: Form(
         key: formKey,
         child: Padding(

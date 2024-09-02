@@ -42,7 +42,8 @@ class DatabaseHelper {
         emailStore TEXT,
         rucStore TEXT,
         signerName TEXT,
-        signerRole TEXT
+        signerRole TEXT,
+        signature BLOB
       )
     ''');
 

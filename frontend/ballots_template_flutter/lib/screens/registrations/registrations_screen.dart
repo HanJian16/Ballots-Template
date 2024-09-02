@@ -26,7 +26,7 @@ class RegistrationsScreen extends StatelessWidget {
     ];
 
     return ScreenContainer(
-      appBarChildren: const Text('Registros'),
+      title: 'Registros',
       children: Container(
         padding: const EdgeInsets.all(10),
         child: Column(

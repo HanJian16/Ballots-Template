@@ -20,7 +20,7 @@ class AppRoutes {
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
-    GetPage(name: settings, page: () => const FormRegisterScreen()),
+    GetPage(name: settings, page: () => const SettingsScreen()),
     GetPage(name: invoice, page: () => const InvoiceScreen()),
     GetPage(name: productInvoice, page: () => const ProductInvoiceScreen()),
     GetPage(name: serviceInvoice, page: () => const ServiceInvoiceScreen()),

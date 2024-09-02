@@ -37,7 +37,7 @@ class RegisterProductScreen extends StatelessWidget {
     ];
 
     return ScreenContainer(
-      appBarChildren: const Text('Registro del producto'),
+      title: 'Registro del producto',
       children: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
