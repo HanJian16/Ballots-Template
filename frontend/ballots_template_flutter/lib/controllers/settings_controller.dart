@@ -1,4 +1,3 @@
-import 'package:ballots_template_flutter/models/store_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -6,7 +5,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/models/store_model.dart';
 
 class SettingsController extends GetxController {
   final box = GetStorage();
@@ -36,24 +37,15 @@ class SettingsController extends GetxController {
 
   Future<void> loadData() async {
     try {
-      var storeDB = await getStore();
-      if (storeDB.isNotEmpty) {
-        var storeReformed = Store.fromMap(storeDB.first);
-        name.text = storeReformed.nameStore;
-        phone.text = storeReformed.phoneStore;
-        direction.text = storeReformed.addressStore;
-        email.text = storeReformed.emailStore;
-        ruc.text = storeReformed.rucStore;
-        nameOfFirm.text = storeReformed.signerName;
-        positionOfFirm.text = storeReformed.signerRole;
-      } else {
-        name.text = '';
-        phone.text = '';
-        direction.text = '';
-        email.text = '';
-        ruc.text = '';
-        nameOfFirm.text = '';
-      }
+      final Store? store = await getStore();
+
+      name.text = store?.nameStore ?? '';
+      phone.text = store?.phoneStore ?? '';
+      direction.text = store?.addressStore ?? '';
+      email.text = store?.addressStore ?? '';
+      ruc.text = store?.rucStore ?? '';
+      nameOfFirm.text = store?.signerName ?? '';
+      positionOfFirm.text = store?.signerRole ?? '';
     } catch (error) {
       NotificationHelper.show(
         title: 'Error',
@@ -164,7 +156,7 @@ class SettingsController extends GetxController {
         // await box.write('storeData', formData);
 
         final store = await getStore();
-        if (store.isEmpty) {
+        if (store == null) {
           await insertStore(
             name.text,
             email.text,

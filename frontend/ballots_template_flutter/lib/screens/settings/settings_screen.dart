@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/screens/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
@@ -20,22 +19,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-   Uint8List? signature;
-   @override
-   void initState() {
-     super.initState();
-     loadData();
-   }
+  Uint8List? signature;
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   Future<void> loadData() async {
     try {
       var storeDB = await getStore();
-      if (storeDB.isNotEmpty) {
-        var storeReformed = Store.fromMap(storeDB.first);
-        signature = storeReformed.signature;
-      } else {
-        signature = null;
-      }
+      signature = storeDB?.signature ?? null;
       setState(() {});
     } catch (error) {
       NotificationHelper.show(
@@ -45,6 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
@@ -146,7 +141,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: signature != null
                       ? Image.memory(signature!)
                       : Center(
-                          child: Text('Agrega una firma', style: theme.titleLarge,),
+                          child: Text(
+                            'Agrega una firma',
+                            style: theme.titleLarge,
+                          ),
                         ),
                 ),
                 const SizedBox(

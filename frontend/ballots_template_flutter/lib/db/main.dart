@@ -1,3 +1,11 @@
+import 'dart:io';
+
+import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -91,5 +99,54 @@ class DatabaseHelper {
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
+  }
+}
+
+Future<void> backupDb() async {
+  var status = await Permission.storage.status;
+
+  if (!status.isGranted) {
+    await Permission.storage.request();
+  }
+
+  final dbDir = await getDatabasesPath();
+  final dbPath = join(dbDir, 'ballots_template_flutter.db');
+
+  Directory? downloadDir;
+  if (GetPlatform.isAndroid) {
+    downloadDir = await getExternalStorageDirectory();
+  } else if (GetPlatform.isIOS) {
+    downloadDir = await getApplicationDocumentsDirectory();
+  }
+
+  final backupPath = join(downloadDir!.path, 'ballots_template_flutter.db');
+
+  final dbFile = File(dbPath);
+  final backupFile = File(backupPath);
+
+  await backupFile.writeAsBytes(await dbFile.readAsBytes());
+}
+
+Future<void> restoreDb() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.any,
+  );
+
+  if (result != null) {
+    final path = result.files.single.path;
+    File backupFile = File(path!);
+
+    final dbDir = await getDatabasesPath();
+    final dbPath = join(dbDir, 'ballots_template_flutter.db');
+
+    final dbFile = File(dbPath);
+    await dbFile.writeAsBytes(await backupFile.readAsBytes());
+
+    Get.find<SettingsController>().onInit();
+  } else {
+    NotificationHelper.show(
+      title: 'No file selected',
+      message: 'Please select a file',
+    );
   }
 }

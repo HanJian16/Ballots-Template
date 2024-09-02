@@ -12,8 +12,9 @@ class ClientsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listClients =
-        Get.find<ListClientsController>().listClients as List<Client>;
+    final ListClientsController controller = Get.find<ListClientsController>();
+    controller.getDataDB();
+    final List<Client> listClients = controller.listClients;
 
     return ScreenContainer(
       title: 'Clientes',
