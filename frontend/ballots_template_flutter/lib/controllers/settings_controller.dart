@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/models/store_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -30,21 +31,21 @@ class SettingsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    _loadData();
-    // signaturePath.value = box.read('signaturePath') ?? '';
+    loadData();
   }
 
-  Future<void> _loadData() async {
+  Future<void> loadData() async {
     try {
-      final dynamic store = await box.read('storeData');
-      if (store != null) {
-        name.text = store['nameStore'] ?? '';
-        phone.text = store['phoneStore'] ?? '';
-        direction.text = store['addressStore'] ?? '';
-        email.text = store['emailStore'] ?? '';
-        ruc.text = store['rucStore'] ?? '';
-        nameOfFirm.text = store['signerName'] ?? '';
-        positionOfFirm.text = store['signerRole'] ?? '';
+      var storeDB = await getStore();
+      if (storeDB.isNotEmpty) {
+        var storeReformed = Store.fromMap(storeDB.first);
+        name.text = storeReformed.nameStore;
+        phone.text = storeReformed.phoneStore;
+        direction.text = storeReformed.addressStore;
+        email.text = storeReformed.emailStore;
+        ruc.text = storeReformed.rucStore;
+        nameOfFirm.text = storeReformed.signerName;
+        positionOfFirm.text = storeReformed.signerRole;
       } else {
         name.text = '';
         phone.text = '';
@@ -52,7 +53,6 @@ class SettingsController extends GetxController {
         email.text = '';
         ruc.text = '';
         nameOfFirm.text = '';
-        positionOfFirm.text = '';
       }
     } catch (error) {
       NotificationHelper.show(
@@ -64,7 +64,6 @@ class SettingsController extends GetxController {
   }
 
   void updateSignaturePath() async {
-    // Actualiza la ruta de la firma si existe
     final directory = await getApplicationDocumentsDirectory();
     final signatureFilePath = '${directory.path}/signature.png';
     signaturePath.value = signatureFilePath;
@@ -85,7 +84,6 @@ class SettingsController extends GetxController {
         ruc.text.isNotEmpty &&
         nameOfFirm.text.isNotEmpty &&
         positionOfFirm.text.isNotEmpty;
-    // // && signaturePath.isNotEmpty; // Verificar si hay firma
   }
 
   validateName(String value) {
@@ -153,17 +151,17 @@ class SettingsController extends GetxController {
   void submitForm() async {
     if (isFormValid) {
       try {
-        final formData = {
-          'nameStore': name.text,
-          'phoneStore': phone.text,
-          'addressStore': direction.text,
-          'emailStore': email.text,
-          'rucStore': ruc.text,
-          'signerName': nameOfFirm.text,
-          'signerRole': positionOfFirm.text,
-          // 'signaturePath': signaturePath.value,
-        };
-        await box.write('storeData', formData);
+        // final formData = {
+        //   'nameStore': name.text,
+        //   'phoneStore': phone.text,
+        //   'addressStore': direction.text,
+        //   'emailStore': email.text,
+        //   'rucStore': ruc.text,
+        //   'signerName': nameOfFirm.text,
+        //   'signerRole': positionOfFirm.text,
+        //   // 'signaturePath': signaturePath.value,
+        // };
+        // await box.write('storeData', formData);
 
         final store = await getStore();
         if (store.isEmpty) {

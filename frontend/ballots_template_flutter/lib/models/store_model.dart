@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class Store {
   final int id;
   final String nameStore;
@@ -7,6 +9,7 @@ class Store {
   final String rucStore;
   final String signerName;
   final String signerRole;
+  final Uint8List? signature;
 
   Store({
     required this.id,
@@ -17,6 +20,7 @@ class Store {
     required this.rucStore,
     required this.signerName,
     required this.signerRole,
+    this.signature,
   });
 
   factory Store.fromMap(Map<String, dynamic> map) {
@@ -29,6 +33,21 @@ class Store {
       rucStore: map['rucStore'],
       signerName: map['signerName'],
       signerRole: map['signerRole'],
+      signature: map['signature'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nameStore': nameStore,
+      'phoneStore': phoneStore,
+      'addressStore': addressStore,
+      'emailStore': emailStore,
+      'rucStore': rucStore,
+      'signerName': signerName,
+      'signerRole': signerRole,
+      'signature': signature,
+    };
   }
 }
