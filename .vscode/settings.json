@@ -16,6 +16,7 @@
     "PGUSER",
     "postgres",
     "RGBO",
+    "sqflite",
     "textformfield",
     "unfocus",
     "vsync"
