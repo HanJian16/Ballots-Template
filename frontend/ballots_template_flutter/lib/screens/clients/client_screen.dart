@@ -16,7 +16,7 @@ class ClientsScreen extends StatelessWidget {
         Get.find<ListClientsController>().listClients as List<Client>;
 
     return ScreenContainer(
-      appBarChildren: const Text('Lista de clientes'),
+      title: 'Clientes',
       floatingActionButton:
           AddItemBtn(onPress: () => Get.toNamed(AppRoutes.addClient)),
       children: Padding(

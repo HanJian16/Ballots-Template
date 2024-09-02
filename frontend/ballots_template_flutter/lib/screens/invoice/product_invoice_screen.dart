@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/models/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ class ProductInvoiceScreen extends StatefulWidget {
 
 class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
   late Map<String, dynamic> invoiceData;
+  List<Product> products = [];
+
   @override
   void initState() {
     super.initState();
@@ -55,12 +58,7 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
           Get.toNamed(AppRoutes.addProduct);
         },
       ),
-      appBarChildren: Text(
-        'Recibo del producto',
-        style: theme.headlineLarge?.copyWith(
-          color: AppColors.whiteColor,
-        ),
-      ),
+      title: 'Recibo del producto',
       appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -101,8 +99,18 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
                           color: AppColors.blackColor,
                           height: 1,
                         ),
-                        const SizedBox(height: 25,),
-                         Container(
+                        // const SizedBox(height: 25,),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(10.0),
+                        //   child: Column(
+                        //     children: products.map(
+                        //       (product) {
+                        //         return Text(product.productName);
+                        //       }
+                        //     ).toList(),
+                        //   ),
+                        // ),
+                        Container(
                           color: AppColors.blackColor,
                           height: 1,
                         )
@@ -136,22 +144,18 @@ class StoreInfoWidget extends StatelessWidget {
           invoiceData['nameStore'] ?? '',
           style: theme.headlineLarge,
         ),
-        Text(invoiceData['rucStore'] ?? '',
-            style: theme.bodySmall),
-        Text(invoiceData['addressStore'] ?? '',
-            style: theme.bodySmall),
+        Text(invoiceData['rucStore'] ?? '', style: theme.bodySmall),
+        Text(invoiceData['addressStore'] ?? '', style: theme.bodySmall),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-                'Teléfono:${invoiceData['phoneStore'] ?? ''}',
+            Text('Teléfono:${invoiceData['phoneStore'] ?? ''}',
                 style: theme.bodySmall),
             Text(
               ' | ',
               style: theme.bodySmall,
             ),
-            Text('${invoiceData['emailStore'] ?? ''}',
-                style: theme.bodySmall),
+            Text('${invoiceData['emailStore'] ?? ''}', style: theme.bodySmall),
           ],
         ),
       ],

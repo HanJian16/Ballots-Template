@@ -1,16 +1,14 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/widgets/custom_btn.dart';
 
 class SignatureScreen extends StatefulWidget {
   const SignatureScreen({super.key});
@@ -30,16 +28,26 @@ class SignatureScreenState extends State<SignatureScreen> {
   void initState() {
     super.initState();
     _requestPermissions();
+    _signatureController.addListener(
+      () => setState(() {}),
+    );
   }
 
   Future<void> _requestPermissions() async {
-    // Solicita permisos para almacenamiento y cámara
-    final statusStorage = await Permission.storage.request();
+    // Solicita permisos para almacenamiento
+    final statusStorage = await Permission.manageExternalStorage.request();
 
-    if (!statusStorage.isGranted) {
+    if (statusStorage.isPermanentlyDenied) {
+      Get.defaultDialog(
+        title: "Permisos necesarios",
+        content: const PermissionRequest(),
+        backgroundColor: AppColors.cardColorSecondary,
+      );
+    } else if (!statusStorage.isGranted) {
       Get.snackbar(
-        "Permisos necesarios",
-        "Necesitamos permisos para guardar imágenes y usar la cámara.",
+        "Permiso necesario",
+        "Necesitamos permisos para guardar imágenes.",
+        duration: const Duration(seconds: 3),
       );
     }
   }
@@ -70,14 +78,31 @@ class SignatureScreenState extends State<SignatureScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  onPressed: () => _signatureController.clear(),
-                  child: const Text('Limpiar'),
+                Expanded(
+                  child: CustomBtn(
+                    text: 'Limpiar',
+                    onPressed: () => _signatureController.clear(),
+                    status: 1,
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: _saveSignature,
-                  child: const Text('Guardar'),
+                const SizedBox(
+                  width: 10,
                 ),
+                Expanded(
+                  child: CustomBtn(
+                    text: 'Guardar',
+                    onPressed: _saveSignature,
+                    status: _signatureController.isEmpty ? 0 : 1,
+                  ),
+                )
+                // ElevatedButton(
+                //   onPressed: () => _signatureController.clear(),
+                //   child: const Text('Limpiar'),
+                // ),
+                // ElevatedButton(
+                //   onPressed: _saveSignature,
+                //   child: const Text('Guardar'),
+                // ),
               ],
             ),
           ),
@@ -87,6 +112,18 @@ class SignatureScreenState extends State<SignatureScreen> {
   }
 
   Future<void> _saveSignature() async {
+    final statusManageExternalStorage =
+        await Permission.manageExternalStorage.status;
+
+    if (!statusManageExternalStorage.isGranted) {
+      Get.snackbar(
+        "Permisos no concedidos",
+        "No tienes los permisos necesarios para guardar la firma.",
+        duration: const Duration(seconds: 3),
+      );
+      return;
+    }
+
     if (_signatureController.isNotEmpty) {
       try {
         final ui.Image? image = await _signatureController.toImage();
@@ -97,25 +134,10 @@ class SignatureScreenState extends State<SignatureScreen> {
 
           if (byteData != null) {
             final Uint8List pngBytes = byteData.buffer.asUint8List();
-            final directory = await getApplicationDocumentsDirectory();
-            final imagePath = '${directory.path}/signature.png';
+            await insertSignature(1, pngBytes);
 
-            final file = File(imagePath);
-            if (await file.exists()) {
-              await file.delete();
-            }
-
-            await file.writeAsBytes(pngBytes, flush: true);
-
-            Get.snackbar("Firma", "Firma guardada como imagen");
-
-            final SettingsController controller = Get.find();
-            controller.signaturePath.value = imagePath;
-
-            // Verificar si el widget sigue montado antes de usar 'context'
-            if (mounted) {
-              Navigator.pop(context);
-            }
+            Get.back();
+            Get.snackbar("Firma", "Firma guardada en la base de datos");
           } else {
             Get.snackbar("Firma", "Error al convertir la firma a imagen");
           }
@@ -128,5 +150,35 @@ class SignatureScreenState extends State<SignatureScreen> {
     } else {
       Get.snackbar("Firma", "No hay firma para guardar");
     }
+  }
+}
+
+class PermissionRequest extends StatelessWidget {
+  const PermissionRequest({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text(
+          'Necesitamos permisos para guardar imágenes y gestionar almacenamiento.',
+          style: TextStyle(fontSize: 15),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        CustomBtn(
+          text: 'Abrir configuración',
+          onPressed: () {
+            openAppSettings();
+            Get.back();
+          },
+          status: 1,
+        ),
+      ],
+    );
   }
 }

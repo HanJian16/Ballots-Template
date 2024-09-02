@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
 
@@ -26,12 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final ListController controller = Get.find();
-    TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
-      appBarChildren: Text(
-        "Generador de Recibo",
-        style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),
-      ),
+        title: 'Generador de Recibo',
       appBarActions: const [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),

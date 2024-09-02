@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:flutter/material.dart';
 
 class ScreenContainer extends StatelessWidget {
@@ -7,7 +8,7 @@ class ScreenContainer extends StatelessWidget {
     this.appBarChildren,
     this.appBarActions,
     this.backgroundColor,
-     this.appBarHeight = kToolbarHeight, this.floatingActionButton,
+     this.appBarHeight = kToolbarHeight, this.floatingActionButton, this.title,
   });
 
   final Widget children;
@@ -16,19 +17,24 @@ class ScreenContainer extends StatelessWidget {
   final Color? backgroundColor;
   final double appBarHeight;
   final Widget? floatingActionButton;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: appBarChildren != null
+      appBar: title != null
           ? PreferredSize(
             preferredSize: Size.fromHeight(appBarHeight),
             child: AppBar(
                 elevation: 0,
                 scrolledUnderElevation: 0,
                 backgroundColor: backgroundColor,
-                title: appBarChildren,
+                title: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(title!, style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),),
+                ),
                 actions: appBarActions ?? [],
               ),
           )

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 
@@ -11,10 +10,7 @@ class GeneralListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
-        appBarChildren: Text(
-          'Lista de Productos / Servicios',
-          style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),
-        ),
+        title: 'Lista de productos o servicios',
         children: Container(
           padding: const EdgeInsets.all(20),
           child: Column(

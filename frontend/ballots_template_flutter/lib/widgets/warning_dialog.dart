@@ -10,10 +10,12 @@ class WarningDialog extends StatelessWidget {
       {super.key,
       required this.title,
       required this.onPress,
-      required this.titleBtn});
+      required this.titleBtn,
+      this.actionsBtn});
   final String title;
   final String titleBtn;
   final VoidCallback onPress;
+  final Widget? actionsBtn;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,15 @@ class WarningDialog extends StatelessWidget {
             // textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
+          if (actionsBtn != null) actionsBtn!,
+          if(actionsBtn == null)
           CustomBtn(
             text: titleBtn,
             status: 1,
             onPressed: () {
               onPress();
             },
-          )
+          ),
         ],
       ),
     );

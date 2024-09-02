@@ -20,7 +20,7 @@ ThemeData buildTheme() {
             headlineMedium:
                 const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             headlineLarge:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             titleLarge:
                 const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             bodyLarge: const TextStyle(
