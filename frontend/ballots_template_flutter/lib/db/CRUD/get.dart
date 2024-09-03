@@ -51,3 +51,15 @@ Future<Product?> getProductById(int id) async {
   // Si el resultado no está vacío, lo convierte en una instancia de Product.
   return result.isNotEmpty ? Product.fromMap(result.first) : null;
 }
+
+Future<Service?> getServiceById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'service',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+  
+  // Si el resultado no está vacío, lo convierte en una instancia de Service.
+  return result.isNotEmpty ? Service.fromMap(result.first) : null;
+}
