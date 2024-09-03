@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 
@@ -11,12 +10,7 @@ class InvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme theme = Theme.of(context).textTheme;
     return ScreenContainer(
-      appBarChildren: Text(
-        'Recibo',
-        style: theme.headlineLarge?.copyWith(
-          color: AppColors.whiteColor,
-        ),
-      ),
+      title: 'Recibo',
       children: Container(
         padding: const EdgeInsets.all(20),
         child: Column(

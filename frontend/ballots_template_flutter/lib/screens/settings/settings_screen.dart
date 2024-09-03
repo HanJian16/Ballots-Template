@@ -23,21 +23,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    loadData();
-  }
-
-  Future<void> loadData() async {
-    try {
-      var storeDB = await getStore();
-      signature = storeDB?.signature ?? null;
-      setState(() {});
-    } catch (error) {
-      NotificationHelper.show(
-        title: 'Error',
-        message: '$error',
-        isError: true,
-      );
-    }
   }
 
   @override
@@ -69,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return ScreenContainer(
-      appBarChildren: const Text('Ajustes'),
+      title: 'Ajustes',
       appBarActions: [
         buildAppBarActions([
           {
@@ -101,20 +86,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   status: 1,
                 ),
                 const SizedBox(height: 20),
-                // Muestra la firma si está disponible
-                // Obx(() {
-                //   final signaturePath = controller.signaturePath.value;
-                //   return Container(
-                //     alignment: Alignment.center,
-                //     height: 300,
-                //     width: double.infinity,
-                //     color: Colors.red,
-                //     child: signaturePath.isNotEmpty
-                //         ? Image.file(File(signaturePath))
-                //         : const Text('No hay firma, añade una.'),
-                //   );
-                // }),
-                // const SizedBox(height: 20),
                 ...formFieldSettings.map(
                   (field) {
                     return Padding(
@@ -135,18 +106,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     );
                   },
                 ),
-                Container(
+                Obx(() {
+                  return Container(
                   height: 250,
                   color: AppColors.cardColorSecondary,
-                  child: signature != null
-                      ? Image.memory(signature!)
+                  child: controller.signature.value != null
+                      ? Image.memory(controller.signature.value!)
                       : Center(
                           child: Text(
                             'Agrega una firma',
                             style: theme.titleLarge,
                           ),
                         ),
-                ),
+                );
+                }),
                 const SizedBox(
                   height: 5,
                 ),
@@ -155,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onPressed: () async {
                     await Get.to(() => const SignatureScreen());
                     // Después de volver de SignatureScreen, actualizar el estado
-                    controller.updateSignaturePath();
+                    // controller.updateSignaturePath();
                   },
                   status: 1,
                 ),

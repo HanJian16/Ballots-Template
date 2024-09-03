@@ -1,8 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
@@ -19,15 +20,7 @@ class SettingsController extends GetxController {
   var ruc = TextEditingController();
   var nameOfFirm = TextEditingController();
   var positionOfFirm = TextEditingController();
-  var signaturePath = ''.obs;
-
-  var nameError = ''.obs;
-  var phoneError = ''.obs;
-  var directionError = ''.obs;
-  var emailError = ''.obs;
-  var rucError = ''.obs;
-  var nameOfFirmError = ''.obs;
-  var positionOfFirmError = ''.obs;
+  var signature = Rx<Uint8List?>(null);
 
   @override
   void onInit() async {
@@ -46,6 +39,7 @@ class SettingsController extends GetxController {
       ruc.text = store?.rucStore ?? '';
       nameOfFirm.text = store?.signerName ?? '';
       positionOfFirm.text = store?.signerRole ?? '';
+      signature.value = store?.signature;
     } catch (error) {
       NotificationHelper.show(
         title: 'Error',
@@ -53,29 +47,6 @@ class SettingsController extends GetxController {
         isError: true,
       );
     }
-  }
-
-  void updateSignaturePath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final signatureFilePath = '${directory.path}/signature.png';
-    signaturePath.value = signatureFilePath;
-  }
-
-  bool get isFormValid {
-    return nameError.isEmpty &&
-        phoneError.isEmpty &&
-        directionError.isEmpty &&
-        emailError.isEmpty &&
-        rucError.isEmpty &&
-        nameOfFirmError.isEmpty &&
-        positionOfFirmError.isEmpty &&
-        name.text.isNotEmpty &&
-        phone.text.isNotEmpty &&
-        direction.text.isNotEmpty &&
-        email.text.isNotEmpty &&
-        ruc.text.isNotEmpty &&
-        nameOfFirm.text.isNotEmpty &&
-        positionOfFirm.text.isNotEmpty;
   }
 
   validateName(String value) {
@@ -140,60 +111,46 @@ class SettingsController extends GetxController {
     return null;
   }
 
+  void updateSignature(Uint8List value) {
+    signature.value = value;
+  }
+
   void submitForm() async {
-    if (isFormValid) {
-      try {
-        // final formData = {
-        //   'nameStore': name.text,
-        //   'phoneStore': phone.text,
-        //   'addressStore': direction.text,
-        //   'emailStore': email.text,
-        //   'rucStore': ruc.text,
-        //   'signerName': nameOfFirm.text,
-        //   'signerRole': positionOfFirm.text,
-        //   // 'signaturePath': signaturePath.value,
-        // };
-        // await box.write('storeData', formData);
-
-        final store = await getStore();
-        if (store == null) {
-          await insertStore(
-            name.text,
-            email.text,
-            phone.text,
-            direction.text,
-            ruc.text,
-            nameOfFirm.text,
-            positionOfFirm.text,
-          );
-        } else {
-          await updateStore(
-            name.text,
-            email.text,
-            phone.text,
-            direction.text,
-            ruc.text,
-            nameOfFirm.text,
-            positionOfFirm.text,
-          );
-        }
-
-        NotificationHelper.show(
-          title: 'Éxito',
-          message: 'El establecimiento se ha guardado correctamente',
-          isError: false,
+    try {
+      final store = await getStore();
+      if (store == null) {
+        await insertStore(
+          name.text,
+          email.text,
+          phone.text,
+          direction.text,
+          ruc.text,
+          nameOfFirm.text,
+          positionOfFirm.text,
+          signature.value!,
         );
-      } catch (e) {
-        NotificationHelper.show(
-          title: 'Error',
-          message: '$e',
-          isError: true,
+      } else {
+        await updateStore(
+          name.text,
+          email.text,
+          phone.text,
+          direction.text,
+          ruc.text,
+          nameOfFirm.text,
+          positionOfFirm.text,
+          signature.value!,
         );
       }
-    } else {
+
+      NotificationHelper.show(
+        title: 'Éxito',
+        message: 'El establecimiento se ha guardado correctamente',
+        isError: false,
+      );
+    } catch (e) {
       NotificationHelper.show(
         title: 'Error',
-        message: 'Por favor, complete todos los campos',
+        message: 'Recuerda también agregar la firma',
         isError: true,
       );
     }
