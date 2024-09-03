@@ -3,7 +3,11 @@ export 'homeScreen/custom_button.dart';
 export 'homeScreen/header_homescreen_body.dart';
 
 //* invoice
+export 'invoice/client_info.dart';
+export 'invoice/invoice_preview.dart';
 export 'invoice/invoice_tool_bar.dart';
+export 'invoice/signature_display_info.dart';
+export 'invoice/store_info.dart';
 
 //* settingsScreen
 export 'settingsScreen/backup_options.dart';

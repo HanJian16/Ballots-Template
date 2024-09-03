@@ -171,15 +171,15 @@ getListTileData() {
     //     navigateToAnotherScreen(() {}, 'Historial de presupuesto');
     //   }
     // },
-    {
-      'title': 'Planes Premium',
-      'subtitle': 'Conviértase en un usuario premium y 0...',
-      'icon': Icons.workspace_premium,
-      "selected": true,
-      "onTap": () {
-        navigateToAnotherScreen(() {}, 'Planes Premium');
-      }
-    },
+    // {
+    //   'title': 'Planes Premium',
+    //   'subtitle': 'Conviértase en un usuario premium y 0...',
+    //   'icon': Icons.workspace_premium,
+    //   "selected": true,
+    //   "onTap": () {
+    //     navigateToAnotherScreen(() {}, 'Planes Premium');
+    //   }
+    // },
     {
       'title': 'Ajustes',
       'subtitle': 'Configuraciones de la aplicación',
