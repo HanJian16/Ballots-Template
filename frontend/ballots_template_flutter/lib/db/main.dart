@@ -44,14 +44,14 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS store (
         id INTEGER PRIMARY KEY,
-        nameStore TEXT,
-        phoneStore TEXT,
-        addressStore TEXT,
-        emailStore TEXT,
-        rucStore TEXT,
-        signerName TEXT,
-        signerRole TEXT,
-        signature BLOB
+        nameStore TEXT REQUIRED,
+        phoneStore TEXT REQUIRED,
+        addressStore TEXT REQUIRED,
+        emailStore TEXT REQUIRED,
+        rucStore TEXT REQUIRED,
+        signerName TEXT REQUIRED,
+        signerRole TEXT REQUIRED,
+        signature BLOB REQUIRED
       )
     ''');
 
