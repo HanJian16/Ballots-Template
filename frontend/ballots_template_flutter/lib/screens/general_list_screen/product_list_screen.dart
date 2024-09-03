@@ -8,7 +8,9 @@ import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key});
+  const ProductListScreen({super.key, required this.category});
+
+  final String category;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -16,6 +18,7 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   List<Product> products = [];
+  List<Service> services = [];
 
   @override
   void initState() {
@@ -24,16 +27,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   getDataDB() async {
-    final productsDB = await getProducts();
-    setState(() {
-      products = productsDB;
-    });
+    if (widget.category == 'Servicios') {
+      final servicesDB = await getServices();
+      setState(() {
+        services = servicesDB;
+      });
+    } else {
+      final productsDB = await getProducts();
+      setState(() {
+        products = productsDB;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final listItems = widget.category == 'Servicios' ? services : products;
     return ScreenContainer(
-      title: 'Lista de Productos',
+      title: widget.category == 'Servicios'
+          ? 'Lista de servicios'
+          : 'Lista de productos',
       floatingActionButton: AddItemBtn(
         onPress: () {},
       ),
@@ -43,7 +56,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
           children: [
             TextFormField(
               decoration: InputDecoration(
-                  hintText: 'Buscar producto',
+                  hintText: widget.category == 'Servicios'
+                      ? 'Buscar servicio'
+                      : 'Buscar producto',
                   suffixIcon: IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.qr_code_scanner),
@@ -54,30 +69,44 @@ class _ProductListScreenState extends State<ProductListScreen> {
             ),
             SizedBox(
               height: Get.height * 0.65,
-              child: products.isEmpty
-                  ? const Center(child: Text('No hay productos'))
+              child: listItems.isEmpty
+                  ? Center(
+                      child: Text(widget.category == 'Servicios'
+                          ? 'No hay servicios'
+                          : 'No hay productos'),
+                    )
                   : ListView.separated(
-                      itemCount: products.length,
+                      itemCount: listItems.length,
                       itemBuilder: (context, index) {
-                        var item = products[index];
-                        var productName = item.productName;
-                        var productValue = item.productValue;
-                        var id = item.id;
-                        // Aquí puedes personalizar cómo mostrar cada producto
-                        return Card(
-                          child: ListTile(
-                            onTap: () {
-                              Get.to(
-                                () => DetailScreen(
-                                  id: id,
-                                ),
-                              );
+                        if (widget.category == 'Servicios') {
+                          var item = services[index];
+                          var serviceDescription = item.description;
+                          var serviceValue = item.value;
+                          var id = item.id;
+                          return ItemCard(
+                            category: widget.category,
+                            id: id,
+                            title: serviceDescription,
+                            subtitle: serviceValue.toString(),
+                            onPress: () {
+                              print('Service121221');
                             },
-                            title: Text(productName),
-                            subtitle: Text('Valor: ${productValue.toString()}'),
-                            trailing: const Icon(Icons.arrow_forward_ios),
-                          ),
-                        );
+                          );
+                        } else {
+                          var item = products[index];
+                          var productName = item.productName;
+                          var productValue = item.productValue;
+                          var id = item.id;
+                          return ItemCard(
+                            id: id,
+                            title: productName,
+                            subtitle: productValue.toString(),
+                            category: widget.category,
+                            onPress: () {
+                              print('Product12121');
+                            },
+                          );
+                        }
                       },
                       separatorBuilder: (context, index) {
                         return const SizedBox(height: 12);
@@ -95,8 +124,12 @@ class DetailScreen extends StatefulWidget {
   const DetailScreen({
     super.key,
     required this.id,
+    required this.category,
+    this.onPress,
   });
   final int id;
+  final String category;
+  final VoidCallback? onPress;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -104,6 +137,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   Product? _product;
+  Service? _service;
 
   @override
   void initState() {
@@ -112,10 +146,17 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   getData() async {
-    final product = await getProductById(widget.id);
-    setState(() {
-      _product = product; // Asignas el producto a la variable de estado
-    });
+    if (widget.category == 'Servicios') {
+      final serviceDb = await getServiceById(widget.id);
+      setState(() {
+        _service = serviceDb;
+      });
+    } else {
+      final productDb = await getProductById(widget.id);
+      setState(() {
+        _product = productDb;
+      });
+    }
   }
 
   @override
@@ -129,38 +170,13 @@ class _DetailScreenState extends State<DetailScreen> {
           key: formKey,
           child: Column(
             children: [
-              if (_product != null)
+              if (_product != null || _service != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        enabled: false,
-                        // controller: field['controller'],
-                        decoration: InputDecoration(
-                            hintText: _product?.productName, counterText: ''),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        enabled: false,
-                        // controller: field['controller'],
-                        decoration: InputDecoration(
-                            hintText: _product?.productDescription,
-                            counterText: ''),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        enabled: false,
-                        // controller: field['controller'],
-                        decoration: InputDecoration(
-                            hintText: '${_product?.productValue}',
-                            counterText: ''),
-                      ),
-                    ],
+                  child: DetailFields(
+                    category: widget.category,
+                    product: _product,
+                    service: _service,
                   ),
                 ),
               Row(
@@ -171,42 +187,37 @@ class _DetailScreenState extends State<DetailScreen> {
                       customColor: Colors.red,
                       text: 'Borrar',
                       onPressed: () {
-                        Get.defaultDialog(
-                          title: '',
-                          titleStyle: GoogleFonts.onest(
-                            fontSize: 1,
-                          ),
-                          content: WarningDialog(
-                            title: '¿Quieres borrar este producto?',
-                            titleBtn: "Borrar",
-                            actionsBtn: Row(
-                              children: [
-                                Expanded(
-                                  child: CustomBtn(
-                                    customColor: Colors.red,
-                                    status: 1,
-                                    text: 'Cancelar',
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                  ),
+                        WarningDialogHelper.show(
+                          message: '¿Quieres borrar este producto?',
+                          actionsBtn: Row(
+                            children: [
+                              Expanded(
+                                child: CustomBtn(
+                                  customColor: Colors.red,
+                                  status: 1,
+                                  text: 'Cancelar',
+                                  onPressed: () {
+                                    Get.back();
+                                  },
                                 ),
-                                const SizedBox(
-                                  width: 10,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: CustomBtn(
+                                  status: 1,
+                                  text: 'Borrar',
+                                  onPressed: () {
+                                    if (widget.onPress != null) {
+                                      widget.onPress!();
+                                    } else {
+                                      print('hola toy vacio muiajajaj');
+                                    }
+                                  },
                                 ),
-                                Expanded(
-                                  child: CustomBtn(
-                                    status: 1,
-                                    text: 'Borrar',
-                                    onPressed: () {},
-                                  ),
-                                )
-                              ],
-                            ),
-                            onPress: () {
-                              Get.back();
-                              // deleteProduct(_product?.id);
-                            },
+                              )
+                            ],
                           ),
                         );
                       },

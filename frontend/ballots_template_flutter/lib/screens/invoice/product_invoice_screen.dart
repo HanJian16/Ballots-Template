@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,14 +11,14 @@ import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class ProductInvoiceScreen extends StatefulWidget {
-  const ProductInvoiceScreen({super.key});
+  const ProductInvoiceScreen({super.key, required this.category});
+  final String category;
 
   @override
   State<ProductInvoiceScreen> createState() => _ProductInvoiceScreenState();
 }
 
 class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
-  List<Product> products = [];
   Store? store;
 
   @override
@@ -57,14 +58,14 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
   @override
   Widget build(BuildContext context) {
     // TextTheme theme = Theme.of(context).textTheme;
-    var invoiceActionIcons = InvoiceResources.getInvoiceActionIcons();
+    var invoiceActionIcons = InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
       floatingActionButton: AddItemBtn(
         onPress: () {
           Get.toNamed(AppRoutes.addProduct);
         },
       ),
-      title: 'Recibo del producto',
+      title: widget.category == 'Servicios' ? 'Recibo del servicio' : 'Recibo del producto',
       appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -80,7 +81,7 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
               const SizedBox(
                 height: 20,
               ),
-              InvoicePreviewWidget(store: store, category: 'Producto'),
+              InvoicePreviewWidget(store: store, category: widget.category),
             ],
           ),
         ),

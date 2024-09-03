@@ -19,7 +19,9 @@ class GeneralListScreenResources {
         'title': 'Lista de servicios',
         'subtitle': 'Listar todos los servicios',
         'icon': Icons.list,
-        'onTap': () {}
+        'onTap': () {
+          Get.toNamed(AppRoutes.serviceList);
+        }
       }
     ];
   }

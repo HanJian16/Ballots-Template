@@ -1,3 +1,7 @@
+//* generalListScreen
+export 'generalListScreen/detail_fields.dart';
+export 'generalListScreen/item_card.dart';
+
 //* homeScreen
 export 'homeScreen/custom_button.dart';
 export 'homeScreen/header_homescreen_body.dart';

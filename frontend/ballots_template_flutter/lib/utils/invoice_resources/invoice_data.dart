@@ -43,7 +43,7 @@ class InvoiceResources {
   }
 
   static List<Map<String, dynamic>> getInvoiceActionIcons(
-      {bool isService = false}) {
+      {String category = ''}) {
     List<Map<String, dynamic>> icons = [
       {
         'icon': Icons.person_search_rounded,
@@ -67,7 +67,7 @@ class InvoiceResources {
       },
     ];
 
-    if (isService) {
+    if (category == 'Servicios') {
       icons.add({
         'icon': Icons.settings,
         'onPressed': () {},
