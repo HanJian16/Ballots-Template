@@ -1,16 +1,16 @@
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 
-void navigateToAnotherScreen(action, String title) {
-  final SettingsController formController = Get.find();
+void navigateToAnotherScreen(action, String title) async {
+  var store = await getStore();
 
-  if (formController.isFormValid || title == 'Ajustes') {
+  if (store != null|| title == 'Ajustes') {
     action();
   } else {
     Get.defaultDialog(

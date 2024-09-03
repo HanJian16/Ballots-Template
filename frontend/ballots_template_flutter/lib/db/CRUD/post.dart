@@ -10,6 +10,7 @@ Future<void> insertStore(
   String ruc,
   String nameOfFirm,
   String positionOfFirm,
+  Uint8List signature,
 ) async {
   final db = await DatabaseHelper().database;
   await db.insert('store', <String, dynamic>{
@@ -20,6 +21,7 @@ Future<void> insertStore(
     'rucStore': ruc,
     'signerName': nameOfFirm,
     'signerRole': positionOfFirm,
+    'signature': signature,
   });
 }
 
