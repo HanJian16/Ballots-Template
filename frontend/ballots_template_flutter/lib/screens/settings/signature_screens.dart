@@ -1,14 +1,15 @@
 import 'dart:ui' as ui;
-import 'dart:typed_data';
-import 'package:ballots_template_flutter/db/index.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/widgets/custom_btn.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class SignatureScreen extends StatefulWidget {
   const SignatureScreen({super.key});
@@ -31,6 +32,20 @@ class SignatureScreenState extends State<SignatureScreen> {
     _signatureController.addListener(
       () => setState(() {}),
     );
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    // Volver a la orientación predeterminada cuando se abandona la pantalla
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 
   Future<void> _requestPermissions() async {
@@ -95,14 +110,6 @@ class SignatureScreenState extends State<SignatureScreen> {
                     status: _signatureController.isEmpty ? 0 : 1,
                   ),
                 )
-                // ElevatedButton(
-                //   onPressed: () => _signatureController.clear(),
-                //   child: const Text('Limpiar'),
-                // ),
-                // ElevatedButton(
-                //   onPressed: _saveSignature,
-                //   child: const Text('Guardar'),
-                // ),
               ],
             ),
           ),
@@ -134,10 +141,15 @@ class SignatureScreenState extends State<SignatureScreen> {
 
           if (byteData != null) {
             final Uint8List pngBytes = byteData.buffer.asUint8List();
-            await insertSignature(1, pngBytes);
+            final controller = Get.find<SettingsController>();
+            controller.updateSignature(pngBytes);
 
             Get.back();
-            Get.snackbar("Firma", "Firma guardada en la base de datos");
+            NotificationHelper.show(
+              title: 'Éxito',
+              message: 'La firma ha sido registrada',
+              isError: false,
+            );
           } else {
             Get.snackbar("Firma", "Error al convertir la firma a imagen");
           }
