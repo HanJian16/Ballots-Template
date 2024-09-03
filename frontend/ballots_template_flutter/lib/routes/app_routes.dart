@@ -5,6 +5,7 @@ import 'package:ballots_template_flutter/screens/index.dart';
 class AppRoutes {
   static const home = '/home';
   static const settings = '/settings';
+  static const signatureSettings = '/settings/signature';
   static const invoice = '/invoice';
   static const productInvoice = '/invoice/product';
   static const serviceInvoice = '/invoice/service';
@@ -21,6 +22,7 @@ class AppRoutes {
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
     GetPage(name: settings, page: () => const SettingsScreen()),
+    GetPage(name: signatureSettings, page: () => const SignatureScreen()),
     GetPage(name: invoice, page: () => const InvoiceScreen()),
     GetPage(name: productInvoice, page: () => const ProductInvoiceScreen()),
     GetPage(name: serviceInvoice, page: () => const ServiceInvoiceScreen()),

@@ -1,9 +1,9 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/screens/index.dart';
@@ -126,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 CustomBtn(
                   text: 'Firmar',
                   onPressed: () async {
-                    await Get.to(() => const SignatureScreen());
+                    await Get.toNamed(AppRoutes.signatureSettings);
                     // Después de volver de SignatureScreen, actualizar el estado
                     // controller.updateSignaturePath();
                   },
