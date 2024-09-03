@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ballots_template_flutter/db/main.dart';
 
 Future<void> updateStore(
@@ -8,6 +10,7 @@ Future<void> updateStore(
   String ruc,
   String nameOfFirm,
   String positionOfFirm,
+  Uint8List signature,
 ) async {
   final db = await DatabaseHelper().database;
   await db.update(
@@ -20,6 +23,7 @@ Future<void> updateStore(
       'rucStore': ruc,
       'signerName': nameOfFirm,
       'signerRole': positionOfFirm,
+      'signature': signature,
     },
     where: 'id = ?',
     whereArgs: [1],

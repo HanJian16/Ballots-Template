@@ -1,11 +1,11 @@
-import 'package:ballots_template_flutter/models/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
+import 'package:ballots_template_flutter/db/CRUD/get.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 
@@ -17,14 +17,20 @@ class ProductInvoiceScreen extends StatefulWidget {
 }
 
 class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
-  late Map<String, dynamic> invoiceData;
   List<Product> products = [];
+  Store? store;
 
   @override
   void initState() {
     super.initState();
-    final box = GetStorage();
-    invoiceData = box.read('storeData') ?? {};
+    getData();
+  }
+
+  getData() async {
+    final storeDB = await getStore();
+    setState(() {
+      store = storeDB;
+    });
   }
 
   Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
@@ -74,50 +80,58 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                width: double.infinity,
-                height: Get.height * 0.5,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  border: Border.all(color: AppColors.blackColor, width: 0.8),
-                ),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        StoreInfoWidget(invoiceData: invoiceData),
-                        const SizedBox(height: 30),
-                        Text(
-                          'Producto',
-                          style: theme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: Get.height * 0.5,
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      border:
+                          Border.all(color: AppColors.blackColor, width: 0.8),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            StoreInfoWidget(store: store),
+                            const SizedBox(height: 30),
+                            Text(
+                              'Producto',
+                              style: theme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Container(
+                              color: AppColors.blackColor,
+                              height: 1,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              color: AppColors.blackColor,
+                              height: 1,
+                            )
+                          ],
                         ),
-                        Container(
-                          color: AppColors.blackColor,
-                          height: 1,
-                        ),
-                        // const SizedBox(height: 25,),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(10.0),
-                        //   child: Column(
-                        //     children: products.map(
-                        //       (product) {
-                        //         return Text(product.productName);
-                        //       }
-                        //     ).toList(),
-                        //   ),
-                        // ),
-                        Container(
-                          color: AppColors.blackColor,
-                          height: 1,
-                        )
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  if (store != null)
+                    Positioned(
+                      bottom: 20,
+                      left: 0,
+                      right: 0,
+                        height: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Image.memory(store!.signature),
+                      ),
+                    )
+                ],
               ),
             ],
           ),
@@ -130,10 +144,10 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
 class StoreInfoWidget extends StatelessWidget {
   const StoreInfoWidget({
     super.key,
-    required this.invoiceData,
+    required this.store,
   });
 
-  final Map<String, dynamic> invoiceData;
+  final Store? store;
 
   @override
   Widget build(BuildContext context) {
@@ -141,21 +155,20 @@ class StoreInfoWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          invoiceData['nameStore'] ?? '',
+          store?.nameStore ?? '',
           style: theme.headlineLarge,
         ),
-        Text(invoiceData['rucStore'] ?? '', style: theme.bodySmall),
-        Text(invoiceData['addressStore'] ?? '', style: theme.bodySmall),
+        Text(store?.rucStore ?? '', style: theme.bodySmall),
+        Text(store?.addressStore ?? '', style: theme.bodySmall),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Teléfono:${invoiceData['phoneStore'] ?? ''}',
-                style: theme.bodySmall),
+            Text('Teléfono:${store?.phoneStore ?? ''}', style: theme.bodySmall),
             Text(
               ' | ',
               style: theme.bodySmall,
             ),
-            Text('${invoiceData['emailStore'] ?? ''}', style: theme.bodySmall),
+            Text(store?.emailStore ?? '', style: theme.bodySmall),
           ],
         ),
       ],

@@ -9,7 +9,7 @@ class Store {
   final String rucStore;
   final String signerName;
   final String signerRole;
-  final Uint8List? signature;
+  final Uint8List signature;
 
   Store({
     required this.id,
@@ -20,7 +20,7 @@ class Store {
     required this.rucStore,
     required this.signerName,
     required this.signerRole,
-    this.signature,
+    required this.signature,
   });
 
   factory Store.fromMap(Map<String, dynamic> map) {
