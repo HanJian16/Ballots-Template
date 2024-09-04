@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -58,14 +57,17 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
   @override
   Widget build(BuildContext context) {
     // TextTheme theme = Theme.of(context).textTheme;
-    var invoiceActionIcons = InvoiceResources.getInvoiceActionIcons(category: widget.category);
+    var invoiceActionIcons =
+        InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
       floatingActionButton: AddItemBtn(
         onPress: () {
-          Get.toNamed(AppRoutes.addProduct);
+          Get.toNamed(AppRoutes.addInballotProduct);
         },
       ),
-      title: widget.category == 'Servicios' ? 'Recibo del servicio' : 'Recibo del producto',
+      title: widget.category == 'Servicios'
+          ? 'Recibo del servicio'
+          : 'Recibo del producto',
       appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
