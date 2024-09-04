@@ -10,7 +10,7 @@ class BottomSheetWidget extends StatelessWidget {
   const BottomSheetWidget(
       {super.key, required this.title, required this.controller});
   final String title;
-  final ListController controller;
+  final ListMenuController controller;
 
   @override
   Widget build(BuildContext context) {
