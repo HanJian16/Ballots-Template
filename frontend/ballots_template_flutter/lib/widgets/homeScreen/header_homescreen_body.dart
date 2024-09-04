@@ -12,7 +12,7 @@ class HeaderHomeScreenBody extends StatelessWidget {
   });
 
   void showBottomSheet(BuildContext context) {
-    final ListController controller = Get.find();
+    final controller = Get.find<ListMenuController>();
 
     showModalBottomSheet(
       context: context,

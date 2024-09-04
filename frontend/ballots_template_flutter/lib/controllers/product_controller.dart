@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:ballots_template_flutter/routes/app_routes.dart';
 
-class NewProductController extends GetxController {
+class ProductController extends GetxController {
   var productName = TextEditingController();
   var productDescription = TextEditingController();
   var productValue = TextEditingController();
@@ -40,6 +39,29 @@ class NewProductController extends GetxController {
     productValue.text = '';
   }
 
+  Future<bool> getProduct(int id) async {
+    final product = await getProductById(id);
+    productName.text = product?.productName ?? '';
+    productDescription.text = product?.productDescription ?? '';
+    productValue.text = product?.productValue.toString() ?? '';
+
+    return true;
+  }
+
+  Future<bool> initScreen() async {
+    cleanController();
+    return true;
+  }
+
+  Future<void> modifyProduct(int id) async {
+    await updateProduct(
+      productName.text,
+      productDescription.text,
+      double.parse(productValue.text),
+      id,
+    );
+  }
+
   void submitForm() async {
     try {
       await insertProduct(
@@ -56,8 +78,6 @@ class NewProductController extends GetxController {
       );
 
       cleanController();
-
-      Get.toNamed(AppRoutes.home);
     } catch (e) {
       NotificationHelper.show(
         title: 'Error',

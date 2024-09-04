@@ -14,8 +14,8 @@ void navigateToAnotherScreen(action, String title) async {
   } else {
     WarningDialogHelper.show(
       title: '¡Aplicación no configurada!',
-      titleBtn: "Ir a configurar",
-      onPress: () {
+      confirmText: "Ir a configurar",
+      confirmOnPress: () {
         Get.back();
         Get.toNamed(AppRoutes.settings);
       },

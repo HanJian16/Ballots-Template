@@ -1,9 +1,9 @@
+import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:ballots_template_flutter/controllers/index.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,17 +16,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.put(ListController());
-    Get.put(SettingsController());
     Get.put(AddClientController());
-    Get.put(ListClientsController());
+    Get.put(ListController());
+    Get.put(ListMenuController());
+    Get.put(ProductController());
+    Get.put(ServiceController());
+    Get.put(SettingsController());
   }
 
   @override
   Widget build(BuildContext context) {
-    final ListController controller = Get.find();
+    final controller = Get.find<ListMenuController>();
     return ScreenContainer(
-        title: 'Generador de Recibo',
+      title: 'Generador de Recibo',
       appBarActions: const [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),

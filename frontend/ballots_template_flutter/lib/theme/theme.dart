@@ -59,7 +59,7 @@ ThemeData buildTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.greyColor,
+      fillColor: AppColors.whiteColor,
       border: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor,
@@ -93,6 +93,19 @@ ThemeData buildTheme() {
     ),
     cardTheme: const CardTheme(
       elevation: 10,
+    ),
+    dialogTheme: DialogTheme(
+      titleTextStyle: GoogleFonts.onest(
+        fontSize: 25,
+        color: AppColors.blackColor,
+      ),
+      contentTextStyle: GoogleFonts.onest(
+        fontSize: 15,
+        color: AppColors.blackColor,
+      ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
     ),
   );
 }

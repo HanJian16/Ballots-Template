@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:ballots_template_flutter/routes/app_routes.dart';
 
-class NewServiceController extends GetxController {
+class ServiceController extends GetxController {
   final serviceDescription = TextEditingController();
   final serviceValue = TextEditingController();
 
@@ -31,6 +30,27 @@ class NewServiceController extends GetxController {
     serviceValue.text = '';
   }
 
+  Future<bool> getService(int id) async {
+    final service = await getServiceById(id);
+    serviceDescription.text = service?.description ?? '';
+    serviceValue.text = service?.value.toString() ?? '';
+
+    return true;
+  }
+
+  Future<bool> initScreen() async {
+    cleanController();
+    return true;
+  }
+
+  Future<void> modifyService(int id) async {
+    await updateService(
+      serviceDescription.text,
+      double.parse(serviceValue.text),
+      id,
+    );
+  }
+
   void onSubmit() async {
     try {
       await insertService(
@@ -46,8 +66,6 @@ class NewServiceController extends GetxController {
       );
 
       cleanController();
-
-      Get.toNamed(AppRoutes.home);
     } catch (e) {
       NotificationHelper.show(
         title: 'Error',
