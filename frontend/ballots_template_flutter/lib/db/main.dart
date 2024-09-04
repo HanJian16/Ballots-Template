@@ -1,13 +1,15 @@
 import 'dart:io';
 
-import 'package:ballots_template_flutter/controllers/index.dart';
-import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -125,6 +127,10 @@ Future<void> backupDb() async {
   final backupFile = File(backupPath);
 
   await backupFile.writeAsBytes(await dbFile.readAsBytes());
+  final xFile = XFile(backupPath,
+      mimeType: 'application/x-sqlite3', name: 'ballots_template_flutter.db');
+  await Share.shareXFiles([xFile],
+      text: 'Aquí tienes el backup de la base de datos.');
 }
 
 Future<void> restoreDb() async {

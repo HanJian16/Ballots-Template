@@ -17,6 +17,7 @@
     "postgres",
     "RGBO",
     "sqflite",
+    "sqlite",
     "textformfield",
     "unfocus",
     "vsync"
