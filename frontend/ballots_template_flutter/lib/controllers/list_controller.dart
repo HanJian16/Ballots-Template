@@ -1,39 +1,69 @@
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/models/index.dart';
 
 class ListController extends GetxController {
-  //* Lista de datos con estado de selección
-  var listTileData = <Map<String, dynamic>>[].obs;
+  List<Client> listClients = <Client>[].obs;
+  List<Product> listProducts = <Product>[].obs;
+  List<Service> listServices = <Service>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    //* Inicializar los datos
-    listTileData.value = getListTileData();
+    getClientsDb();
   }
 
-  //* Actualizar el estado de selección
-  void toggleSelection(int index, bool? value) {
-    if (index >= 0 && index < listTileData.length) {
-      listTileData[index]['selected'] = value;
-      update();
+  Future<List<Client>> getClientsDb() async {
+    final clientsDB = await getClients();
+    listClients.assignAll(clientsDB);
+    return listClients;
+  }
+
+  Future<List<Product>> getProductsDb() async {
+    final productsDB = await getProducts();
+    listProducts.assignAll(productsDB);
+    return listProducts;
+  }
+
+  Future<List<Service>> getServicesDb() async {
+    final servicesDB = await getServices();
+    listServices.assignAll(servicesDB);
+    return listServices;
+  }
+
+  Future<void> onTapReubicacion(item, String type) async {
+    if (type == 'client') {
+      Get.toNamed(
+        AppRoutes.editClient,
+        arguments: item.id,
+      );
+    } else if (type == 'product') {
+      Get.toNamed(
+        AppRoutes.editproduct,
+        arguments: item.id,
+      );
+    } else if (type == 'service') {
+      Get.toNamed(
+        AppRoutes.editservice,
+        arguments: item.id,
+      );
     }
   }
 
-  //* Obtener solo los elementos seleccionados
-  List<Map<String, dynamic>> getSelectedItems() {
-    return listTileData.where((item) => item['selected'] == true).toList();
-  }
-
-  void updateSelection(int index, bool? value) {
-    //* Verifica que el índice sea válido
-    if (index >= 0 && index < listTileData.length) {
-      //* Actualiza el ítem en la lista
-      listTileData[index]['selected'] = value;
-      //* Notifica a los observadores de la actualización
-      update();
-      listTileData.refresh();
+  Future<void> onTapSelect(item, String type) async {
+    if (type == 'client') {
+      // final data = item as Client;
+    } else if (type == 'product') {
+      final data = item as Product;
+      Get.back();
+      Get.defaultDialog(
+        title: 'Cantidad',
+        middleText: data.productDescription,
+      );
+    } else if (type == 'service') {
+      // final data = item as Service;
     }
   }
 }
