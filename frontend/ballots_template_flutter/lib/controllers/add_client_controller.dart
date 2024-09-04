@@ -1,10 +1,10 @@
-import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class AddClientController extends GetxController {
   final name = TextEditingController();
@@ -51,6 +51,31 @@ class AddClientController extends GetxController {
     address.text = '';
   }
 
+  Future<bool> getClient(int id) async {
+    final client = await getClientById(id);
+    name.text = client?.name ?? '';
+    phone.text = client?.phone ?? '';
+    document.text = client?.document ?? '';
+    address.text = client?.address ?? '';
+
+    return true;
+  }
+
+  Future<bool> addScreen() async {
+    cleanController();
+    return true;
+  }
+
+  Future modifyClient(int id) async {
+    await updateClient(
+      name.text,
+      phone.text,
+      document.text,
+      address.text,
+      id,
+    );
+  }
+
   void onSubmit() async {
     try {
       await insertClient(
@@ -69,8 +94,8 @@ class AddClientController extends GetxController {
 
       cleanController();
 
-      ListClientsController controller = Get.find();
-      controller.getDataDB();
+      ListController controller = Get.find();
+      controller.getClientsDb();
     } catch (e) {
       NotificationHelper.show(
         title: 'Error',
