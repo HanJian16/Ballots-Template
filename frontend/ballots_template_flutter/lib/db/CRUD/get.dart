@@ -40,6 +40,18 @@ Future<List<Client>> getClients() async {
   return clients;
 }
 
+Future<Client?> getClientById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'client',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+
+  // Si el resultado no está vacío, lo convierte en una instancia de Product.
+  return result.isNotEmpty ? Client.fromMap(result.first) : null;
+}
+
 Future<Product?> getProductById(int id) async {
   final db = await DatabaseHelper().database;
   final result = await db.query(
@@ -47,7 +59,7 @@ Future<Product?> getProductById(int id) async {
     where: 'id = ?',
     whereArgs: [id],
   );
-  
+
   // Si el resultado no está vacío, lo convierte en una instancia de Product.
   return result.isNotEmpty ? Product.fromMap(result.first) : null;
 }
@@ -59,7 +71,7 @@ Future<Service?> getServiceById(int id) async {
     where: 'id = ?',
     whereArgs: [id],
   );
-  
+
   // Si el resultado no está vacío, lo convierte en una instancia de Service.
   return result.isNotEmpty ? Service.fromMap(result.first) : null;
 }
