@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onPressed: iconData['onPressed'] as VoidCallback?,
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all<Color>(
-                    iconData['background'] ?? AppColors.greyColor),
+                    iconData['background'] ?? AppColors.cardColorSecondary),
               ),
             );
           }).toList(),
