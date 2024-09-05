@@ -34,14 +34,14 @@ class AppRoutes {
     GetPage(name: home, page: () => const HomeScreen()),
     GetPage(name: settings, page: () => const SettingsScreen()),
     GetPage(name: signatureSettings, page: () => const SignatureScreen()),
-    GetPage(name: invoice, page: () => const InvoiceScreen()),
+    GetPage(name: invoice, page: () => const InvoiceMenuScreen()),
     GetPage(
       name: productInvoice,
-      page: () => const ProductInvoiceScreen(category: 'Productos'),
+      page: () => const CreateInvoiceScreen(category: 'product'),
     ),
     GetPage(
       name: serviceInvoice,
-      page: () => const ProductInvoiceScreen(category: 'Servicios'),
+      page: () => const CreateInvoiceScreen(category: 'service'),
     ),
     GetPage(name: registrations, page: () => const RegistrationsScreen()),
     GetPage(

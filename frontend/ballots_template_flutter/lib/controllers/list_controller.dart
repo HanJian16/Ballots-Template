@@ -71,10 +71,21 @@ class ListController extends GetxController {
               ListTile(
                 leading: const Icon(Icons.person_search_rounded),
                 title: const Text('Seleccionar cliente'),
-                onTap: () {
-                  invoiceController.selectClient(data);
-                  Get.back();
-                  Get.back();
+                onTap: () async {
+                  try {
+                    final clientController = Get.find<ClientController>();
+                    final actualClient =
+                        await clientController.getClient(data.id);
+                    invoiceController.selectClient(actualClient!);
+                    Get.back();
+                    Get.back();
+                  } catch (e) {
+                    NotificationHelper.show(
+                      title: 'Error',
+                      message: '$e',
+                      isError: true,
+                    );
+                  }
                 },
               ),
               ListTile(
@@ -92,70 +103,90 @@ class ListController extends GetxController {
         ),
       ));
     } else if (type == 'product') {
-      final data = item as Product;
-      final editingController = TextEditingController(text: '1.0');
-
       Get.back();
-      Get.defaultDialog(
-        title: 'Cantidad',
-        content: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {
-                  if (double.parse(editingController.text) > 0) {
-                    editingController.text =
-                        '${double.parse(editingController.text) - 1}';
-                  }
-                },
-                icon: const Icon(Icons.remove),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: editingController,
-                  keyboardType: TextInputType.number,
-                ),
-              ),
-              const SizedBox(width: 20),
-              IconButton(
-                onPressed: () {
-                  editingController.text =
-                      '${double.parse(editingController.text) + 1}';
-                },
-                icon: const Icon(Icons.add),
-              ),
-            ],
-          ),
-        ),
-        confirm: CustomBtn(
-          onPressed: () {
-            final datamap = {
-              'name': data.productName,
-              'amount': double.parse(editingController.text),
-              'value': data.productValue,
-              'total': data.productValue * double.parse(editingController.text),
-            };
-            invoiceController.addProduct(datamap);
-            Get.back();
-          },
-          text: 'Confirmar',
-          status: 1,
-        ),
-        cancel: CustomBtn(
-          onPressed: () {
-            Get.back();
-          },
-          text: 'Cancelar',
-          status: 1,
-          customColor: AppColors.errorColor,
-        ),
-      );
+      createDialogForAddProductOrService(type, item);
     } else if (type == 'service') {
-      // final data = item as Service;
+      Get.back();
+      createDialogForAddProductOrService(type, item);
     }
   }
+}
+
+void createDialogForAddProductOrService(String type, item) {
+  final editingController = TextEditingController(text: '1.0');
+
+  Get.defaultDialog(
+    title: 'Cantidad',
+    content: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            onPressed: () {
+              if (double.parse(editingController.text) > 0) {
+                editingController.text =
+                    '${double.parse(editingController.text) - 1}';
+              }
+            },
+            icon: const Icon(Icons.remove),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              controller: editingController,
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(width: 20),
+          IconButton(
+            onPressed: () {
+              editingController.text =
+                  '${double.parse(editingController.text) + 1}';
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+    ),
+    confirm: CustomBtn(
+      onPressed: () {
+        final invoiceController = Get.find<InvoiceController>();
+        print(type);
+        if (type == 'product') {
+          final data = item as Product;
+          final datamap = {
+            'name': data.productName,
+            'amount': double.parse(editingController.text),
+            'value': data.productValue,
+            'total': data.productValue * double.parse(editingController.text),
+          };
+          invoiceController.addProduct(datamap);
+        } else if (type == 'service') {
+          final data = item as Service;
+          final datamap = {
+            'name': data.description,
+            'amount': double.parse(editingController.text),
+            'value': data.value,
+            'total': data.value * double.parse(editingController.text),
+          };
+          invoiceController.addService(datamap);
+          print(invoiceController.listServices.length);
+        }
+
+        Get.back();
+      },
+      text: 'Confirmar',
+      status: 1,
+    ),
+    cancel: CustomBtn(
+      onPressed: () {
+        Get.back();
+      },
+      text: 'Cancelar',
+      status: 1,
+      customColor: AppColors.errorColor,
+    ),
+  );
 }

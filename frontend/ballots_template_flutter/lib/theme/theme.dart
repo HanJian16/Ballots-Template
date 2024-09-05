@@ -96,7 +96,7 @@ ThemeData buildTheme() {
     ),
     dialogTheme: DialogTheme(
       titleTextStyle: GoogleFonts.onest(
-        fontSize: 25,
+        fontSize: 20,
         color: AppColors.blackColor,
       ),
       contentTextStyle: GoogleFonts.onest(

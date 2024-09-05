@@ -1,6 +1,8 @@
+import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:get/get.dart';
 
 class InvoiceToolBar extends StatelessWidget {
   const InvoiceToolBar({
@@ -15,7 +17,10 @@ class InvoiceToolBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            final invoiceController = Get.find<InvoiceController>();
+            invoiceController.deleteAll();
+          },
           icon: const Icon(
             Icons.delete,
             color: Colors.white,

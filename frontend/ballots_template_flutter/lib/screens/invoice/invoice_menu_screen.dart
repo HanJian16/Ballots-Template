@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 
-class InvoiceScreen extends StatelessWidget {
-  const InvoiceScreen({super.key});
+class InvoiceMenuScreen extends StatelessWidget {
+  const InvoiceMenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ class NotificationHelper {
       colorText: isError ? AppColors.whiteColor : AppColors.blackColor,
       backgroundColor: backgroundColor ??
           (isError ? AppColors.errorColor : AppColors.successColor),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       icon: Icon(
         icon ?? (isError ? Icons.error : Icons.check_circle),
         color: isError ? AppColors.whiteColor : AppColors.blackColor,

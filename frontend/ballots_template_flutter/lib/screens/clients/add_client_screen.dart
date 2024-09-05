@@ -17,13 +17,15 @@ class AddClientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AddClientController>();
+    final controller = Get.find<ClientController>();
     final listClientsController = Get.find<ListController>();
     final formKey = GlobalKey<FormState>();
     final id = Get.arguments;
 
     return FutureBuilder(
-      future: type == 'add' ? controller.addScreen() : controller.getClient(id),
+      future: type == 'add'
+          ? controller.addScreen()
+          : controller.updateClientFromDb(id),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const ScreenContainer(

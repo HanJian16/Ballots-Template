@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,21 +10,22 @@ import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 
-class ProductInvoiceScreen extends StatefulWidget {
-  const ProductInvoiceScreen({super.key, required this.category});
+class CreateInvoiceScreen extends StatefulWidget {
+  const CreateInvoiceScreen({super.key, required this.category});
   final String category;
 
   @override
-  State<ProductInvoiceScreen> createState() => _ProductInvoiceScreenState();
+  State<CreateInvoiceScreen> createState() => _CreateInvoiceScreenState();
 }
 
-class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
+class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
   Store? store;
 
   @override
   void initState() {
     super.initState();
     getData();
+    clearInvoice();
   }
 
   getData() async {
@@ -31,6 +33,11 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     setState(() {
       store = storeDB;
     });
+  }
+
+  clearInvoice() {
+    final invoiceController = Get.find<InvoiceController>();
+    invoiceController.deleteAll();
   }
 
   Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
@@ -62,10 +69,14 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     return ScreenContainer(
       floatingActionButton: AddItemBtn(
         onPress: () {
-          Get.toNamed(AppRoutes.addInBallotProduct);
+          if (widget.category == 'service') {
+            Get.toNamed(AppRoutes.addInBallotService);
+          } else {
+            Get.toNamed(AppRoutes.addInBallotProduct);
+          }
         },
       ),
-      title: widget.category == 'Servicios'
+      title: widget.category == 'service'
           ? 'Recibo del servicio'
           : 'Recibo del producto',
       appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],

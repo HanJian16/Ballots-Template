@@ -43,13 +43,13 @@ class InvoicePreviewWidget extends StatelessWidget {
                 color: AppColors.blackColor,
               ),
               Text(
-                category,
+                category == 'product' ? 'Productos' : 'Servicios',
                 style: theme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
-              const ListForInvoice(),
+              ListForInvoice(type: category),
               Obx(
                 () {
                   return Container(
@@ -71,6 +71,24 @@ class InvoicePreviewWidget extends StatelessWidget {
                   );
                 },
               ),
+              Obx(
+                () {
+                  final appear = invoiceController.boolObservations.value;
+
+                  return Container(
+                    padding: appear
+                        ? const EdgeInsets.symmetric(vertical: 20)
+                        : null,
+                    width: double.infinity,
+                    child: appear
+                        ? Text(
+                            'Observaciones:\n${invoiceController.observations.value}',
+                            textAlign: TextAlign.start,
+                          )
+                        : null,
+                  );
+                },
+              ),
               const Divider(
                 color: AppColors.blackColor,
               ),
@@ -89,19 +107,34 @@ class InvoicePreviewWidget extends StatelessWidget {
 class ListForInvoice extends StatelessWidget {
   const ListForInvoice({
     super.key,
+    required this.type,
   });
+  final String type;
 
   @override
   Widget build(BuildContext context) {
     final invoiceController = Get.find<InvoiceController>();
     final listProducts = invoiceController.listProducts;
+    final listServices = invoiceController.listServices;
 
     return Obx(
       () {
         return Column(
-          children: listProducts.asMap().entries.map((entry) {
-            return ListForInvoiceItem(item: entry.value, id: entry.key);
-          }).toList(),
+          children: type == 'product'
+              ? listProducts.asMap().entries.map((entry) {
+                  return ListForInvoiceItem(
+                    item: entry.value,
+                    id: entry.key,
+                    type: type,
+                  );
+                }).toList()
+              : listServices.asMap().entries.map((entry) {
+                  return ListForInvoiceItem(
+                    item: entry.value,
+                    id: entry.key,
+                    type: type,
+                  );
+                }).toList(),
         );
       },
     );
@@ -113,9 +146,11 @@ class ListForInvoiceItem extends StatelessWidget {
     super.key,
     required this.id,
     required this.item,
+    required this.type,
   });
   final Map item;
   final int id;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +169,11 @@ class ListForInvoiceItem extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                invoiceController.removeProductList(id);
+                if (type == 'product') {
+                  invoiceController.removeProductList(id);
+                } else if (type == 'service') {
+                  invoiceController.removeServiceList(id);
+                }
               },
               icon: const Icon(Icons.close),
             )

@@ -3,12 +3,15 @@ import 'package:get/get.dart';
 
 class InvoiceController extends GetxController {
   RxList listProducts = [].obs;
-  List listServices = [].obs;
+  RxList listServices = [].obs;
   Rx<double> total = 0.0.obs;
   Rx<double> totalPay = 0.0.obs;
   Rx<double> descuento = 0.0.obs;
   final client = Rx<Client?>(null);
   final invoiceId = 0.obs;
+  final checkbox = true.obs;
+  final boolObservations = false.obs;
+  final observations = ''.obs;
 
   @override
   void onInit() {
@@ -16,6 +19,12 @@ class InvoiceController extends GetxController {
     ever(listProducts, (_) {
       total.value = 0;
       listProducts.forEach((element) {
+        total.value += element['total'];
+      });
+    });
+    ever(listServices, (_) {
+      total.value = 0;
+      listServices.forEach((element) {
         total.value += element['total'];
       });
     });
@@ -42,5 +51,18 @@ class InvoiceController extends GetxController {
 
   void selectClient(Client client) {
     this.client.value = client;
+  }
+
+  void deleteAll() {
+    listProducts.value = [];
+    listServices.value = [];
+    total.value = 0.0;
+    totalPay.value = 0.0;
+    descuento.value = 0.0;
+    client.value = null;
+    invoiceId.value = 0;
+    checkbox.value = true;
+    boolObservations.value = false;
+    observations.value = '';
   }
 }
