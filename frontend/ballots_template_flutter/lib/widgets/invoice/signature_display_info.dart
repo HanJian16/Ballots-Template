@@ -25,25 +25,26 @@ class SignatureDisplayInfo extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Image.memory(
-                store!.signature,
-                height: 40,
-              ),
-              // const SizedBox(height: 2,),
-              const Divider(
-                color: AppColors.blackColor,
-                thickness: 1,
-              ),
-              Text(store?.signerName ?? '', style: theme.bodySmall),
-              Text(
-                store?.signerRole ?? '',
-                style: theme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Container()
-            ],
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: IntrinsicWidth(
+            child: Column(
+              children: [
+                Image.memory(
+                  store!.signature,
+                  height: 40,
+                ),
+                // const SizedBox(height: 2,),
+                const Divider(
+                  color: AppColors.blackColor,
+                  thickness: 1,
+                ),
+                Text(store?.signerName ?? '', style: theme.bodySmall),
+                Text(
+                  store?.signerRole ?? '',
+                  style: theme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
         ),
         Container(

@@ -14,22 +14,37 @@ class StoreInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           store?.nameStore ?? '',
           style: theme.headlineLarge,
+          textAlign: TextAlign.center,
         ),
-        Text(store?.rucStore ?? '', style: theme.bodySmall),
-        Text(store?.addressStore ?? '', style: theme.bodySmall),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text('Teléfono:${store?.phoneStore ?? ''}', style: theme.bodySmall),
             Text(
-              ' | ',
+              'RUC: ${store?.rucStore ?? ''}',
               style: theme.bodySmall,
             ),
-            Text(store?.emailStore ?? '', style: theme.bodySmall),
+            Text(
+              'Dir: ${store?.addressStore ?? ''}',
+              style: theme.bodySmall,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              'Tel: ${store?.phoneStore ?? ''}',
+              style: theme.bodySmall,
+            ),
+            Text(
+              'Email: ${store?.emailStore ?? ''}',
+              style: theme.bodySmall,
+            ),
           ],
         ),
       ],

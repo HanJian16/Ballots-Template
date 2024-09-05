@@ -13,7 +13,7 @@ void navigateToAnotherScreen(action, String title) async {
     action();
   } else {
     WarningDialogHelper.show(
-      title: '¡Aplicación no configurada!',
+      message: '¡Aplicación no configurada!',
       confirmText: "Ir a configurar",
       confirmOnPress: () {
         Get.back();

@@ -17,7 +17,10 @@ class WarningDialogHelper {
   }) {
     Get.defaultDialog(
       title: title ?? '',
-      titlePadding: const EdgeInsets.all(15),
+      titlePadding: title != null
+          ? const EdgeInsets.symmetric(horizontal: 30, vertical: 20)
+          : null,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       confirm: confirmText != null
           ? CustomBtn(
               text: confirmText,
@@ -34,7 +37,7 @@ class WarningDialogHelper {
             )
           : null,
       titleStyle: GoogleFonts.onest(
-        fontSize: 25,
+        fontSize: title != null ? 25 : 1,
       ),
       content: Column(
         children: [
