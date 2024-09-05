@@ -62,7 +62,7 @@ class _ProductInvoiceScreenState extends State<ProductInvoiceScreen> {
     return ScreenContainer(
       floatingActionButton: AddItemBtn(
         onPress: () {
-          Get.toNamed(AppRoutes.addInballotProduct);
+          Get.toNamed(AppRoutes.addInBallotProduct);
         },
       ),
       title: widget.category == 'Servicios'
