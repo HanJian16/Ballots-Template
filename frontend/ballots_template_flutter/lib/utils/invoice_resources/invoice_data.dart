@@ -47,7 +47,7 @@ class InvoiceResources {
     List<Map<String, dynamic>> icons = [
       {
         'icon': Icons.person_search_rounded,
-        'onPressed': () {},
+        'onPressed': () => Get.toNamed(AppRoutes.addInballotClient),
         'color': AppColors.blackColor,
       },
       {

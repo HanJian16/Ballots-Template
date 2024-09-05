@@ -27,6 +27,8 @@ class AppRoutes {
   static const editClient = '/clients/edit/:id';
   //*************************************************************************
   static const addInballotProduct = '/listSelection/product';
+  static const addInballotService = '/listSelection/service';
+  static const addInballotClient = '/listSelection/client';
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
@@ -77,6 +79,19 @@ class AppRoutes {
       name: addInballotProduct,
       page: () => const ListScreen(
         type: 'product',
+        addInballot: true,
+      ),
+    ),
+    GetPage(
+        name: addInballotService,
+        page: () => const ListScreen(
+              type: 'service',
+              addInballot: true,
+            )),
+    GetPage(
+      name: addInballotClient,
+      page: () => const ListScreen(
+        type: 'client',
         addInballot: true,
       ),
     ),

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,19 +9,8 @@ import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
-
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  Uint8List? signature;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,17 +95,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Obx(() {
                   return Container(
-                  height: 250,
-                  color: AppColors.cardColorSecondary,
-                  child: controller.signature.value != null
-                      ? Image.memory(controller.signature.value!)
-                      : Center(
-                          child: Text(
-                            'Agrega una firma',
-                            style: theme.titleLarge,
+                    height: 250,
+                    color: AppColors.cardColorSecondary,
+                    child: controller.signature.value != null
+                        ? Image.memory(controller.signature.value!)
+                        : Center(
+                            child: Text(
+                              'Agrega una firma',
+                              style: theme.titleLarge,
+                            ),
                           ),
-                        ),
-                );
+                  );
                 }),
                 const SizedBox(
                   height: 5,

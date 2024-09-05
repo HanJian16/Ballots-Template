@@ -35,7 +35,7 @@ class SettingsController extends GetxController {
       name.text = store?.nameStore ?? '';
       phone.text = store?.phoneStore ?? '';
       direction.text = store?.addressStore ?? '';
-      email.text = store?.addressStore ?? '';
+      email.text = store?.emailStore ?? '';
       ruc.text = store?.rucStore ?? '';
       nameOfFirm.text = store?.signerName ?? '';
       positionOfFirm.text = store?.signerRole ?? '';
