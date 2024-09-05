@@ -18,15 +18,15 @@ class InvoiceController extends GetxController {
     super.onInit();
     ever(listProducts, (_) {
       total.value = 0;
-      listProducts.forEach((element) {
+      for (var element in listProducts) {
         total.value += element['total'];
-      });
+      }
     });
     ever(listServices, (_) {
       total.value = 0;
-      listServices.forEach((element) {
+      for (var element in listServices) {
         total.value += element['total'];
-      });
+      }
     });
     ever(total, (_) {
       totalPay.value = total.value - descuento.value;

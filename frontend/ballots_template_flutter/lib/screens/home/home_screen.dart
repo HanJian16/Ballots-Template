@@ -1,9 +1,9 @@
-import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Get.put(ProductController());
     Get.put(ServiceController());
     Get.put(SettingsController());
+     Get.put(CompanyLogoController());
   }
 
   @override

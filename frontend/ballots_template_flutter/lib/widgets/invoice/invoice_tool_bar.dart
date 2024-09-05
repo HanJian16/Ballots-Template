@@ -30,7 +30,7 @@ class InvoiceToolBar extends StatelessWidget {
             minHeight: 40,
           ),
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
+            backgroundColor: WidgetStateProperty.all<Color>(AppColors.errorColor),
             shadowColor: WidgetStateProperty.all(Colors.black),
             elevation: WidgetStateProperty.all(8),
           ),
@@ -41,8 +41,9 @@ class InvoiceToolBar extends StatelessWidget {
               final icon = item['icon'];
               final onPressed = item['onPressed'];
               final color = item['color'] ?? AppColors.whiteColor;
-              final background = item['background'] ?? AppColors.greyColor;
+              final background = item['background'] ?? AppColors.cardColorSecondary;
               return IconButton(
+                alignment: Alignment.center,
                 onPressed: onPressed,
                 icon: Icon(
                   icon,
@@ -55,7 +56,7 @@ class InvoiceToolBar extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(background),
                   shadowColor: WidgetStateProperty.all(Colors.black),
-                  elevation: WidgetStateProperty.all(5),
+                  elevation: WidgetStateProperty.all(8),
                 ),
               );
             }).toList(),

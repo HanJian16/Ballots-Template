@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:get/get.dart';
+
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class InvoicePreviewWidget extends StatelessWidget {
   const InvoicePreviewWidget({
@@ -52,7 +52,7 @@ class InvoicePreviewWidget extends StatelessWidget {
               ListForInvoice(type: category),
               Obx(
                 () {
-                  return Container(
+                  return SizedBox(
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -61,10 +61,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                         Text('Descuento: ${invoiceController.descuento}'),
                         Text(
                           'Total a pagar: ${invoiceController.totalPay}',
-                          style: GoogleFonts.onest(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: theme.titleLarge
                         ),
                       ],
                     ),

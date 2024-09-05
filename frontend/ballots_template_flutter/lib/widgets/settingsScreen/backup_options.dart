@@ -1,6 +1,6 @@
-import 'package:ballots_template_flutter/db/index.dart';
 import 'package:flutter/material.dart';
 
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 

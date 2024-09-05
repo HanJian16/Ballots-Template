@@ -1,10 +1,10 @@
-import 'package:ballots_template_flutter/db/index.dart';
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
 
@@ -82,7 +82,7 @@ class AddServiceScreen extends StatelessWidget {
                                 WarningDialogHelper.show(
                                   title: '¡Atento!',
                                   message:
-                                      '¿Estás seguiro de querer\nborrar este servicio?',
+                                      '¿Estás seguro de querer\nborrar este servicio?',
                                   confirmText: 'Borrar',
                                   cancelText: 'Cancelar',
                                   confirmOnPress: () async {

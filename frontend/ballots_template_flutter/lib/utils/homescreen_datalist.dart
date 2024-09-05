@@ -1,8 +1,8 @@
-import 'package:ballots_template_flutter/db/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 

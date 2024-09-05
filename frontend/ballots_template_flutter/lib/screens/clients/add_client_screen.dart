@@ -1,9 +1,9 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
 

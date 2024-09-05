@@ -19,7 +19,7 @@ class InvoiceResources {
       {
         'icon': Icons.print_disabled,
         'onPressed': () {},
-        'color': AppColors.blackColor
+        'background': AppColors.errorColor,
       },
     ];
   }
@@ -80,10 +80,9 @@ class InvoiceResources {
                   Obx(
                     () {
                       bool value = invoiceController.checkbox.value;
-
-                      final onTap = () {
+                      onTap() {
                         invoiceController.checkbox.value = !value;
-                      };
+                      }
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -130,7 +129,7 @@ class InvoiceResources {
         'icon': Icons.info,
         'onPressed': () {
           final invoiceController = Get.find<InvoiceController>();
-          final formkey = GlobalKey<FormState>();
+          final formKey = GlobalKey<FormState>();
           final editingController = TextEditingController();
           validator(String value) {
             if (value.isEmpty) {
@@ -144,7 +143,7 @@ class InvoiceResources {
             titlePadding: const EdgeInsets.only(top: 20),
             contentPadding: const EdgeInsets.all(20),
             content: Form(
-              key: formkey,
+              key: formKey,
               child: TextFormField(
                 controller: editingController,
                 keyboardType: TextInputType.multiline,
@@ -157,7 +156,7 @@ class InvoiceResources {
               text: 'Agregar',
               status: 1,
               onPressed: () {
-                if (validateAndSaveForm(formkey)) {
+                if (validateAndSaveForm(formKey)) {
                   invoiceController.observations.value = editingController.text;
                   invoiceController.boolObservations.value = true;
                   Get.back();
