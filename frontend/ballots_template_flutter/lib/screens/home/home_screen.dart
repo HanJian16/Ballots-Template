@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.put(AddClientController());
+    Get.put(ClientController());
     Get.put(InvoiceController());
     Get.put(ListController());
     Get.put(ListMenuController());
