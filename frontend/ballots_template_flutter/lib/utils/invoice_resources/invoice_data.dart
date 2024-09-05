@@ -10,6 +10,8 @@ import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class InvoiceResources {
   static List<Map<String, dynamic>> get invoiceIcons {
+    final ScreenshotControllerGetx screenshotController =
+        Get.find<ScreenshotControllerGetx>();
     return [
       {
         'icon': Icons.share,
@@ -18,7 +20,9 @@ class InvoiceResources {
       },
       {
         'icon': Icons.print_disabled,
-        'onPressed': () {},
+        'onPressed': () {
+          screenshotController.captureWidget();
+        },
         'background': AppColors.errorColor,
       },
     ];

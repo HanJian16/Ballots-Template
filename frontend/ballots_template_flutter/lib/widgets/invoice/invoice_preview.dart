@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:screenshot/screenshot.dart';
 
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
@@ -21,79 +22,83 @@ class InvoicePreviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     final InvoiceController invoiceController = Get.find<InvoiceController>();
+    final ScreenshotControllerGetx screenshotController = Get.find<ScreenshotControllerGetx>();
 
-    return Container(
-      padding: const EdgeInsets.all(5.0),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        border: Border.all(color: AppColors.blackColor, width: 0.8),
-      ),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              StoreInfoWidget(store: store),
-              const Divider(
-                color: AppColors.blackColor,
-              ),
-              const ClientInfoWidget(),
-              const Divider(
-                color: AppColors.blackColor,
-              ),
-              Text(
-                category == 'product' ? 'Productos' : 'Servicios',
-                style: theme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+    return Screenshot(
+      controller: screenshotController.screenshotController,
+      child: Container(
+        padding: const EdgeInsets.all(5.0),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          // color: AppColors.cardColorSecondary,
+          border: Border.all(color: AppColors.blackColor, width: 0.8),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                StoreInfoWidget(store: store),
+                const Divider(
+                  color: AppColors.blackColor,
                 ),
-              ),
-              ListForInvoice(type: category),
-              Obx(
-                () {
-                  return SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('Total: ${invoiceController.total}'),
-                        Text('Descuento: ${invoiceController.descuento}'),
-                        Text(
-                          'Total a pagar: ${invoiceController.totalPay}',
-                          style: theme.titleLarge
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              Obx(
-                () {
-                  final appear = invoiceController.boolObservations.value;
-
-                  return Container(
-                    padding: appear
-                        ? const EdgeInsets.symmetric(vertical: 20)
-                        : null,
-                    width: double.infinity,
-                    child: appear
-                        ? Text(
-                            'Observaciones:\n${invoiceController.observations.value}',
-                            textAlign: TextAlign.start,
-                          )
-                        : null,
-                  );
-                },
-              ),
-              const Divider(
-                color: AppColors.blackColor,
-              ),
-              if (store != null)
-                SignatureDisplayInfo(
-                  store: store,
+                const ClientInfoWidget(),
+                const Divider(
+                  color: AppColors.blackColor,
                 ),
-            ],
+                Text(
+                  category == 'product' ? 'Productos' : 'Servicios',
+                  style: theme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                ListForInvoice(type: category),
+                Obx(
+                  () {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('Total: ${invoiceController.total}'),
+                          Text('Descuento: ${invoiceController.descuento}'),
+                          Text(
+                            'Total a pagar: ${invoiceController.totalPay}',
+                            style: theme.titleLarge
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Obx(
+                  () {
+                    final appear = invoiceController.boolObservations.value;
+      
+                    return Container(
+                      padding: appear
+                          ? const EdgeInsets.symmetric(vertical: 20)
+                          : null,
+                      width: double.infinity,
+                      child: appear
+                          ? Text(
+                              'Observaciones:\n${invoiceController.observations.value}',
+                              textAlign: TextAlign.start,
+                            )
+                          : null,
+                    );
+                  },
+                ),
+                const Divider(
+                  color: AppColors.blackColor,
+                ),
+                if (store != null)
+                  SignatureDisplayInfo(
+                    store: store,
+                  ),
+              ],
+            ),
           ),
         ),
       ),

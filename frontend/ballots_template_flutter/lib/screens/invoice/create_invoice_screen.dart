@@ -1,13 +1,14 @@
-import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/db/CRUD/get.dart';
+
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class CreateInvoiceScreen extends StatefulWidget {
@@ -95,6 +96,9 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                 height: 20,
               ),
               InvoicePreviewWidget(store: store, category: widget.category),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
