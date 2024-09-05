@@ -1,10 +1,10 @@
-import 'package:ballots_template_flutter/db/index.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
+import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
 
@@ -101,7 +101,7 @@ class AddProductScreen extends StatelessWidget {
                               WarningDialogHelper.show(
                                 title: '¡Atento!',
                                 message:
-                                    '¿Estás seguiro de querer\nborrar este producto?',
+                                    '¿Estás seguro de querer\nborrar este producto?',
                                 confirmText: 'Borrar',
                                 cancelText: 'Cancelar',
                                 confirmOnPress: () async {

@@ -53,7 +53,7 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
             onPressed: iconData['onPressed'] as VoidCallback?,
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all<Color>(
-                  iconData['background'] ?? AppColors.greyColor),
+                  iconData['background'] ?? AppColors.cardColorSecondary),
             ),
           );
         }).toList(),

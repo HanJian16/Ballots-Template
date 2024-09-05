@@ -1,5 +1,6 @@
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class ScreenContainer extends StatelessWidget {
   const ScreenContainer({

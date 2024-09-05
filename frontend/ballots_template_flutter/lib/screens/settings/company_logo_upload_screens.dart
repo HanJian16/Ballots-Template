@@ -1,23 +1,16 @@
-import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:flutter/material.dart';
 
+import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
-class CompanyLogoUploadScreen extends StatefulWidget {
-  const CompanyLogoUploadScreen({super.key});
+class CompanyLogoUploadScreen extends StatelessWidget {
+  CompanyLogoUploadScreen({super.key});
+  final CompanyLogoController controller = Get.put(CompanyLogoController());
 
-  @override
-  State<CompanyLogoUploadScreen> createState() =>
-      _CompanyLogoUploadScreenState();
-}
-
-class _CompanyLogoUploadScreenState extends State<CompanyLogoUploadScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-   Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
+  Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
       child: Row(
@@ -38,59 +31,23 @@ class _CompanyLogoUploadScreenState extends State<CompanyLogoUploadScreen> {
     );
   }
 
-  Future<void> uploadLogo() async {
-    // var status = await Permission.photos.request();
-    // var storageStatus = await Permission.storage.request();
-    // print("Storage status: $storageStatus");
-    // if (storageStatus == PermissionStatus.granted) {
-    //  print("Storage granted");
-    // } else {
-    //    showDialog(
-    //     context: Get.context!,
-    //     builder: (BuildContext context) => AlertDialog(
-    //       title: const Text('Permiso requerido'),
-    //       content: const Text('Necesitamos acceso al almacenamiento para seleccionar una imagen.'),
-    //       actions: [
-    //         TextButton(
-    //           child: const Text('Cancelar'),
-    //           onPressed: () => Navigator.of(context).pop(),
-    //         ),
-    //         TextButton(
-    //           child: const Text('Ir a ajustes'),
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //             openAppSettings();
-    //           },
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ScreenContainer(title: 'Seleccionar imagen',
+    TextTheme theme = Theme.of(context).textTheme;
+    return ScreenContainer(
+      title: 'Seleccionar imagen',
       appBarActions: [
-_buildAppBarActions([
-  {
-    'icon': Icons.search,
-    'onPressed': () {
-      uploadLogo();
-    },
-    'color': AppColors.blackColor,
-  }
-])
+        _buildAppBarActions([
+          {
+            'icon': Icons.search,
+            'onPressed': () {
+              controller.selectImage();
+            },
+            'color': AppColors.blackColor,
+            'background': AppColors.cardColorSecondary,
+          }
+        ])
       ],
-      // Column(
-      //   children: [
-      //     AppBarTitleWithIcon(
-      //       text: "Seleccionar imagen",
-      //       icon: Icons.search,
-      //       onPressed: () => uploadLogo(),
-      //     ),
-      //   ],
-      // ),
       children: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -99,7 +56,39 @@ _buildAppBarActions([
             const SizedBox(
               height: 40,
             ),
-            Image.asset("assets/gifs/upload-logo.gif"),
+            Obx(() {
+              return controller.selectedLogo.value != null
+                  ? ColorFiltered(
+                      colorFilter: const ColorFilter.matrix(
+                        <double>[
+                          0.2126, 0.7152, 0.0722, 0, 0, // Red channel
+                          0.2126, 0.7152, 0.0722, 0, 0, // Green channel
+                          0.2126, 0.7152, 0.0722, 0, 0, // Blue channel
+                          0, 0, 0, 1, 0,               // Alpha channel
+                        ],
+                      ),
+                      child: Image.file(
+                        controller.selectedLogo.value!,
+                        width: 200,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Image.asset(
+                      "assets/gifs/upload-logo.gif",
+                      width: 200,
+                      height: 200,
+                    );
+            }),
+            const SizedBox(height: 20),
+            Obx(() {
+              return Text(
+                controller.selectedLogo.value != null
+                    ? 'Imagen seleccionada'
+                    : 'Seleccione una imagen para cargar',
+                style: theme.headlineLarge,
+              );
+            }),
           ],
         ),
       ),

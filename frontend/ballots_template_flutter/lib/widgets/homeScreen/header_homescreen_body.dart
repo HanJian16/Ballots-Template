@@ -41,18 +41,10 @@ class HeaderHomeScreenBody extends StatelessWidget {
           children: [
             CustomButton(
               icon: Icons.print_disabled,
-              backgroundColor: AppColors.buttonColor,
+              backgroundColor: AppColors.errorColor,
               color: AppColors.whiteColor,
               onPressed: () {},
             ),
-            // CustomButton(
-            //   icon: Icons.format_list_bulleted_add,
-            //   backgroundColor: AppColors.buttonColorSecondary,
-            //   color: AppColors.blackColor,
-            //   onPressed: () {
-            //     // showBottomSheet(context);
-            //   },
-            // ),
           ],
         ),
       ),

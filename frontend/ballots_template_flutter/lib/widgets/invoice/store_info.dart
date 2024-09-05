@@ -21,31 +21,50 @@ class StoreInfoWidget extends StatelessWidget {
           style: theme.headlineLarge,
           textAlign: TextAlign.center,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              'RUC: ${store?.rucStore ?? ''}',
-              style: theme.bodySmall,
-            ),
-            Text(
-              'Dir: ${store?.addressStore ?? ''}',
-              style: theme.bodySmall,
-            ),
-          ],
+        SizedBox(
+          child: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    'RUC: ${store?.rucStore ?? ''}',
+                    style: theme.bodySmall,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Tel: ${store?.phoneStore ?? ''}',
+                    style: theme.bodySmall,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              'Tel: ${store?.phoneStore ?? ''}',
-              style: theme.bodySmall,
-            ),
-            Text(
-              'Email: ${store?.emailStore ?? ''}',
-              style: theme.bodySmall,
-            ),
-          ],
+        SizedBox(
+          child: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                  'Dir: ${store?.addressStore ?? ''}',
+                  style: theme.bodySmall,
+                ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    'Email: ${store?.emailStore ?? ''}',
+                    style: theme.bodySmall,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -63,7 +63,7 @@ class ListController extends GetxController {
       final data = item as Client;
 
       Get.bottomSheet(Card(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -153,26 +153,24 @@ void createDialogForAddProductOrService(String type, item) {
     confirm: CustomBtn(
       onPressed: () {
         final invoiceController = Get.find<InvoiceController>();
-        print(type);
         if (type == 'product') {
           final data = item as Product;
-          final datamap = {
+          final dataMap = {
             'name': data.productName,
             'amount': double.parse(editingController.text),
             'value': data.productValue,
             'total': data.productValue * double.parse(editingController.text),
           };
-          invoiceController.addProduct(datamap);
+          invoiceController.addProduct(dataMap);
         } else if (type == 'service') {
           final data = item as Service;
-          final datamap = {
+          final dataMap = {
             'name': data.description,
             'amount': double.parse(editingController.text),
             'value': data.value,
             'total': data.value * double.parse(editingController.text),
           };
-          invoiceController.addService(datamap);
-          print(invoiceController.listServices.length);
+          invoiceController.addService(dataMap);
         }
 
         Get.back();

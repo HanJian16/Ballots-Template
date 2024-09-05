@@ -68,7 +68,7 @@ class SettingsScreen extends StatelessWidget {
                 CustomBtn(
                   text: 'Añadir logotipo',
                   onPressed: () {
-                    Get.to(() => const CompanyLogoUploadScreen());
+                    Get.to(() => CompanyLogoUploadScreen());
                   },
                   status: 1,
                 ),
