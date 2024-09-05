@@ -37,7 +37,7 @@ class ListController extends GetxController {
     return listServices;
   }
 
-  Future<void> onTapReubicacion(item, String type) async {
+  Future<void> onTapReubication(item, String type) async {
     if (type == 'client') {
       Get.toNamed(
         AppRoutes.editClient,
@@ -45,12 +45,12 @@ class ListController extends GetxController {
       );
     } else if (type == 'product') {
       Get.toNamed(
-        AppRoutes.editproduct,
+        AppRoutes.editProduct,
         arguments: item.id,
       );
     } else if (type == 'service') {
       Get.toNamed(
-        AppRoutes.editservice,
+        AppRoutes.editService,
         arguments: item.id,
       );
     }

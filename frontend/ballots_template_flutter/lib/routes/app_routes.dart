@@ -14,9 +14,9 @@ class AppRoutes {
   //*************************************************************************
   static const registrations = '/registrations';
   static const registerProduct = '/registrations/product';
-  static const editproduct = '/registrations/product/:id';
+  static const editProduct = '/registrations/product/:id';
   static const registerService = '/registrations/service';
-  static const editservice = '/registrations/service/:id';
+  static const editService = '/registrations/service/:id';
   //*************************************************************************
   static const generalList = '/general-list';
   static const productList = '/general-list/product';
@@ -26,9 +26,9 @@ class AppRoutes {
   static const addClient = '/clients/add';
   static const editClient = '/clients/edit/:id';
   //*************************************************************************
-  static const addInballotProduct = '/listSelection/product';
-  static const addInballotService = '/listSelection/service';
-  static const addInballotClient = '/listSelection/client';
+  static const addInBallotProduct = '/listSelection/product';
+  static const addInBallotService = '/listSelection/service';
+  static const addInBallotClient = '/listSelection/client';
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
@@ -49,7 +49,7 @@ class AppRoutes {
       page: () => const AddProductScreen(type: 'register'),
     ),
     GetPage(
-      name: editproduct,
+      name: editProduct,
       page: () => const AddProductScreen(type: 'edit'),
     ),
     GetPage(
@@ -57,7 +57,7 @@ class AppRoutes {
       page: () => const AddServiceScreen(type: 'register'),
     ),
     GetPage(
-      name: editservice,
+      name: editService,
       page: () => const AddServiceScreen(type: 'edit'),
     ),
     GetPage(name: generalList, page: () => const GeneralListScreen()),
@@ -76,23 +76,23 @@ class AppRoutes {
     GetPage(name: addClient, page: () => const AddClientScreen(type: 'add')),
     GetPage(name: editClient, page: () => const AddClientScreen(type: 'edit')),
     GetPage(
-      name: addInballotProduct,
+      name: addInBallotProduct,
       page: () => const ListScreen(
         type: 'product',
-        addInballot: true,
+        addInBallot: true,
       ),
     ),
     GetPage(
-        name: addInballotService,
+        name: addInBallotService,
         page: () => const ListScreen(
               type: 'service',
-              addInballot: true,
+              addInBallot: true,
             )),
     GetPage(
-      name: addInballotClient,
+      name: addInBallotClient,
       page: () => const ListScreen(
         type: 'client',
-        addInballot: true,
+        addInBallot: true,
       ),
     ),
   ];
