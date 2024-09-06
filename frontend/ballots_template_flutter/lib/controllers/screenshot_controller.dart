@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
+
 import 'package:ballots_template_flutter/screens/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:blue_thermal_printer/blue_thermal_printer.dart';
-import 'package:get/get.dart';
-import 'package:screenshot/screenshot.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class ScreenshotControllerGetx extends GetxController {
   var isConnected = false.obs;
@@ -11,11 +17,25 @@ class ScreenshotControllerGetx extends GetxController {
 
   ScreenshotController screenshotController = ScreenshotController();
   BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
+  final invoiceController = Get.find<InvoiceController>();
 
   @override
   void onInit() {
     super.onInit();
     getBoolConnect();
+  }
+
+  void captureAndShare(int id) async {
+    final image = await screenshotController.capture();
+    if (image != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = '${directory.path}/boleta-$id.png';
+      final imageFile = File(imagePath);
+      await imageFile.writeAsBytes(image);
+      final xFile =
+          XFile(imagePath, mimeType: 'image/png', name: 'boleta-$id.png');
+      await Share.shareXFiles([xFile], text: 'Aquí tienes la boleta.');
+    }
   }
 
   void getBoolConnect() async {
@@ -27,50 +47,40 @@ class ScreenshotControllerGetx extends GetxController {
       switch (state) {
         case BlueThermalPrinter.CONNECTED:
           isConnected.value = true;
-          print("bluetooth device state: connected");
 
           break;
         case BlueThermalPrinter.DISCONNECTED:
           isConnected.value = false;
-          print("bluetooth device state: disconnected");
 
           break;
         case BlueThermalPrinter.DISCONNECT_REQUESTED:
           isConnected.value = false;
-          print("bluetooth device state: disconnect requested");
 
           break;
         case BlueThermalPrinter.STATE_TURNING_OFF:
           isConnected.value = false;
-          print("bluetooth device state: bluetooth turning off");
 
           break;
         case BlueThermalPrinter.STATE_OFF:
           isConnected.value = false;
-          print("bluetooth device state: bluetooth off");
 
           break;
         case BlueThermalPrinter.STATE_ON:
           isConnected.value = false;
-          print("bluetooth device state: bluetooth on");
 
           break;
         case BlueThermalPrinter.STATE_TURNING_ON:
           isConnected.value = false;
-          print("bluetooth device state: bluetooth turning on");
 
           break;
         case BlueThermalPrinter.ERROR:
           isConnected.value = false;
-          print("bluetooth device state: error");
 
           break;
         default:
-          print(state);
           break;
       }
       if (data == true) isConnected.value = true;
-      print('isConnected: ${isConnected.value}');
     });
   }
 

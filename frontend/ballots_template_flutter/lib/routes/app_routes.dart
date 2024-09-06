@@ -9,8 +9,8 @@ class AppRoutes {
   static const signatureSettings = '/settings/signature';
   //*************************************************************************
   static const invoice = '/invoice';
-  static const productInvoice = '/invoice/product';
-  static const serviceInvoice = '/invoice/service';
+  static const productInvoice = '/invoice/product/:history';
+  static const serviceInvoice = '/invoice/service/:history';
   //*************************************************************************
   static const registrations = '/registrations';
   static const registerProduct = '/registrations/product';
@@ -21,6 +21,8 @@ class AppRoutes {
   static const generalList = '/general-list';
   static const productList = '/general-list/product';
   static const serviceList = '/general-list/service';
+  static const historyProductList = '/general-list/history-product';
+  static const historyServiceList = '/general-list/history-service';
   //*************************************************************************
   static const clients = '/clients';
   static const addClient = '/clients/add';
@@ -103,5 +105,13 @@ class AppRoutes {
     ),
     GetPage(name: bluetoohConnect, page: () => const BluetoohScreen()),
     GetPage(name: history, page: () => const HistoryMenuList()),
+    GetPage(
+      name: historyProductList,
+      page: () => const ListScreen(type: 'history-product'),
+    ),
+    GetPage(
+      name: historyServiceList,
+      page: () => const ListScreen(type: 'history-service'),
+    ),
   ];
 }

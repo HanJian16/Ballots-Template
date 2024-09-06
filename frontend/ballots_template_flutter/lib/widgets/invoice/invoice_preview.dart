@@ -32,6 +32,7 @@ class InvoicePreviewWidget extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         width: double.infinity,
         decoration: BoxDecoration(
+          color: Colors.white,
           // color: AppColors.cardColorSecondary,
           border: Border.all(color: AppColors.blackColor, width: 0.8),
         ),

@@ -42,6 +42,7 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final history = Get.arguments as HistoryProduct;
     var invoiceActionIcons =
         InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
@@ -58,37 +59,59 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
           ? 'Recibo del servicio'
           : 'Recibo del producto',
       appBarActions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+        IconButton(
+            onPressed: () {
+              final screenshotController = Get.find<ScreenshotControllerGetx>();
+              final invoiceController = Get.find<InvoiceController>();
+              bool boolShare = false;
+              if (widget.category == 'service') {
+                boolShare = invoiceController.createHistoryService();
+              } else {
+                boolShare = invoiceController.createHistoryProduct();
+              }
+              if (boolShare) {
+                screenshotController.captureAndShare(0);
+              } else {
+                NotificationHelper.show(
+                  title: 'Error',
+                  message: widget.category == 'service'
+                      ? 'No se pudo crear el recibo del servicio'
+                      : 'No se pudo crear el recibo del producto',
+                  isError: true,
+                );
+              }
+            },
+            icon: const Icon(Icons.share)),
         Obx(() {
-          final screenchotController = Get.find<ScreenshotControllerGetx>();
+          final screenshotController = Get.find<ScreenshotControllerGetx>();
           return IconButton(
             onPressed: () async {
-              if (screenchotController.isConnected == true) {
+              if (screenshotController.isConnected.value == true) {
                 final invoiceController = Get.find<InvoiceController>();
                 bool boolPrint = false;
                 if (widget.category == 'service') {
-                  boolPrint = await invoiceController.createHistoryService();
+                  boolPrint = invoiceController.createHistoryService();
                 } else {
-                  boolPrint = await invoiceController.createHistoryProduct();
+                  boolPrint = invoiceController.createHistoryProduct();
                 }
                 if (boolPrint) {
-                  screenchotController.printTicket();
+                  screenshotController.printTicket();
                 }
               } else {
                 Get.toNamed(AppRoutes.bluetoohConnect);
               }
             },
-            icon: screenchotController.isConnected.value
+            icon: screenshotController.isConnected.value
                 ? const Icon(Icons.print)
                 : const Icon(Icons.print_disabled),
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all<Color>(
-                screenchotController.isConnected.value
+                screenshotController.isConnected.value
                     ? AppColors.successColor
                     : AppColors.errorColor,
               ),
               iconColor: WidgetStateProperty.all<Color>(
-                screenchotController.isConnected.value
+                screenshotController.isConnected.value
                     ? AppColors.blackColor
                     : AppColors.whiteColor,
               ),
@@ -112,7 +135,7 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               ),
               InvoicePreviewWidget(store: store, category: widget.category),
               const SizedBox(
-                height: 20,
+                height: 50,
               ),
             ],
           ),

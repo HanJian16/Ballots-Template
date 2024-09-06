@@ -1,5 +1,9 @@
-import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class HistoryMenuList extends StatelessWidget {
   const HistoryMenuList({super.key});
@@ -12,14 +16,18 @@ class HistoryMenuList extends StatelessWidget {
         'subtitle': 'Productos registrados',
         'icon': Icons.receipt_long_outlined,
         "selected": true,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.historyProductList);
+        }
       },
       {
         'title': 'Historial de Servicios',
         'subtitle': 'Servicios registrados',
         'icon': Icons.receipt_long_outlined,
         "selected": true,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.historyServiceList);
+        }
       }
     ];
     return ScreenContainer(

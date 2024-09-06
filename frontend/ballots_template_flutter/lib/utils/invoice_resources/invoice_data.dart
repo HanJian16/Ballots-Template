@@ -20,13 +20,13 @@ class InvoiceResources {
       {
         'icon': Icons.print_disabled,
         'onPressed': () async {
-          if (controller.isConnected == true) {
+          if (controller.isConnected.value == true) {
             controller.printTicket();
           } else {
             Get.toNamed(AppRoutes.bluetoohConnect);
           }
         },
-        'background': controller.isConnected == true
+        'background': controller.isConnected.value == true
             ? AppColors.successColor
             : AppColors.errorColor,
       },

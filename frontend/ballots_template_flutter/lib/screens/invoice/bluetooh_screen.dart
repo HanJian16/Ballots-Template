@@ -61,7 +61,7 @@ class TestPrint {
     bluetooth.isConnected.then((isConnected) {
       if (isConnected == true) {
         bluetooth.printCustom(
-          '${settingsController.name.value.text}',
+          settingsController.name.value.text,
           Size.extraLarge.val,
           Align.center.val,
         );
@@ -72,7 +72,7 @@ class TestPrint {
           Size.medium.val,
         );
         bluetooth.printLeftRight(
-          'Direccion: ${settingsController.direction.value.text}',
+          'Dirección: ${settingsController.direction.value.text}',
           'Correo: ${settingsController.email.value.text}',
           Size.medium.val,
         );
@@ -95,12 +95,12 @@ class TestPrint {
           Align.left.val,
         );
         bluetooth.printCustom(
-          'Telefono: ${invoiceController.client.value?.phone}',
+          'Teléfono: ${invoiceController.client.value?.phone}',
           Size.medium.val,
           Align.left.val,
         );
         bluetooth.printCustom(
-          'Direccion: ${invoiceController.client.value?.address}',
+          'Dirección: ${invoiceController.client.value?.address}',
           Size.medium.val,
           Align.left.val,
         );
@@ -112,12 +112,12 @@ class TestPrint {
         );
         bluetooth.printNewLine();
         bluetooth.printCustom(
-          '${invoiceController.type == 'product' ? 'Productos' : 'Servicios'}',
+          invoiceController.type == 'product' ? 'Productos' : 'Servicios',
           Size.boldMedium.val,
           Align.center.val,
         );
         bluetooth.printNewLine();
-        if (invoiceController.type == 'product')
+        if (invoiceController.type == 'product') {
           invoiceController.listProducts.asMap().entries.forEach((entry) {
             bluetooth.printCustom(
               '${entry.value['name']}',
@@ -145,7 +145,8 @@ class TestPrint {
               Align.left.val,
             );
           });
-        if (invoiceController.type == 'service')
+        }
+        if (invoiceController.type == 'service') {
           invoiceController.listServices.asMap().entries.forEach((entry) {
             bluetooth.printCustom(
               '${entry.value['name']}',
@@ -173,6 +174,7 @@ class TestPrint {
               Align.left.val,
             );
           });
+        }
         bluetooth.printNewLine();
         bluetooth.printCustom(
           'Total: ${invoiceController.total.value}',
@@ -195,12 +197,13 @@ class TestPrint {
           Align.center.val,
         );
         bluetooth.printNewLine();
-        if (invoiceController.boolObservations.value)
+        if (invoiceController.boolObservations.value) {
           bluetooth.printCustom(
             'Observaciones:\n${invoiceController.observations.value}',
             1,
             Align.left.val,
           );
+        }
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         bluetooth.printCustom(
@@ -209,18 +212,18 @@ class TestPrint {
           Align.center.val,
         );
         bluetooth.printCustom(
-          '${settingsController.nameOfFirm.value.text}',
+          settingsController.nameOfFirm.value.text,
           Size.medium.val,
           Align.center.val,
         );
         bluetooth.printCustom(
-          '${settingsController.positionOfFirm.value.text}',
+          settingsController.positionOfFirm.value.text,
           Size.medium.val,
           Align.center.val,
         );
         bluetooth.printNewLine();
         bluetooth.printCustom(
-          '${invoiceController.date.value}',
+          invoiceController.date.value,
           Size.medium.val,
           Align.right.val,
         );
