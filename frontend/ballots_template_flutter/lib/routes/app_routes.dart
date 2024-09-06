@@ -31,6 +31,10 @@ class AppRoutes {
   static const addInBallotClient = '/listSelection/client';
   //*************************************************************************
   static const bluetoohConnect = '/bluetooth/connect';
+  //*************************************************************************
+  static const history = '/history';
+  static const historyProduct = '/history/product';
+  static const historyService = '/history/service';
 
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
@@ -97,6 +101,7 @@ class AppRoutes {
         addInBallot: true,
       ),
     ),
-    GetPage(name: bluetoohConnect, page: () => const BluetoohScreen())
+    GetPage(name: bluetoohConnect, page: () => const BluetoohScreen()),
+    GetPage(name: history, page: () => const HistoryMenuList()),
   ];
 }

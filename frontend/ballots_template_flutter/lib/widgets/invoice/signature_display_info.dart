@@ -1,4 +1,6 @@
+import 'package:ballots_template_flutter/controllers/index.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:intl/intl.dart';
 
@@ -22,6 +24,9 @@ class SignatureDisplayInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
+    final invoiceController = Get.find<InvoiceController>();
+    invoiceController.date.value = formatDate(DateTime.now());
+
     return Column(
       children: [
         Padding(
@@ -50,7 +55,7 @@ class SignatureDisplayInfo extends StatelessWidget {
         Container(
           alignment: Alignment.bottomRight,
           width: double.infinity,
-          child: Text(formatDate(DateTime.now()), style: theme.bodySmall),
+          child: Text(invoiceController.date.value, style: theme.bodySmall),
         ),
       ],
     );

@@ -58,11 +58,31 @@ class DatabaseHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS history (
+      CREATE TABLE IF NOT EXISTS historyProduct (
         id INTEGER PRIMARY KEY,
         storeId INTEGER,
+        productList TEXT,
+        clientId INTEGER,
+        total NUMERIC,
+        descuento NUMERIC,
+        totalPay NUMERIC,
+        observations TEXT,
         date TEXT,
-        total TEXT,
+        Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS historyService (
+        id INTEGER PRIMARY KEY,
+        storeId INTEGER,
+        serviceList TEXT,
+        clientId INTEGER,
+        total NUMERIC,
+        descuento NUMERIC,
+        totalPay NUMERIC,
+        observations TEXT,
+        date TEXT,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');

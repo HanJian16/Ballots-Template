@@ -4,3 +4,4 @@ export 'home/index.dart';
 export 'invoice/index.dart';
 export 'registrations/index.dart';
 export 'settings/index.dart';
+export 'history/index.dart';

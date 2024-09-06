@@ -11,9 +11,22 @@ Future<Store?> getStore() async {
   return Store.fromMap(data);
 }
 
-Future<List<Map<String, dynamic>>> getHistory() async {
+Future<List<HistoryProduct>> getHistoryProducts() async {
   final db = await DatabaseHelper().database;
-  return await db.query('history');
+  final listData = await db.query('historyProduct');
+
+  final historyProducts =
+      listData.map((e) => HistoryProduct.fromMap(e)).toList();
+  return historyProducts;
+}
+
+Future<List<HistoryService>> getHistoryServices() async {
+  final db = await DatabaseHelper().database;
+  final listData = await db.query('historyService');
+
+  final historyServices =
+      listData.map((e) => HistoryService.fromMap(e)).toList();
+  return historyServices;
 }
 
 Future<List<Product>> getProducts() async {

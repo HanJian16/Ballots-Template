@@ -22,7 +22,9 @@ class InvoicePreviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     final InvoiceController invoiceController = Get.find<InvoiceController>();
-    final ScreenshotControllerGetx screenshotController = Get.find<ScreenshotControllerGetx>();
+    final ScreenshotControllerGetx screenshotController =
+        Get.find<ScreenshotControllerGetx>();
+    invoiceController.type = category;
 
     return Screenshot(
       controller: screenshotController.screenshotController,
@@ -63,10 +65,8 @@ class InvoicePreviewWidget extends StatelessWidget {
                         children: [
                           Text('Total: ${invoiceController.total}'),
                           Text('Descuento: ${invoiceController.descuento}'),
-                          Text(
-                            'Total a pagar: ${invoiceController.totalPay}',
-                            style: theme.titleLarge
-                          ),
+                          Text('Total a pagar: ${invoiceController.totalPay}',
+                              style: theme.titleLarge),
                         ],
                       ),
                     );
@@ -75,7 +75,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 Obx(
                   () {
                     final appear = invoiceController.boolObservations.value;
-      
+
                     return Container(
                       padding: appear
                           ? const EdgeInsets.symmetric(vertical: 20)

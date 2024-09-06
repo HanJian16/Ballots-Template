@@ -64,7 +64,16 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
           return IconButton(
             onPressed: () async {
               if (screenchotController.isConnected == true) {
-                screenchotController.printTicket();
+                final invoiceController = Get.find<InvoiceController>();
+                bool boolPrint = false;
+                if (widget.category == 'service') {
+                  boolPrint = await invoiceController.createHistoryService();
+                } else {
+                  boolPrint = await invoiceController.createHistoryProduct();
+                }
+                if (boolPrint) {
+                  screenchotController.printTicket();
+                }
               } else {
                 Get.toNamed(AppRoutes.bluetoohConnect);
               }

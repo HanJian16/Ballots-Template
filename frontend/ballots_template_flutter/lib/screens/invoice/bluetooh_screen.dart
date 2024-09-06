@@ -3,7 +3,6 @@ import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class BluetoohScreen extends StatelessWidget {
   const BluetoohScreen({super.key});
@@ -54,12 +53,6 @@ class BluetoohScreen extends StatelessWidget {
 }
 
 class TestPrint {
-  String formatDate(DateTime dateTime) {
-    // Define el formato que deseas: día/mes/año hora:minuto
-    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
-    return formatter.format(dateTime);
-  }
-
   BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
   final settingsController = Get.find<SettingsController>();
   final invoiceController = Get.find<InvoiceController>();
@@ -119,7 +112,67 @@ class TestPrint {
         );
         bluetooth.printNewLine();
         bluetooth.printCustom(
-            'Productos', Size.boldMedium.val, Align.center.val);
+          '${invoiceController.type == 'product' ? 'Productos' : 'Servicios'}',
+          Size.boldMedium.val,
+          Align.center.val,
+        );
+        bluetooth.printNewLine();
+        if (invoiceController.type == 'product')
+          invoiceController.listProducts.asMap().entries.forEach((entry) {
+            bluetooth.printCustom(
+              '${entry.value['name']}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Cant:                             ${entry.value['amount'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Valor:                         S/.${entry.value['value'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Total:                         S/.${entry.value['total'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              '------------------------------------',
+              1,
+              Align.left.val,
+            );
+          });
+        if (invoiceController.type == 'service')
+          invoiceController.listServices.asMap().entries.forEach((entry) {
+            bluetooth.printCustom(
+              '${entry.value['name']}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Cant:                             ${entry.value['amount'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Valor:                         S/.${entry.value['value'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              'Total:                         S/.${entry.value['total'].toString()}',
+              Size.medium.val,
+              Align.left.val,
+            );
+            bluetooth.printCustom(
+              '------------------------------------',
+              1,
+              Align.left.val,
+            );
+          });
         bluetooth.printNewLine();
         bluetooth.printCustom(
           'Total: ${invoiceController.total.value}',
@@ -142,6 +195,12 @@ class TestPrint {
           Align.center.val,
         );
         bluetooth.printNewLine();
+        if (invoiceController.boolObservations.value)
+          bluetooth.printCustom(
+            'Observaciones:\n${invoiceController.observations.value}',
+            1,
+            Align.left.val,
+          );
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         bluetooth.printCustom(
@@ -161,7 +220,7 @@ class TestPrint {
         );
         bluetooth.printNewLine();
         bluetooth.printCustom(
-          '${formatDate(DateTime.now())}',
+          '${invoiceController.date.value}',
           Size.medium.val,
           Align.right.val,
         );

@@ -80,7 +80,8 @@ getListTileData() {
       'icon': Icons.history,
       "selected": true,
       "onTap": () {
-        navigateToAnotherScreen(() {}, 'Historial');
+        navigateToAnotherScreen(
+            () => Get.toNamed(AppRoutes.history), 'Historial');
       }
     },
     {
