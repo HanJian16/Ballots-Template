@@ -10,13 +10,14 @@ import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 void main() async {
   await GetStorage.init();
+
   await dotenv.load();
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  
+
   runApp(const MyApp());
 }
 

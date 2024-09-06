@@ -7,12 +7,12 @@ environment:
   sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
+  blue_thermal_printer: ^1.2.3
   dio: ^5.6.0
   file_picker: ^8.1.2
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
-  flutter_launcher_icons: ^0.13.1
   get: ^4.6.6
   get_storage: ^2.1.1
   google_fonts: ^6.2.1
@@ -21,9 +21,7 @@ dependencies:
   intl: ^0.19.0
   path: ^1.9.0
   path_provider: ^2.1.4
-  pdf: ^3.11.1
   permission_handler: ^11.3.1
-  printing: ^5.13.2
   screenshot: ^3.0.0
   share_plus: ^10.0.2
   signature: ^5.5.0
@@ -45,3 +43,4 @@ flutter:
   assets:
     - .env
     - assets/gifs/
+    - assets/images/

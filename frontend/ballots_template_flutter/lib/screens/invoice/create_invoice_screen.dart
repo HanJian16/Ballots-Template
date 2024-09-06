@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/utils/index.dart';
@@ -41,30 +40,8 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
     invoiceController.deleteAll();
   }
 
-  Widget _buildAppBarActions(List<Map<String, dynamic>> icons) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: Row(
-        children: icons.map((iconData) {
-          return IconButton(
-            icon: Icon(
-              iconData['icon'] as IconData,
-              color: iconData['color'] ?? AppColors.whiteColor,
-            ),
-            onPressed: iconData['onPressed'] as VoidCallback?,
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(
-                  iconData['background'] ?? AppColors.cardColorSecondary),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    // TextTheme theme = Theme.of(context).textTheme;
     var invoiceActionIcons =
         InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
@@ -80,7 +57,36 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
       title: widget.category == 'service'
           ? 'Recibo del servicio'
           : 'Recibo del producto',
-      appBarActions: [_buildAppBarActions(InvoiceResources.invoiceIcons)],
+      appBarActions: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+        Obx(() {
+          final screenchotController = Get.find<ScreenshotControllerGetx>();
+          return IconButton(
+            onPressed: () async {
+              if (screenchotController.isConnected == true) {
+                screenchotController.printTicket();
+              } else {
+                Get.toNamed(AppRoutes.bluetoohConnect);
+              }
+            },
+            icon: screenchotController.isConnected.value
+                ? const Icon(Icons.print)
+                : const Icon(Icons.print_disabled),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all<Color>(
+                screenchotController.isConnected.value
+                    ? AppColors.successColor
+                    : AppColors.errorColor,
+              ),
+              iconColor: WidgetStateProperty.all<Color>(
+                screenchotController.isConnected.value
+                    ? AppColors.blackColor
+                    : AppColors.whiteColor,
+              ),
+            ),
+          );
+        })
+      ],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(

@@ -6,14 +6,14 @@ class ScreenContainer extends StatelessWidget {
   const ScreenContainer({
     super.key,
     required this.children,
-    this.appBarChildren,
     this.appBarActions,
     this.backgroundColor,
-     this.appBarHeight = kToolbarHeight, this.floatingActionButton, this.title,
+    this.appBarHeight = kToolbarHeight,
+    this.floatingActionButton,
+    this.title,
   });
 
   final Widget children;
-  final Widget? appBarChildren;
   final List<Widget>? appBarActions;
   final Color? backgroundColor;
   final double appBarHeight;
@@ -27,18 +27,22 @@ class ScreenContainer extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: title != null
           ? PreferredSize(
-            preferredSize: Size.fromHeight(appBarHeight),
-            child: AppBar(
+              preferredSize: Size.fromHeight(appBarHeight),
+              child: AppBar(
                 elevation: 0,
                 scrolledUnderElevation: 0,
                 backgroundColor: backgroundColor,
                 title: FittedBox(
                   fit: BoxFit.fitWidth,
-                  child: Text(title!, style: theme.headlineLarge?.copyWith(color: AppColors.whiteColor),),
+                  child: Text(
+                    title!,
+                    style: theme.headlineLarge
+                        ?.copyWith(color: AppColors.whiteColor),
+                  ),
                 ),
                 actions: appBarActions ?? [],
               ),
-          )
+            )
           : null,
       body: SafeArea(
         child: GestureDetector(

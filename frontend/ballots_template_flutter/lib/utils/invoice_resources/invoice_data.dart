@@ -10,8 +10,7 @@ import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class InvoiceResources {
   static List<Map<String, dynamic>> get invoiceIcons {
-    final ScreenshotControllerGetx screenshotController =
-        Get.find<ScreenshotControllerGetx>();
+    final controller = Get.find<ScreenshotControllerGetx>();
     return [
       {
         'icon': Icons.share,
@@ -20,10 +19,16 @@ class InvoiceResources {
       },
       {
         'icon': Icons.print_disabled,
-        'onPressed': () {
-          screenshotController.captureWidget();
+        'onPressed': () async {
+          if (controller.isConnected == true) {
+            controller.printTicket();
+          } else {
+            Get.toNamed(AppRoutes.bluetoohConnect);
+          }
         },
-        'background': AppColors.errorColor,
+        'background': controller.isConnected == true
+            ? AppColors.successColor
+            : AppColors.errorColor,
       },
     ];
   }
