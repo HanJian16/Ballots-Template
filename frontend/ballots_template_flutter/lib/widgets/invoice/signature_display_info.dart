@@ -59,17 +59,15 @@ class SignatureDisplayInfo extends StatelessWidget {
             ),
           ),
         ),
-        Obx(() {
-          return Container(
-            alignment: Alignment.bottomRight,
-            width: double.infinity,
-            child: Text(
-                historyId != null
-                    ? invoiceController.date.value
-                    : formatDate(DateTime.now()),
-                style: theme.bodySmall),
-          );                                                                                                                                                                              
-        })
+        Container(
+          alignment: Alignment.bottomRight,
+          width: double.infinity,
+          child: Text(
+              historyId != null
+                  ? invoiceController.date.value
+                  : formatDate(DateTime.now()),
+              style: theme.bodySmall),
+        ),
       ],
     );
   }
