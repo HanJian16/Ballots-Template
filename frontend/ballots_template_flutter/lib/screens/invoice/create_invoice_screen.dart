@@ -63,16 +63,22 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
             onPressed: () async {
               final screenshotController = Get.find<ScreenshotControllerGetx>();
               final invoiceController = Get.find<InvoiceController>();
-              final isShared = await screenshotController.captureAndShare(0);
+              int invoiceId = 0;
+              if (widget.category == 'service') {
+                final listProdcts = await getHistoryProducts();
+                invoiceId = listProdcts.isNotEmpty ? listProdcts.length + 1 : 0;
+              } else if (widget.category == 'product') {
+                final listServices = await getHistoryServices();
+                invoiceId =
+                    listServices.isNotEmpty ? listServices.length + 1 : 0;
+              }
+              final isShared =
+                  await screenshotController.captureAndShare(invoiceId);
               if (isShared) {
-                if (isShared &&
-                    widget.category == 'service' &&
-                    historyId == null) {
+                if (widget.category == 'service' && historyId == null) {
                   invoiceController.createHistoryService();
                   Get.back();
-                } else if (isShared &&
-                    widget.category == 'service' &&
-                    historyId == null) {
+                } else if (widget.category == 'service' && historyId == null) {
                   invoiceController.createHistoryProduct();
                   Get.back();
                 }

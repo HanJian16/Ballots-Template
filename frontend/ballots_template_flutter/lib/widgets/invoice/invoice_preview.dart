@@ -50,7 +50,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 const Divider(
                   color: AppColors.blackColor,
                 ),
-                const ClientInfoWidget(),
+                ClientInfoWidget(type: category),
                 const Divider(
                   color: AppColors.blackColor,
                 ),

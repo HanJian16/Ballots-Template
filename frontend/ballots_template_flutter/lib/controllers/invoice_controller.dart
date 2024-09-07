@@ -12,7 +12,8 @@ class InvoiceController extends GetxController {
   Rx<double> totalPay = 0.0.obs;
   Rx<double> descuento = 0.0.obs;
   final client = Rx<Client?>(null);
-  final invoiceId = 0.obs;
+  final invoiceProductId = 0.obs;
+  final invoiceServiceId = 0.obs;
   final checkbox = true.obs;
   final boolObservations = false.obs;
   final observations = ''.obs;
@@ -62,17 +63,22 @@ class InvoiceController extends GetxController {
     this.client.value = client;
   }
 
-  void deleteAll() {
+  void deleteAll() async {
     listProducts.value = [];
     listServices.value = [];
     total.value = 0.0;
     totalPay.value = 0.0;
     descuento.value = 0.0;
     client.value = null;
-    invoiceId.value = 0;
     checkbox.value = true;
     boolObservations.value = false;
     observations.value = '';
+
+    final historyProductDB = await getHistoryProducts();
+    final historyServiceDB = await getHistoryServices();
+
+    invoiceProductId.value = historyProductDB.length + 1;
+    invoiceServiceId.value = historyServiceDB.length + 1;
   }
 
   bool createHistoryProduct() {
