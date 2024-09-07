@@ -1,4 +1,6 @@
 import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:ballots_template_flutter/db/CRUD/delete.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ballots_template_flutter/theme/index.dart';
@@ -9,9 +11,13 @@ class InvoiceToolBar extends StatelessWidget {
     super.key,
     this.list,
     this.see,
+    required this.type,
+    required this.id,
   });
   final List<Map<String, dynamic>>? list;
   final bool? see;
+  final String type;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +26,32 @@ class InvoiceToolBar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            final invoiceController = Get.find<InvoiceController>();
-            invoiceController.deleteAll();
+            if (see == true) {
+              final invoiceController = Get.find<InvoiceController>();
+              invoiceController.deleteAll();
+            } else {
+              final listController = Get.find<ListController>();
+              WarningDialogHelper.show(
+                title: '¡Atento!',
+                message: '¿Estás seguro de querer\nborrar esta boleta?',
+                confirmText: 'Borrar',
+                cancelText: 'Cancelar',
+                confirmOnPress: () async {
+                  if (type == 'product') {
+                    await deleteHistoryProduct(id);
+                    listController.getHistoryProductsDb();
+                  } else if (type == 'service') {
+                    await deleteHistoryService(id);
+                    listController.getHistoryServicesDb();
+                  }
+                  Get.back();
+                  Get.back();
+                },
+                cancelOnPress: () {
+                  Get.back();
+                },
+              );
+            }
           },
           icon: const Icon(
             Icons.delete,

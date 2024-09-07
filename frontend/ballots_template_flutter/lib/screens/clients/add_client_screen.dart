@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/db/index.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -101,7 +102,24 @@ class AddClientScreen extends StatelessWidget {
                             text: 'Borrar',
                             status: 1,
                             customColor: AppColors.errorColor,
-                            onPressed: () {},
+                            onPressed: () {
+                              WarningDialogHelper.show(
+                                title: '¡Atento!',
+                                message:
+                                    '¿Estás seguro de querer\nborrar este cliente?',
+                                confirmText: 'Borrar',
+                                cancelText: 'Cancelar',
+                                confirmOnPress: () async {
+                                  await deleteClient(id);
+                                  listClientsController.getClientsDb();
+                                  Get.back();
+                                  Get.back();
+                                },
+                                cancelOnPress: () {
+                                  Get.back();
+                                },
+                              );
+                            },
                           ),
                         ),
                         const SizedBox(width: 20),

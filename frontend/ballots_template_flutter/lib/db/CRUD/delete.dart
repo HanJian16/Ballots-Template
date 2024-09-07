@@ -34,3 +34,21 @@ Future<void> deleteService(int id) async {
     whereArgs: [id],
   );
 }
+
+Future<void> deleteHistoryProduct(int id) async {
+  final db = await DatabaseHelper().database;
+  await db.delete(
+    'historyProduct',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
+
+Future<void> deleteHistoryService(int id) async {
+  final db = await DatabaseHelper().database;
+  await db.delete(
+    'historyService',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}

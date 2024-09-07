@@ -184,6 +184,8 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               InvoiceToolBar(
                 list: invoiceActionIcons,
                 see: historyId == null,
+                type: widget.category,
+                id: historyId,
               ),
               const SizedBox(
                 height: 20,
