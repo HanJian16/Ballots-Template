@@ -22,10 +22,6 @@ class AddProductScreen extends StatelessWidget {
       {
         'controller': productController.productName,
         'hintText': 'Nombre del producto',
-        'suffixIcon': IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.qr_code_scanner),
-        ),
         'validator': (value) => productController.validateProductName(value!),
       },
       {
@@ -72,7 +68,6 @@ class AddProductScreen extends StatelessWidget {
                           controller: field['controller'],
                           decoration: InputDecoration(
                             hintText: field['hintText'],
-                            suffixIcon: field['suffixIcon'],
                           ),
                           keyboardType: field['keyboardType'],
                           validator: (value) => field['validator'](value!),

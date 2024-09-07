@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/screens/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
