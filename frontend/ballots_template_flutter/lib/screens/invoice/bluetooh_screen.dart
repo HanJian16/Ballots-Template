@@ -10,7 +10,9 @@ class BluetoohScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenshotController = Get.find<ScreenshotControllerGetx>();
+    screenshotController.verifyBluetooh();
     screenshotController.getBoolConnect();
+
     return ScreenContainer(
       title: 'Impresora térmica',
       appBarActions: [

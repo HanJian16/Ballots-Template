@@ -64,14 +64,14 @@ class SettingsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 25),
-                CustomBtn(
-                  text: 'Añadir logotipo',
-                  onPressed: () {
-                    Get.to(() => CompanyLogoUploadScreen());
-                  },
-                  status: 1,
-                ),
+                // const SizedBox(height: 25),
+                // CustomBtn(
+                //   text: 'Añadir logotipo',
+                //   onPressed: () {
+                //     Get.to(() => CompanyLogoUploadScreen());
+                //   },
+                //   status: 1,
+                // ),
                 const SizedBox(height: 20),
                 ...formFieldSettings.map(
                   (field) {

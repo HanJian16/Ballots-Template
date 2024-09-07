@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
@@ -55,6 +57,29 @@ class ScreenshotControllerGetx extends GetxController {
         isError: true,
       );
       return false;
+    }
+  }
+
+  void verifyBluetooh() async {
+    bool? isBluetoohOn = await bluetooth.isOn;
+
+    if (isBluetoohOn != null && isBluetoohOn == false) {
+      //? Si el bluietooh esta apagado pide permisos para encenderlo
+
+      //* Primero verifica si el permiso para acceder a bluetooh esta habilitado
+      PermissionStatus permissionStatus = await Permission.bluetooth.request();
+
+      if (permissionStatus.isGranted) {
+        //? Si el permiso esta habilitado se enciende el bluietooh
+        await FlutterBluePlus.turnOn();
+        getBoolConnect();
+      } else if (permissionStatus.isDenied) {
+        NotificationHelper.show(
+          title: 'Error',
+          message: 'Has denegado el acceso a Bluetooth',
+          isError: true,
+        );
+      }
     }
   }
 
