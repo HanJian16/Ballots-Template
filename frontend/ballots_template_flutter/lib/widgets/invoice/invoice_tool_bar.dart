@@ -8,8 +8,10 @@ class InvoiceToolBar extends StatelessWidget {
   const InvoiceToolBar({
     super.key,
     this.list,
+    this.see,
   });
   final List<Map<String, dynamic>>? list;
+  final bool? see;
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +32,20 @@ class InvoiceToolBar extends StatelessWidget {
             minHeight: 40,
           ),
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all<Color>(AppColors.errorColor),
+            backgroundColor:
+                WidgetStateProperty.all<Color>(AppColors.errorColor),
             shadowColor: WidgetStateProperty.all(Colors.black),
             elevation: WidgetStateProperty.all(8),
           ),
         ),
-        if (list != null)
+        if (list != null && see == true)
           Row(
             children: list!.map((item) {
               final icon = item['icon'];
               final onPressed = item['onPressed'];
               final color = item['color'] ?? AppColors.whiteColor;
-              final background = item['background'] ?? AppColors.cardColorSecondary;
+              final background =
+                  item['background'] ?? AppColors.cardColorSecondary;
               return IconButton(
                 alignment: Alignment.center,
                 onPressed: onPressed,

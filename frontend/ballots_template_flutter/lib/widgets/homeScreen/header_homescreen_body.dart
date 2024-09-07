@@ -45,11 +45,15 @@ class HeaderHomeScreenBody extends StatelessWidget {
                 final screenshotController =
                     Get.find<ScreenshotControllerGetx>();
                 return CustomButton(
-                  icon: Icons.print_disabled,
+                  icon: screenshotController.isConnected.value
+                      ? Icons.print
+                      : Icons.print_disabled,
                   backgroundColor: screenshotController.isConnected.value
                       ? AppColors.successColor
                       : AppColors.errorColor,
-                  color: AppColors.whiteColor,
+                  color: screenshotController.isConnected.value
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
                   onPressed: () => Get.toNamed(AppRoutes.bluetoohConnect),
                 );
               },

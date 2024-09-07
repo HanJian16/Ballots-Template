@@ -96,7 +96,9 @@ class ListController extends GetxController {
 
   Future<List<HistoryProduct>> getHistoryProductsDb() async {
     final historyProductDB = await getHistoryProducts();
+    print(historyProductDB);
     listHistoryProduct.assignAll(historyProductDB);
+    print(listHistoryProduct);
     return listHistoryProduct;
   }
 
@@ -125,12 +127,12 @@ class ListController extends GetxController {
     } else if (type == 'history-product') {
       Get.toNamed(
         AppRoutes.productInvoice,
-        arguments: item,
+        arguments: item.id,
       );
     } else if (type == 'history-service') {
       Get.toNamed(
         AppRoutes.serviceInvoice,
-        arguments: item,
+        arguments: item.id,
       );
     }
   }

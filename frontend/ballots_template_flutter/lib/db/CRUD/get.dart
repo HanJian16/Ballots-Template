@@ -88,3 +88,27 @@ Future<Service?> getServiceById(int id) async {
   // Si el resultado no está vacío, lo convierte en una instancia de Service.
   return result.isNotEmpty ? Service.fromMap(result.first) : null;
 }
+
+Future<HistoryProduct?> getHistoryProductById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'historyProduct',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+
+  // Si el resultado no está vacío, lo convierte en una instancia de HistoryProduct.
+  return result.isNotEmpty ? HistoryProduct.fromMap(result.first) : null;
+}
+
+Future<HistoryService?> getHistoryServiceById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'historyService',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+
+  // Si el resultado no está vacío, lo convierte en una instancia de HistoryService.
+  return result.isNotEmpty ? HistoryService.fromMap(result.first) : null;
+}

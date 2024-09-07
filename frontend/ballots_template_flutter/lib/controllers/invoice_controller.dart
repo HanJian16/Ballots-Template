@@ -160,4 +160,58 @@ class InvoiceController extends GetxController {
       return false;
     }
   }
+
+  void fillController(int id, String type) async {
+    try {
+      if (type == 'product') {
+        final product = await getHistoryProductById(id);
+        if (product != null) {
+          final clientValue = await getClientById(product.clientId);
+          if (clientValue != null) {
+            final dataList = jsonDecode(product.productList);
+            listProducts.assignAll(dataList);
+            client.value = clientValue;
+            total.value = product.total;
+            descuento.value = product.descuento;
+            totalPay.value = product.totalPay;
+            observations.value = product.observations;
+            date.value = product.date;
+
+            if (product.observations != '') {
+              boolObservations.value = false;
+            } else {
+              boolObservations.value = true;
+            }
+          }
+        }
+      } else if (type == 'service') {
+        final service = await getHistoryServiceById(id);
+        if (service != null) {
+          final clientValue = await getClientById(service.clientId);
+          if (clientValue != null) {
+            final dataList = jsonDecode(service.serviceList);
+            listServices.assignAll(dataList);
+            client.value = clientValue;
+            total.value = service.total;
+            descuento.value = service.descuento;
+            totalPay.value = service.totalPay;
+            observations.value = service.observations;
+            date.value = service.date;
+
+            if (service.observations != '') {
+              boolObservations.value = false;
+            } else {
+              boolObservations.value = true;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      NotificationHelper.show(
+        title: 'Error',
+        message: 'Problemas al cargar el historial de este producto',
+        isError: true,
+      );
+    }
+  }
 }

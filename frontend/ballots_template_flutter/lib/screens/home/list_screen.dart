@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
@@ -31,22 +30,15 @@ class ListScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        List list = [];
-
         if (type == 'client') {
-          list = snapshot.data! as List<Client>;
           controller.filteredList.value = controller.listClients;
         } else if (type == 'product') {
-          list = snapshot.data! as List<Product>;
           controller.filteredList.value = controller.listProducts;
         } else if (type == 'service') {
-          list = snapshot.data! as List<Service>;
           controller.filteredList.value = controller.listServices;
         } else if (type == 'history-product') {
-          list = snapshot.data! as List<HistoryProduct>;
           controller.filteredList.value = controller.listHistoryProduct;
         } else if (type == 'history-service') {
-          list = snapshot.data! as List<HistoryService>;
           controller.filteredList.value = controller.listHistoryService;
         }
 

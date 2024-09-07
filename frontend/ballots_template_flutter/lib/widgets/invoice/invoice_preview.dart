@@ -13,10 +13,12 @@ class InvoicePreviewWidget extends StatelessWidget {
     super.key,
     required this.store,
     required this.category,
+    this.historyId,
   });
 
   final Store? store;
   final String category;
+  final int? historyId;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,9 @@ class InvoicePreviewWidget extends StatelessWidget {
     final ScreenshotControllerGetx screenshotController =
         Get.find<ScreenshotControllerGetx>();
     invoiceController.type = category;
+    if (historyId != null) {
+      invoiceController.fillController(historyId!, category);
+    }
 
     return Screenshot(
       controller: screenshotController.screenshotController,

@@ -9,8 +9,8 @@ class AppRoutes {
   static const signatureSettings = '/settings/signature';
   //*************************************************************************
   static const invoice = '/invoice';
-  static const productInvoice = '/invoice/product/:history';
-  static const serviceInvoice = '/invoice/service/:history';
+  static const productInvoice = '/invoice/product/:historyId';
+  static const serviceInvoice = '/invoice/service/:historyId';
   //*************************************************************************
   static const registrations = '/registrations';
   static const registerProduct = '/registrations/product';

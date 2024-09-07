@@ -25,16 +25,26 @@ class ScreenshotControllerGetx extends GetxController {
     getBoolConnect();
   }
 
-  void captureAndShare(int id) async {
-    final image = await screenshotController.capture();
-    if (image != null) {
-      final directory = await getApplicationDocumentsDirectory();
-      final imagePath = '${directory.path}/boleta-$id.png';
-      final imageFile = File(imagePath);
-      await imageFile.writeAsBytes(image);
-      final xFile =
-          XFile(imagePath, mimeType: 'image/png', name: 'boleta-$id.png');
-      await Share.shareXFiles([xFile], text: 'Aquí tienes la boleta.');
+  Future<bool> captureAndShare(int id) async {
+    try {
+      final image = await screenshotController.capture();
+      if (image != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = '${directory.path}/boleta-$id.png';
+        final imageFile = File(imagePath);
+        await imageFile.writeAsBytes(image);
+        final xFile =
+            XFile(imagePath, mimeType: 'image/png', name: 'boleta-$id.png');
+        final ShareResult response =
+            await Share.shareXFiles([xFile], text: 'Aquí tienes la boleta.');
+
+        if (response.status == ShareResultStatus.dismissed) {
+          return false;
+        }
+      }
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -120,8 +130,14 @@ class ScreenshotControllerGetx extends GetxController {
     );
   }
 
-  Future<void> printTicket() async {
-    TestPrint testPrint = TestPrint();
-    testPrint.sample();
+  Future<bool> printTicket() async {
+    try {
+      TestPrint testPrint = TestPrint();
+      testPrint.sample();
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -42,7 +42,7 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final history = Get.arguments as HistoryProduct;
+    final historyId = Get.arguments;
     var invoiceActionIcons =
         InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
@@ -60,25 +60,22 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
           : 'Recibo del producto',
       appBarActions: [
         IconButton(
-            onPressed: () {
+            onPressed: () async {
               final screenshotController = Get.find<ScreenshotControllerGetx>();
               final invoiceController = Get.find<InvoiceController>();
-              bool boolShare = false;
-              if (widget.category == 'service') {
-                boolShare = invoiceController.createHistoryService();
-              } else {
-                boolShare = invoiceController.createHistoryProduct();
-              }
-              if (boolShare) {
-                screenshotController.captureAndShare(0);
-              } else {
-                NotificationHelper.show(
-                  title: 'Error',
-                  message: widget.category == 'service'
-                      ? 'No se pudo crear el recibo del servicio'
-                      : 'No se pudo crear el recibo del producto',
-                  isError: true,
-                );
+              final isShared = await screenshotController.captureAndShare(0);
+              if (isShared) {
+                if (isShared &&
+                    widget.category == 'service' &&
+                    historyId == null) {
+                  invoiceController.createHistoryService();
+                  Get.back();
+                } else if (isShared &&
+                    widget.category == 'service' &&
+                    historyId == null) {
+                  invoiceController.createHistoryProduct();
+                  Get.back();
+                }
               }
             },
             icon: const Icon(Icons.share)),
@@ -88,14 +85,34 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
             onPressed: () async {
               if (screenshotController.isConnected.value == true) {
                 final invoiceController = Get.find<InvoiceController>();
-                bool boolPrint = false;
-                if (widget.category == 'service') {
-                  boolPrint = invoiceController.createHistoryService();
-                } else {
-                  boolPrint = invoiceController.createHistoryProduct();
-                }
-                if (boolPrint) {
-                  screenshotController.printTicket();
+                bool isPrinted = await screenshotController.printTicket();
+                if (isPrinted) {
+                  if (widget.category == 'service' && historyId == null) {
+                    invoiceController.createHistoryService();
+                  } else if (widget.category == 'product' &&
+                      historyId == null) {
+                    invoiceController.createHistoryProduct();
+                  }
+                  Get.defaultDialog(
+                    middleText: '¿Deseas imprimir una copia?',
+                    confirm: CustomBtn(
+                      text: 'Confirmar',
+                      onPressed: () async {
+                        await screenshotController.printTicket();
+                        Get.back();
+                        Get.back();
+                      },
+                      status: 1,
+                    ),
+                    cancel: CustomBtn(
+                      text: 'Cancelar',
+                      onPressed: () {
+                        Get.back();
+                        Get.back();
+                      },
+                      status: 1,
+                    ),
+                  );
                 }
               } else {
                 Get.toNamed(AppRoutes.bluetoohConnect);
@@ -129,11 +146,16 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               ),
               InvoiceToolBar(
                 list: invoiceActionIcons,
+                see: historyId == null,
               ),
               const SizedBox(
                 height: 20,
               ),
-              InvoicePreviewWidget(store: store, category: widget.category),
+              InvoicePreviewWidget(
+                store: store,
+                category: widget.category,
+                historyId: historyId != null ? historyId! : null,
+              ),
               const SizedBox(
                 height: 50,
               ),
