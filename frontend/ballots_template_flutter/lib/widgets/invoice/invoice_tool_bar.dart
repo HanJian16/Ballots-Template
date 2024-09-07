@@ -12,12 +12,12 @@ class InvoiceToolBar extends StatelessWidget {
     this.list,
     this.see,
     required this.type,
-    required this.id,
+    this.id,
   });
   final List<Map<String, dynamic>>? list;
   final bool? see;
   final String type;
-  final int id;
+  final int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class InvoiceToolBar extends StatelessWidget {
                 cancelText: 'Cancelar',
                 confirmOnPress: () async {
                   if (type == 'product') {
-                    await deleteHistoryProduct(id);
+                    await deleteHistoryProduct(id!);
                     listController.getHistoryProductsDb();
                   } else if (type == 'service') {
-                    await deleteHistoryService(id);
+                    await deleteHistoryService(id!);
                     listController.getHistoryServicesDb();
                   }
                   Get.back();

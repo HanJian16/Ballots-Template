@@ -28,7 +28,7 @@ class SignatureScreenState extends State<SignatureScreen> {
   @override
   void initState() {
     super.initState();
-    _requestPermissions();
+    // _requestPermissions();
     _signatureController.addListener(
       () => setState(() {}),
     );

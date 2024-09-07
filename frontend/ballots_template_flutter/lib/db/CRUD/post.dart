@@ -46,6 +46,7 @@ Future<void> insertHistoryProduct(
   double totalPay,
   String observations,
   String date,
+  String discountType,
 ) async {
   final db = await DatabaseHelper().database;
   await db.insert('historyProduct', <String, dynamic>{
@@ -57,6 +58,7 @@ Future<void> insertHistoryProduct(
     'totalPay': totalPay,
     'observations': observations,
     'date': date,
+    'discountType': discountType,
   });
 }
 
@@ -69,6 +71,7 @@ Future<void> insertHistoryService(
   double totalPay,
   String observations,
   String date,
+  String discountType,
 ) async {
   final db = await DatabaseHelper().database;
   await db.insert('historyService', <String, dynamic>{
@@ -80,6 +83,7 @@ Future<void> insertHistoryService(
     'totalPay': totalPay,
     'observations': observations,
     'date': date,
+    'discountType': discountType,
   });
 }
 

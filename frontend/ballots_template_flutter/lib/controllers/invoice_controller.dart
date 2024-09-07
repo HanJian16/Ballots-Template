@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 import 'package:ballots_template_flutter/db/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
-import 'package:get/get.dart';
 
 class InvoiceController extends GetxController {
   RxList listProducts = [].obs;
@@ -19,6 +20,7 @@ class InvoiceController extends GetxController {
   final observations = ''.obs;
   String type = '';
   final date = ''.obs;
+  final discountType = ''.obs;
 
   @override
   void onInit() {
@@ -39,8 +41,38 @@ class InvoiceController extends GetxController {
       totalPay.value = total.value - descuento.value;
     });
     ever(descuento, (_) {
-      totalPay.value = total.value - descuento.value;
+      if (checkbox.value == true) {
+        // totalPay.value = total.value - descuento.value;
+      } else {}
     });
+  }
+
+  void updateDiscountTypeFromBD(value, id, category) async {
+    dynamic prueba;
+    if (category == 'product') {
+      prueba = await getHistoryProductById(id);
+    } else if (category == 'service') {
+      prueba = await getHistoryServiceById(id);
+    }
+    if (prueba != null) {
+      discountType.value = prueba.discountType;
+    } else {
+      if (value == true) {
+        discountType.value = 'Cantidad';
+      } else {
+        discountType.value = 'Porcentaje';
+      }
+    }
+  }
+
+  void calculateDiscount() {
+    if (checkbox.value == true) {
+      totalPay.value = total.value - descuento.value;
+      discountType.value = 'Cantidad';
+    } else {
+      totalPay.value = total.value - (total.value * descuento.value / 100);
+      discountType.value = 'Porcentaje';
+    }
   }
 
   void updateDate(value) {
@@ -77,6 +109,7 @@ class InvoiceController extends GetxController {
     checkbox.value = true;
     boolObservations.value = false;
     observations.value = '';
+    discountType.value = '';
 
     final historyProductDB = await getHistoryProducts();
     final historyServiceDB = await getHistoryServices();
@@ -106,6 +139,7 @@ class InvoiceController extends GetxController {
       }
 
       final productListJson = jsonEncode(listProducts);
+      checkbox.value = true;
       insertHistoryProduct(
         1,
         productListJson,
@@ -115,6 +149,7 @@ class InvoiceController extends GetxController {
         totalPay.value,
         observations.value,
         date.value,
+        discountType.value,
       );
 
       return true;
@@ -158,6 +193,7 @@ class InvoiceController extends GetxController {
         totalPay.value,
         observations.value,
         date.value,
+        discountType.value,
       );
 
       return true;
@@ -176,7 +212,7 @@ class InvoiceController extends GetxController {
       if (type == 'product') {
         final product = await getHistoryProductById(id);
         if (product != null) {
-        updateDate(product.date);
+          updateDate(product.date);
           final clientValue = await getClientById(product.clientId);
           if (clientValue != null) {
             final dataList = jsonDecode(product.productList);

@@ -8,6 +8,7 @@ class HistoryService {
   final double totalPay;
   final String observations;
   final String date;
+  final String discountType;
 
   HistoryService({
     required this.id,
@@ -19,6 +20,7 @@ class HistoryService {
     required this.totalPay,
     required this.observations,
     required this.date,
+    required this.discountType,
   });
 
   factory HistoryService.fromMap(Map<String, dynamic> map) {
@@ -32,6 +34,7 @@ class HistoryService {
       totalPay: map['totalPay'].toDouble(),
       observations: map['observations'],
       date: map['date'],
+      discountType: map['discountType'],
     );
   }
 }

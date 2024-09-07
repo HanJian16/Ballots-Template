@@ -69,13 +69,33 @@ class InvoicePreviewWidget extends StatelessWidget {
                 ),
                 Obx(
                   () {
+                    var discount = '';
+                    if (invoiceController.checkbox.value == true) {
+                      if (historyId != null) {
+                        invoiceController.updateDiscountTypeFromBD(
+                            invoiceController.checkbox.value, historyId!, category);
+                        if (invoiceController.discountType.value ==
+                            'Porcentaje') {
+                          discount =
+                              'Descuento: ${invoiceController.descuento.toStringAsFixed(0)}%';
+                        } else {
+                          discount =
+                              'Descuento: ${invoiceController.descuento}';
+                        }
+                      } else {
+                        discount = 'Descuento: ${invoiceController.descuento}';
+                      }
+                    } else {
+                      discount =
+                          'Descuento: ${invoiceController.descuento.toStringAsFixed(0)}%';
+                    }
                     return SizedBox(
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text('Total: ${invoiceController.total}'),
-                          Text('Descuento: ${invoiceController.descuento}'),
+                          Text(discount),
                           Text('Total a pagar: ${invoiceController.totalPay}',
                               style: theme.titleLarge),
                         ],

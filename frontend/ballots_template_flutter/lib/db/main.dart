@@ -68,6 +68,7 @@ class DatabaseHelper {
         totalPay NUMERIC,
         observations TEXT,
         date TEXT,
+        discountType TEXT,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
@@ -83,6 +84,7 @@ class DatabaseHelper {
         totalPay NUMERIC,
         observations TEXT,
         date TEXT,
+        discountType TEXT,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
