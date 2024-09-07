@@ -25,7 +25,8 @@ class ScreenshotControllerGetx extends GetxController {
     getBoolConnect();
   }
 
-  Future<bool> captureAndShare(int id) async {
+  Future<bool> captureAndShare(int id, String category) async {
+    bool isShared = false;
     try {
       final image = await screenshotController.capture();
       if (image != null) {
@@ -39,11 +40,20 @@ class ScreenshotControllerGetx extends GetxController {
             await Share.shareXFiles([xFile], text: 'Aquí tienes la boleta.');
 
         if (response.status == ShareResultStatus.dismissed) {
-          return false;
+          isShared = false;
+        } else if (response.status == ShareResultStatus.success) {
+          isShared = true;
+        } else {
+          isShared = false;
         }
       }
-      return true;
+      return isShared;
     } catch (e) {
+      NotificationHelper.show(
+        title: 'Error',
+        message: 'Error al imprimir el boleto',
+        isError: true,
+      );
       return false;
     }
   }

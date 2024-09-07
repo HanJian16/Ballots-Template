@@ -57,20 +57,12 @@ class ListController extends GetxController {
       } else if (type == 'history-product') {
         filteredList.value = listHistoryProduct
             .where((historyProduct) =>
-                historyProduct.date
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) ||
-                historyProduct.totalPay
-                    .toString()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) ||
-                historyProduct.clientId
-                    .toString()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) ||
-                historyProduct.observations
-                    .toLowerCase()
-                    .contains(query.toLowerCase()))
+                historyProduct.id.toString().contains(query))
+            .toList();
+      } else if (type == 'history-service') {
+        filteredList.value = listHistoryService
+            .where((historyService) =>
+                historyService.id.toString().contains(query))
             .toList();
       }
     }
@@ -96,9 +88,7 @@ class ListController extends GetxController {
 
   Future<List<HistoryProduct>> getHistoryProductsDb() async {
     final historyProductDB = await getHistoryProducts();
-    print(historyProductDB);
     listHistoryProduct.assignAll(historyProductDB);
-    print(listHistoryProduct);
     return listHistoryProduct;
   }
 

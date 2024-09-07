@@ -14,11 +14,13 @@ class InvoicePreviewWidget extends StatelessWidget {
     required this.store,
     required this.category,
     this.historyId,
+    this.isHistory = false,
   });
 
   final Store? store;
   final String category;
   final int? historyId;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,10 @@ class InvoicePreviewWidget extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
-                ListForInvoice(type: category),
+                ListForInvoice(
+                  type: category,
+                  isHistory: isHistory,
+                ),
                 Obx(
                   () {
                     return SizedBox(
@@ -102,6 +107,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 if (store != null)
                   SignatureDisplayInfo(
                     store: store,
+                    historyId: historyId,
                   ),
               ],
             ),
@@ -116,8 +122,10 @@ class ListForInvoice extends StatelessWidget {
   const ListForInvoice({
     super.key,
     required this.type,
+    this.isHistory = false,
   });
   final String type;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +142,7 @@ class ListForInvoice extends StatelessWidget {
                     item: entry.value,
                     id: entry.key,
                     type: type,
+                    isHistory: isHistory,
                   );
                 }).toList()
               : listServices.asMap().entries.map((entry) {
@@ -141,6 +150,7 @@ class ListForInvoice extends StatelessWidget {
                     item: entry.value,
                     id: entry.key,
                     type: type,
+                    isHistory: isHistory,
                   );
                 }).toList(),
         );
@@ -155,10 +165,12 @@ class ListForInvoiceItem extends StatelessWidget {
     required this.id,
     required this.item,
     required this.type,
+    this.isHistory = false,
   });
   final Map item;
   final int id;
   final String type;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -175,16 +187,17 @@ class ListForInvoiceItem extends StatelessWidget {
               item['name'],
               style: theme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            IconButton(
-              onPressed: () {
-                if (type == 'product') {
-                  invoiceController.removeProductList(id);
-                } else if (type == 'service') {
-                  invoiceController.removeServiceList(id);
-                }
-              },
-              icon: const Icon(Icons.close),
-            )
+            if (isHistory == false)
+              IconButton(
+                onPressed: () {
+                  if (type == 'product') {
+                    invoiceController.removeProductList(id);
+                  } else if (type == 'service') {
+                    invoiceController.removeServiceList(id);
+                  }
+                },
+                icon: const Icon(Icons.close),
+              )
           ],
         ),
         Row(

@@ -11,21 +11,28 @@ class SignatureDisplayInfo extends StatelessWidget {
   const SignatureDisplayInfo({
     super.key,
     this.store,
+    this.historyId,
   });
 
   final Store? store;
+  final dynamic historyId;
 
   String formatDate(DateTime dateTime) {
     // Define el formato que deseas: día/mes/año hora:minuto
+    final invoiceController = Get.find<InvoiceController>();
     final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
-    return formatter.format(dateTime);
+    var dateFormat = formatter.format(dateTime);
+    if (historyId == null) {
+      invoiceController.updateDate(dateFormat);
+    } else {}
+    return dateFormat;
   }
 
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     final invoiceController = Get.find<InvoiceController>();
-    invoiceController.date.value = formatDate(DateTime.now());
+    // invoiceController.date.value = formatDate(DateTime.now());
 
     return Column(
       children: [
@@ -52,11 +59,17 @@ class SignatureDisplayInfo extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.bottomRight,
-          width: double.infinity,
-          child: Text(invoiceController.date.value, style: theme.bodySmall),
-        ),
+        Obx(() {
+          return Container(
+            alignment: Alignment.bottomRight,
+            width: double.infinity,
+            child: Text(
+                historyId != null
+                    ? invoiceController.date.value
+                    : formatDate(DateTime.now()),
+                style: theme.bodySmall),
+          );                                                                                                                                                                              
+        })
       ],
     );
   }

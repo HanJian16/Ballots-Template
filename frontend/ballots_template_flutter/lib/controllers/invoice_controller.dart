@@ -43,6 +43,10 @@ class InvoiceController extends GetxController {
     });
   }
 
+  void updateDate(value) {
+    date.value = value;
+  }
+
   void addProduct(Map<String, dynamic> product) {
     listProducts.add(product);
   }
@@ -172,9 +176,11 @@ class InvoiceController extends GetxController {
       if (type == 'product') {
         final product = await getHistoryProductById(id);
         if (product != null) {
+        updateDate(product.date);
           final clientValue = await getClientById(product.clientId);
           if (clientValue != null) {
             final dataList = jsonDecode(product.productList);
+
             listProducts.assignAll(dataList);
             client.value = clientValue;
             total.value = product.total;
@@ -182,6 +188,7 @@ class InvoiceController extends GetxController {
             totalPay.value = product.totalPay;
             observations.value = product.observations;
             date.value = product.date;
+            invoiceProductId.value = product.id;
 
             if (product.observations != '') {
               boolObservations.value = false;
@@ -193,6 +200,7 @@ class InvoiceController extends GetxController {
       } else if (type == 'service') {
         final service = await getHistoryServiceById(id);
         if (service != null) {
+          updateDate(service.date);
           final clientValue = await getClientById(service.clientId);
           if (clientValue != null) {
             final dataList = jsonDecode(service.serviceList);
@@ -203,6 +211,7 @@ class InvoiceController extends GetxController {
             totalPay.value = service.totalPay;
             observations.value = service.observations;
             date.value = service.date;
+            invoiceServiceId.value = service.id;
 
             if (service.observations != '') {
               boolObservations.value = false;

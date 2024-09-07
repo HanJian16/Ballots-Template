@@ -46,15 +46,17 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
     var invoiceActionIcons =
         InvoiceResources.getInvoiceActionIcons(category: widget.category);
     return ScreenContainer(
-      floatingActionButton: AddItemBtn(
-        onPress: () {
-          if (widget.category == 'service') {
-            Get.toNamed(AppRoutes.addInBallotService);
-          } else {
-            Get.toNamed(AppRoutes.addInBallotProduct);
-          }
-        },
-      ),
+      floatingActionButton: historyId == null
+          ? AddItemBtn(
+              onPress: () {
+                if (widget.category == 'service') {
+                  Get.toNamed(AppRoutes.addInBallotService);
+                } else {
+                  Get.toNamed(AppRoutes.addInBallotProduct);
+                }
+              },
+            )
+          : null,
       title: widget.category == 'service'
           ? 'Recibo del servicio'
           : 'Recibo del producto',
@@ -64,79 +66,108 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               final screenshotController = Get.find<ScreenshotControllerGetx>();
               final invoiceController = Get.find<InvoiceController>();
               int invoiceId = 0;
-              if (widget.category == 'service') {
-                final listProdcts = await getHistoryProducts();
-                invoiceId = listProdcts.isNotEmpty ? listProdcts.length + 1 : 0;
-              } else if (widget.category == 'product') {
+              if (widget.category == 'product') {
+                final listProducts = await getHistoryProducts();
+                invoiceId =
+                    listProducts.isNotEmpty ? listProducts.length + 1 : 0;
+                if (invoiceController.client.value != null &&
+                    invoiceController.listProducts.isNotEmpty) {
+                  bool isShared = await screenshotController.captureAndShare(
+                      invoiceId, widget.category);
+                  if (isShared) {
+                    if (historyId == null) {
+                      invoiceController.createHistoryProduct();
+                      Get.back();
+                    }
+                  }
+                } else {
+                  NotificationHelper.show(
+                    title: 'Error',
+                    message:
+                        'El cliente y el historial de productos no pueden estar vacíos',
+                    isError: true,
+                  );
+                }
+              } else if (widget.category == 'service') {
                 final listServices = await getHistoryServices();
                 invoiceId =
                     listServices.isNotEmpty ? listServices.length + 1 : 0;
-              }
-              final isShared =
-                  await screenshotController.captureAndShare(invoiceId);
-              if (isShared) {
-                if (widget.category == 'service' && historyId == null) {
-                  invoiceController.createHistoryService();
-                  Get.back();
-                } else if (widget.category == 'service' && historyId == null) {
-                  invoiceController.createHistoryProduct();
-                  Get.back();
+                if (invoiceController.client.value != null &&
+                    invoiceController.listServices.isNotEmpty) {
+                  bool isShared = await screenshotController.captureAndShare(
+                      invoiceId, widget.category);
+                  if (isShared) {
+                    if (historyId == null) {
+                      invoiceController.createHistoryService();
+                      Get.back();
+                    }
+                  }
+                } else {
+                  NotificationHelper.show(
+                    title: 'Error',
+                    message:
+                        'El cliente y el historial de servicios no pueden estar vacíos',
+                    isError: true,
+                  );
                 }
               }
             },
             icon: const Icon(Icons.share)),
         Obx(() {
           final screenshotController = Get.find<ScreenshotControllerGetx>();
-          return IconButton(
-            onPressed: () async {
-              if (screenshotController.isConnected.value == true) {
-                final invoiceController = Get.find<InvoiceController>();
-                bool isPrinted = await screenshotController.printTicket();
-                if (isPrinted) {
-                  if (widget.category == 'service' && historyId == null) {
-                    invoiceController.createHistoryService();
-                  } else if (widget.category == 'product' &&
-                      historyId == null) {
-                    invoiceController.createHistoryProduct();
+          return Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () async {
+                if (screenshotController.isConnected.value == true) {
+                  final invoiceController = Get.find<InvoiceController>();
+                  bool isPrinted = await screenshotController.printTicket();
+                  if (isPrinted) {
+                    if (widget.category == 'service' && historyId == null) {
+                      invoiceController.createHistoryService();
+                    } else if (widget.category == 'product' &&
+                        historyId == null) {
+                      invoiceController.createHistoryProduct();
+                    }
+                    Get.defaultDialog(
+                      middleText: '¿Deseas imprimir una copia?',
+                      confirm: CustomBtn(
+                        text: 'Confirmar',
+                        onPressed: () async {
+                          await screenshotController.printTicket();
+                          Get.back();
+                          Get.back();
+                        },
+                        status: 1,
+                      ),
+                      cancel: CustomBtn(
+                        text: 'Cancelar',
+                        onPressed: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        status: 1,
+                      ),
+                    );
                   }
-                  Get.defaultDialog(
-                    middleText: '¿Deseas imprimir una copia?',
-                    confirm: CustomBtn(
-                      text: 'Confirmar',
-                      onPressed: () async {
-                        await screenshotController.printTicket();
-                        Get.back();
-                        Get.back();
-                      },
-                      status: 1,
-                    ),
-                    cancel: CustomBtn(
-                      text: 'Cancelar',
-                      onPressed: () {
-                        Get.back();
-                        Get.back();
-                      },
-                      status: 1,
-                    ),
-                  );
+                } else {
+                  Get.toNamed(AppRoutes.bluetoohConnect);
                 }
-              } else {
-                Get.toNamed(AppRoutes.bluetoohConnect);
-              }
-            },
-            icon: screenshotController.isConnected.value
-                ? const Icon(Icons.print)
-                : const Icon(Icons.print_disabled),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(
-                screenshotController.isConnected.value
-                    ? AppColors.successColor
-                    : AppColors.errorColor,
-              ),
-              iconColor: WidgetStateProperty.all<Color>(
-                screenshotController.isConnected.value
-                    ? AppColors.blackColor
-                    : AppColors.whiteColor,
+              },
+              icon: screenshotController.isConnected.value
+                  ? const Icon(Icons.print)
+                  : const Icon(Icons.print_disabled),
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(
+                  screenshotController.isConnected.value
+                      ? AppColors.successColor
+                      : AppColors.errorColor,
+                ),
+                iconColor: WidgetStateProperty.all<Color>(
+                  screenshotController.isConnected.value
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
+                ),
               ),
             ),
           );
@@ -160,7 +191,8 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               InvoicePreviewWidget(
                 store: store,
                 category: widget.category,
-                historyId: historyId != null ? historyId! : null,
+                historyId: historyId,
+                isHistory: historyId != null ? true : false,
               ),
               const SizedBox(
                 height: 50,
