@@ -114,8 +114,19 @@ class InvoiceController extends GetxController {
     final historyProductDB = await getHistoryProducts();
     final historyServiceDB = await getHistoryServices();
 
-    invoiceProductId.value = historyProductDB.length + 1;
-    invoiceServiceId.value = historyServiceDB.length + 1;
+    if (historyProductDB.length == 0) {
+      invoiceProductId.value = 1;
+    } else {
+      final HistoryProduct lastProduct = historyProductDB.last;
+      invoiceProductId.value = lastProduct.id + 1;
+    }
+
+    if (historyServiceDB.length == 0) {
+      invoiceServiceId.value = 1;
+    } else {
+      final HistoryService lastService = historyServiceDB.last;
+      invoiceServiceId.value = lastService.id + 1;
+    }
   }
 
   bool createHistoryProduct() {
@@ -226,7 +237,7 @@ class InvoiceController extends GetxController {
             date.value = product.date;
             invoiceProductId.value = product.id;
 
-            if (product.observations != '') {
+            if (product.observations == '') {
               boolObservations.value = false;
             } else {
               boolObservations.value = true;

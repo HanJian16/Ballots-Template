@@ -73,7 +73,9 @@ class InvoicePreviewWidget extends StatelessWidget {
                     if (invoiceController.checkbox.value == true) {
                       if (historyId != null) {
                         invoiceController.updateDiscountTypeFromBD(
-                            invoiceController.checkbox.value, historyId!, category);
+                            invoiceController.checkbox.value,
+                            historyId!,
+                            category);
                         if (invoiceController.discountType.value ==
                             'Porcentaje') {
                           discount =
