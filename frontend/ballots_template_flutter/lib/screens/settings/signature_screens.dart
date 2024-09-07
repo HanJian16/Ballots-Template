@@ -119,17 +119,17 @@ class SignatureScreenState extends State<SignatureScreen> {
   }
 
   Future<void> _saveSignature() async {
-    final statusManageExternalStorage =
-        await Permission.manageExternalStorage.status;
+    // final statusManageExternalStorage =
+    //     await Permission.manageExternalStorage.status;
 
-    if (!statusManageExternalStorage.isGranted) {
-      Get.snackbar(
-        "Permisos no concedidos",
-        "No tienes los permisos necesarios para guardar la firma.",
-        duration: const Duration(seconds: 3),
-      );
-      return;
-    }
+    // if (!statusManageExternalStorage.isGranted) {
+    //   Get.snackbar(
+    //     "Permisos no concedidos",
+    //     "No tienes los permisos necesarios para guardar la firma.",
+    //     duration: const Duration(seconds: 3),
+    //   );
+    //   return;
+    // }
 
     if (_signatureController.isNotEmpty) {
       try {
