@@ -74,7 +74,7 @@ class TestPrint {
           Size.medium.val,
         );
         bluetooth.printLeftRight(
-          'Dirección: ${settingsController.direction.value.text}',
+          'Dir: ${settingsController.direction.value.text}',
           'Correo: ${settingsController.email.value.text}',
           Size.medium.val,
         );
@@ -97,12 +97,12 @@ class TestPrint {
           Align.left.val,
         );
         bluetooth.printCustom(
-          'Teléfono: ${invoiceController.client.value?.phone}',
+          'Telefono: ${invoiceController.client.value?.phone}',
           Size.medium.val,
           Align.left.val,
         );
         bluetooth.printCustom(
-          'Dirección: ${invoiceController.client.value?.address}',
+          'Direccion: ${invoiceController.client.value?.address}',
           Size.medium.val,
           Align.left.val,
         );
