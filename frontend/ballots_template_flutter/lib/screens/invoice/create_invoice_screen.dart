@@ -121,33 +121,41 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
               onPressed: () async {
                 if (screenshotController.isConnected.value == true) {
                   final invoiceController = Get.find<InvoiceController>();
-                  bool isPrinted = await screenshotController.printTicket();
-                  if (isPrinted) {
-                    if (widget.category == 'service' && historyId == null) {
-                      invoiceController.createHistoryService();
-                    } else if (widget.category == 'product' &&
-                        historyId == null) {
-                      invoiceController.createHistoryProduct();
+                  if (invoiceController.client.value != null) {
+                    bool isPrinted = await screenshotController.printTicket();
+                    if (isPrinted) {
+                      if (widget.category == 'service' && historyId == null) {
+                        invoiceController.createHistoryService();
+                      } else if (widget.category == 'product' &&
+                          historyId == null) {
+                        invoiceController.createHistoryProduct();
+                      }
+                      Get.defaultDialog(
+                        middleText: '¿Deseas imprimir una copia?',
+                        confirm: CustomBtn(
+                          text: 'Confirmar',
+                          onPressed: () async {
+                            await screenshotController.printTicket();
+                            Get.back();
+                            Get.back();
+                          },
+                          status: 1,
+                        ),
+                        cancel: CustomBtn(
+                          text: 'Cancelar',
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          status: 1,
+                        ),
+                      );
                     }
-                    Get.defaultDialog(
-                      middleText: '¿Deseas imprimir una copia?',
-                      confirm: CustomBtn(
-                        text: 'Confirmar',
-                        onPressed: () async {
-                          await screenshotController.printTicket();
-                          Get.back();
-                          Get.back();
-                        },
-                        status: 1,
-                      ),
-                      cancel: CustomBtn(
-                        text: 'Cancelar',
-                        onPressed: () {
-                          Get.back();
-                          Get.back();
-                        },
-                        status: 1,
-                      ),
+                  } else {
+                    NotificationHelper.show(
+                      title: 'Error',
+                      message: 'El cliente no puede ser nulo',
+                      isError: true,
                     );
                   }
                 } else {

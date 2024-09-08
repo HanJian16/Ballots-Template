@@ -176,15 +176,6 @@ class InvoiceController extends GetxController {
 
   bool createHistoryService() {
     try {
-      if (client.value == null) {
-        NotificationHelper.show(
-          title: 'Error',
-          message: 'El cliente no puede ser nulo',
-          isError: true,
-        );
-        return false;
-      }
-
       if (listServices.isEmpty) {
         NotificationHelper.show(
           title: 'Error',
