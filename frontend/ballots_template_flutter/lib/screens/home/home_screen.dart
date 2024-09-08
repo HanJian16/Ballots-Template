@@ -35,9 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
           children: [
-            // const HeaderHomeScreenBody(),
+            const HeaderHomeScreenBody(),
             const SizedBox(height: 20),
             Expanded(
               child: Obx(() {
