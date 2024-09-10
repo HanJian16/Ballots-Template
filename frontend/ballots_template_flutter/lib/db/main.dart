@@ -69,6 +69,7 @@ class DatabaseHelper {
         observations TEXT,
         date TEXT,
         discountType TEXT,
+        isDeleted INTEGER DEFAULT 0,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
@@ -85,6 +86,7 @@ class DatabaseHelper {
         observations TEXT,
         date TEXT,
         discountType TEXT,
+        isDeleted INTEGER DEFAULT 0,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
@@ -97,6 +99,7 @@ class DatabaseHelper {
         productValue NUMERIC,
         storeId INTEGER,
         date TEXT,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
@@ -108,6 +111,7 @@ class DatabaseHelper {
         value NUMERIC,
         storeId INTEGER,
         date TEXT,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
@@ -120,6 +124,7 @@ class DatabaseHelper {
         document TEXT,
         address TEXT,
         storeId INTEGER,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');

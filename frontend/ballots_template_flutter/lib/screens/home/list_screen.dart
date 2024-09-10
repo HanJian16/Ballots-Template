@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key, required this.type, this.addInBallot = false});
@@ -126,7 +127,21 @@ class ListScreen extends StatelessWidget {
                       itemCount: controller.filteredList.length,
                     ),
                   ),
-                )
+                ),
+                if (type == 'client')
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: AddItemBtn(
+                      title: 'Agregar\ncontactos',
+                      onPress: () async {
+                        var status = await Permission.contacts.request();
+                        if(status.isGranted) {
+                          // List<Contact> contacts = await FlutterContacts.getContacts();
+                        }
+                          Get.toNamed(AppRoutes.addClientFromPhone);
+                      },
+                    ),
+                  )
               ],
             ),
           ),

@@ -27,6 +27,7 @@ class AppRoutes {
   static const clients = '/clients';
   static const addClient = '/clients/add';
   static const editClient = '/clients/edit/:id';
+  static const addClientFromPhone = '/clients/add-from-phone';
   //*************************************************************************
   static const addInBallotProduct = '/listSelection/product';
   static const addInBallotService = '/listSelection/service';
@@ -112,6 +113,10 @@ class AppRoutes {
     GetPage(
       name: historyServiceList,
       page: () => const ListScreen(type: 'history-service'),
+    ),
+    GetPage(
+      name: addClientFromPhone,
+      page: () => const AddClientFromPhoneScreen(),
     ),
   ];
 }

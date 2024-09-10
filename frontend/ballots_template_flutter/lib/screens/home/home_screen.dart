@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Get.put(SettingsController());
     Get.put(CompanyLogoController());
     Get.put(ScreenshotControllerGetx());
+    Get.put(ContactController());
   }
 
   @override

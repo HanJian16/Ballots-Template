@@ -28,7 +28,6 @@ class SignatureScreenState extends State<SignatureScreen> {
   @override
   void initState() {
     super.initState();
-    // _requestPermissions();
     _signatureController.addListener(
       () => setState(() {}),
     );
@@ -40,31 +39,11 @@ class SignatureScreenState extends State<SignatureScreen> {
 
   @override
   void dispose() {
-    // Volver a la orientación predeterminada cuando se abandona la pantalla
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
     super.dispose();
-  }
-
-  Future<void> _requestPermissions() async {
-    // Solicita permisos para almacenamiento
-    final statusStorage = await Permission.manageExternalStorage.request();
-
-    if (statusStorage.isPermanentlyDenied) {
-      Get.defaultDialog(
-        title: "Permisos necesarios",
-        content: const PermissionRequest(),
-        backgroundColor: AppColors.cardColorSecondary,
-      );
-    } else if (!statusStorage.isGranted) {
-      Get.snackbar(
-        "Permiso necesario",
-        "Necesitamos permisos para guardar imágenes.",
-        duration: const Duration(seconds: 3),
-      );
-    }
   }
 
   @override

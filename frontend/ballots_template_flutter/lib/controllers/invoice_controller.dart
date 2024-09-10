@@ -114,14 +114,14 @@ class InvoiceController extends GetxController {
     final historyProductDB = await getHistoryProducts();
     final historyServiceDB = await getHistoryServices();
 
-    if (historyProductDB.length == 0) {
+    if (historyProductDB.isEmpty) {
       invoiceProductId.value = 1;
     } else {
       final HistoryProduct lastProduct = historyProductDB.last;
       invoiceProductId.value = lastProduct.id + 1;
     }
 
-    if (historyServiceDB.length == 0) {
+    if (historyServiceDB.isEmpty) {
       invoiceServiceId.value = 1;
     } else {
       final HistoryService lastService = historyServiceDB.last;

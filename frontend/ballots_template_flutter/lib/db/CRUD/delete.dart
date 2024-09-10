@@ -10,8 +10,9 @@ Future<void> deleteDb() async {
 
 Future<void> deleteClient(int id) async {
   final db = await DatabaseHelper().database;
-  await db.delete(
+  await db.update(
     'client',
+    {'isDeleted': 1},
     where: 'id = ?',
     whereArgs: [id],
   );
@@ -19,8 +20,9 @@ Future<void> deleteClient(int id) async {
 
 Future<void> deleteProduct(int id) async {
   final db = await DatabaseHelper().database;
-  await db.delete(
+  await db.update(
     'product',
+    {'isDeleted': 1},
     where: 'id = ?',
     whereArgs: [id],
   );
@@ -28,8 +30,9 @@ Future<void> deleteProduct(int id) async {
 
 Future<void> deleteService(int id) async {
   final db = await DatabaseHelper().database;
-  await db.delete(
+  await db.update(
     'service',
+    {'isDeleted': 1},
     where: 'id = ?',
     whereArgs: [id],
   );
@@ -37,8 +40,9 @@ Future<void> deleteService(int id) async {
 
 Future<void> deleteHistoryProduct(int id) async {
   final db = await DatabaseHelper().database;
-  await db.delete(
+  await db.update(
     'historyProduct',
+    {'isDeleted': 1},
     where: 'id = ?',
     whereArgs: [id],
   );
@@ -46,8 +50,9 @@ Future<void> deleteHistoryProduct(int id) async {
 
 Future<void> deleteHistoryService(int id) async {
   final db = await DatabaseHelper().database;
-  await db.delete(
+  await db.update(
     'historyService',
+    {'isDeleted': 1},
     where: 'id = ?',
     whereArgs: [id],
   );
