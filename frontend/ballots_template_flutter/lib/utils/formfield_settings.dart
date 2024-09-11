@@ -1,54 +1,52 @@
-import 'package:ballots_template_flutter/controllers/form_controller.dart';
 import 'package:flutter/material.dart';
 
-createDataForTextFormField(FormController controller) {
+import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/controllers/index.dart';
+
+createDataForTextFormField() {
+  final controller = Get.find<SettingsController>();
+
   List formFieldSettings = [
     {
-      'initialValue': controller.name.value,
+      'controller': controller.name,
       'placeHolder': 'Nombre del establecimiento',
-      'onChanged': (value) => controller.updateName(value),
-      'error': controller.nameError,
+      'validator': (value) => controller.validateName(value),
     },
     {
-      'initialValue': controller.phone.value,
+      'controller': controller.phone,
       'placeHolder': 'Indica tu teléfono',
       'keyboardType': TextInputType.phone,
-      'onChanged': (value) => controller.updatePhone(value),
-      'error': controller.phoneError,
+      'validator': (value) => controller.validatePhone(value),
       'maxLength': 12,
     },
     {
-      'initialValue': controller.direction.value,
+      'controller': controller.direction,
       'placeHolder': 'Introduce tu dirección',
-      'onChanged': (value) => controller.updateDirection(value),
-      'error': controller.directionError,
+      'validator': (value) => controller.validateDirection(value),
     },
     {
-      'initialValue': controller.email.value,
+      'controller': controller.email,
       'placeHolder': 'Escriba su correo electrónico',
       'keyboardType': TextInputType.emailAddress,
-      'onChanged': (value) => controller.updateEmail(value),
-      'error': controller.emailError,
+      'validator': (value) => controller.validateEmail(value),
     },
     {
-      'initialValue': controller.ruc.value,
+      'controller': controller.ruc,
       'placeHolder': 'Número de Identificación de la empresa',
       'keyboardType': TextInputType.number,
-      'onChanged': (value) => controller.updateRuc(value),
-      'error': controller.rucError,
+      'validator': (value) => controller.validateRuc(value),
       'maxLength': 11,
     },
     {
-      'initialValue': controller.nameOfFirm.value,
+      'controller': controller.nameOfFirm,
       'placeHolder': 'Nombre de quien firmará',
-      'onChanged': (value) => controller.updateNameOfFirm(value),
-      'error': controller.nameOfFirmError,
+      'validator': (value) => controller.validateNameOfFirm(value),
     },
     {
-      'initialValue': controller.positionOfFirm.value,
+      'controller': controller.positionOfFirm,
       'placeHolder': 'Cargo de la persona que firma',
-      'onChanged': (value) => controller.updatePositionOfFirm(value),
-      'error': controller.positionOfFirmError,
+      'validator': (value) => controller.validatePositionOfFirm(value),
     },
   ];
 

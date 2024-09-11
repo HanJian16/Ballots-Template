@@ -1,9 +1,11 @@
-import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
-import 'package:ballots_template_flutter/widgets/bottom_sheet.dart';
-import 'package:ballots_template_flutter/widgets/homeScreen/custom_button.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class HeaderHomeScreenBody extends StatelessWidget {
   const HeaderHomeScreenBody({
@@ -11,7 +13,7 @@ class HeaderHomeScreenBody extends StatelessWidget {
   });
 
   void showBottomSheet(BuildContext context) {
-    final ListController controller = Get.find();
+    final controller = Get.find<ListMenuController>();
 
     showModalBottomSheet(
       context: context,
@@ -38,18 +40,22 @@ class HeaderHomeScreenBody extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomButton(
-              icon: Icons.print_disabled,
-              backgroundColor: AppColors.buttonColor,
-              color: AppColors.whiteColor,
-              onPressed: () {},
-            ),
-            CustomButton(
-              icon: Icons.format_list_bulleted_add,
-              backgroundColor: AppColors.buttonColorSecondary,
-              color: AppColors.blackColor,
-              onPressed: () {
-                showBottomSheet(context);
+            Obx(
+              () {
+                final screenshotController =
+                    Get.find<ScreenshotControllerGetx>();
+                return CustomButton(
+                  icon: screenshotController.isConnected.value
+                      ? Icons.print
+                      : Icons.print_disabled,
+                  backgroundColor: screenshotController.isConnected.value
+                      ? AppColors.successColor
+                      : AppColors.errorColor,
+                  color: screenshotController.isConnected.value
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
+                  onPressed: () => Get.toNamed(AppRoutes.bluetoohConnect),
+                );
               },
             ),
           ],

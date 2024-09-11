@@ -1,4 +1,5 @@
 import 'package:ballots_template_flutter/theme/colors.dart';
+import 'package:ballots_template_flutter/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,28 +8,7 @@ ThemeData buildTheme() {
     primaryColor: AppColors.primaryColor, // Color principal
     hintColor: AppColors.greyColor,
     // Configuración de fuentes
-    textTheme: GoogleFonts.onestTextTheme(
-      ThemeData.light()
-          .textTheme
-          .apply(
-            bodyColor: AppColors.blackColor,
-            displayColor: AppColors.blackColor,
-          )
-          .copyWith(
-            displayLarge:
-                const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            headlineMedium:
-                const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-            headlineLarge:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            titleLarge:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            bodyLarge: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-    ),
+    textTheme: buildTextTheme(),
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: const AppBarTheme(
@@ -40,12 +20,11 @@ ThemeData buildTheme() {
       buttonColor: AppColors.buttonColor, // Color de botones
       textTheme: ButtonTextTheme.primary,
     ),
-    // Configuración de texto
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.buttonTextColor,
         backgroundColor: AppColors.buttonColor,
-        minimumSize: const Size(double.infinity, 50),
+        minimumSize: const Size(double.infinity, 55),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -59,7 +38,7 @@ ThemeData buildTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.greyColor,
+      fillColor: AppColors.whiteColor,
       border: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.greyColor,
@@ -89,6 +68,22 @@ ThemeData buildTheme() {
       errorStyle: GoogleFonts.onest(
         color: Colors.red,
         fontSize: 13,
+      ),
+    ),
+    cardTheme: const CardTheme(
+      elevation: 10,
+    ),
+    dialogTheme: DialogTheme(
+      titleTextStyle: GoogleFonts.onest(
+        fontSize: 20,
+        color: AppColors.blackColor,
+      ),
+      contentTextStyle: GoogleFonts.onest(
+        fontSize: 15,
+        color: AppColors.blackColor,
+      ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
   );

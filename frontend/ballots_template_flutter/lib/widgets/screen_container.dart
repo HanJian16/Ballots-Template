@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
 
+import 'package:ballots_template_flutter/theme/index.dart';
+
 class ScreenContainer extends StatelessWidget {
   const ScreenContainer({
     super.key,
     required this.children,
-    this.appBarChildren,
     this.appBarActions,
     this.backgroundColor,
-     this.appBarHeight = kToolbarHeight,
+    this.appBarHeight = kToolbarHeight,
+    this.floatingActionButton,
+    this.title,
   });
 
   final Widget children;
-  final Widget? appBarChildren;
   final List<Widget>? appBarActions;
   final Color? backgroundColor;
   final double appBarHeight;
+  final Widget? floatingActionButton;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: appBarChildren != null
+      appBar: title != null
           ? PreferredSize(
-            preferredSize: Size.fromHeight(appBarHeight),
-            child: AppBar(
+              preferredSize: Size.fromHeight(appBarHeight),
+              child: AppBar(
                 elevation: 0,
                 scrolledUnderElevation: 0,
                 backgroundColor: backgroundColor,
-                title: appBarChildren,
+                title: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    title!,
+                    style: theme.headlineLarge
+                        ?.copyWith(color: AppColors.whiteColor),
+                  ),
+                ),
                 actions: appBarActions ?? [],
               ),
-          )
+            )
           : null,
       body: SafeArea(
         child: GestureDetector(
@@ -43,6 +55,7 @@ class ScreenContainer extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }

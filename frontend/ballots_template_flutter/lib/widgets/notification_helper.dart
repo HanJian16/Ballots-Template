@@ -1,6 +1,8 @@
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
 
 class NotificationHelper {
   static void show({
@@ -17,7 +19,7 @@ class NotificationHelper {
       colorText: isError ? AppColors.whiteColor : AppColors.blackColor,
       backgroundColor: backgroundColor ??
           (isError ? AppColors.errorColor : AppColors.successColor),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       icon: Icon(
         icon ?? (isError ? Icons.error : Icons.check_circle),
         color: isError ? AppColors.whiteColor : AppColors.blackColor,

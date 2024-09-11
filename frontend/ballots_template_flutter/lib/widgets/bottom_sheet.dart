@@ -1,14 +1,16 @@
-import 'package:ballots_template_flutter/controllers/list_controller.dart';
-import 'package:ballots_template_flutter/theme/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:ballots_template_flutter/theme/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   const BottomSheetWidget(
       {super.key, required this.title, required this.controller});
   final String title;
-  final ListController controller;
+  final ListMenuController controller;
 
   @override
   Widget build(BuildContext context) {
