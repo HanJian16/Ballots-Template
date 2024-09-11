@@ -22,6 +22,7 @@ class AddClientScreen extends StatelessWidget {
     final listClientsController = Get.find<ListController>();
     final formKey = GlobalKey<FormState>();
     final id = Get.arguments;
+    final phone = Get.arguments;
 
     return FutureBuilder(
       future: type == 'add'
@@ -44,26 +45,67 @@ class AddClientScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: controller.name,
-                    decoration:
-                        const InputDecoration(hintText: 'Nombre del cliente'),
-                    validator: (value) => controller.validationName(value!),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: controller.phone,
-                    decoration: const InputDecoration(
-                      hintText: 'Teléfono',
-                      counterText: '',
+                  if (phone == null)
+                    Column(
+                      children: [
+                        TextFormField(
+                          controller: controller.name,
+                          decoration: const InputDecoration(
+                              hintText: 'Nombre del cliente'),
+                          validator: (value) =>
+                              controller.validationName(value!),
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: controller.phone,
+                          decoration: const InputDecoration(
+                            hintText: 'Teléfono',
+                            counterText: '',
+                          ),
+                          keyboardType: TextInputType.phone,
+                          maxLength: 12,
+                          validator: (value) =>
+                              controller.validationPhone(value!),
+                          inputFormatters: [
+                            PhoneNumberFormatter(),
+                          ],
+                        ),
+                      ],
                     ),
-                    keyboardType: TextInputType.phone,
-                    maxLength: 12,
-                    validator: (value) => controller.validationPhone(value!),
-                    inputFormatters: [
-                      PhoneNumberFormatter(),
-                    ],
-                  ),
+                  if (phone != null)
+                    Column(
+                      children: [
+                        Obx(() {
+                          return TextFormField(
+                            initialValue: controller.namePhone.value,
+                            decoration: const InputDecoration(
+                              hintText: 'Nombre del cliente',
+                            ),
+                            onChanged: (value) => controller.updateNamePhone(value),
+                            validator: (value) =>
+                              controller.validationName(value!),
+                          );
+                        }),
+                        const SizedBox(height: 20),
+                         Obx(() {
+                          return TextFormField(
+                            initialValue: controller.numberPhone.value,
+                          decoration: const InputDecoration(
+                            hintText: 'Teléfono',
+                            counterText: '',
+                          ),
+                          onChanged: (value) => controller.updateNumberPhone(value),
+                          keyboardType: TextInputType.phone,
+                          maxLength: 12,
+                          validator: (value) =>
+                              controller.validationPhone(value!),
+                          inputFormatters: [
+                            PhoneNumberFormatter(),
+                          ],
+                        );
+                        }),
+                      ],
+                    ),
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: controller.document,
@@ -88,8 +130,9 @@ class AddClientScreen extends StatelessWidget {
                       status: 1,
                       onPressed: () {
                         if (validateAndSaveForm(formKey)) {
-                          controller.onSubmit();
+                          controller.onSubmit(addFromPhone: phone);
                           listClientsController.getClientsDb();
+                          Get.back();
                           Get.back();
                         }
                       },

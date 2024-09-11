@@ -25,7 +25,7 @@ class AppRoutes {
   static const historyServiceList = '/general-list/history-service';
   //*************************************************************************
   static const clients = '/clients';
-  static const addClient = '/clients/add';
+  static const addClient = '/clients/add/:phone';
   static const editClient = '/clients/edit/:id';
   static const addClientFromPhone = '/clients/add-from-phone';
   //*************************************************************************
