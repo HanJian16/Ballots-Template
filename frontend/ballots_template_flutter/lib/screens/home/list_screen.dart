@@ -136,9 +136,14 @@ class ListScreen extends StatelessWidget {
                       onPress: () async {
                         var status = await Permission.contacts.request();
                         if(status.isGranted) {
-                          // List<Contact> contacts = await FlutterContacts.getContacts();
-                        }
                           Get.toNamed(AppRoutes.addClientFromPhone);
+                        } else {
+                          NotificationHelper.show(
+                            title: 'Error',
+                            message: 'No se pudo acceder a los contactos',
+                            isError: true,
+                          );
+                        }
                       },
                     ),
                   )

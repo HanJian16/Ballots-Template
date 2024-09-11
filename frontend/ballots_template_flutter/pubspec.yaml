@@ -8,7 +8,6 @@ environment:
 
 dependencies:
   blue_thermal_printer: ^1.2.3
-  contacts_service: ^0.6.3
   file_picker: ^8.1.2
   flutter:
     sdk: flutter
@@ -17,7 +16,6 @@ dependencies:
   get: ^4.6.6
   get_storage: ^2.1.1
   google_fonts: ^6.2.1
-  image_gallery_saver: ^2.0.3
   image_picker: ^1.1.2
   intl: ^0.19.0
   path: ^1.9.0

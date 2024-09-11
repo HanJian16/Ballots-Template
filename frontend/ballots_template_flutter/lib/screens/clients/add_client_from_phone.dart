@@ -25,12 +25,12 @@ class AddClientFromPhoneScreen extends StatelessWidget {
               return Card(
                 margin: const EdgeInsets.all(20),
                 child: ListTile(
-                  title: Text(contact.displayName ?? 'No se ha definido'),
-                  subtitle: Text(contact.phones!.isNotEmpty
-                      ? contact.phones!.first.value ?? 'Sin número'
+                  title: Text(contact.name),
+                  subtitle: Text(contact.phone != ''
+                      ? contact.phone
                       : 'Sin número'),
                   onTap: () {
-                    if(contact.phones!.isNotEmpty) {
+                    if(contact.phone != '') {
                     contactController.selectContact(contact);
                     Get.toNamed(AppRoutes.addClient, arguments: true);
                     } else {
