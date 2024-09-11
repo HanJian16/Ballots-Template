@@ -1,3 +1,4 @@
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -39,11 +40,23 @@ class HeaderHomeScreenBody extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomButton(
-              icon: Icons.print_disabled,
-              backgroundColor: AppColors.errorColor,
-              color: AppColors.whiteColor,
-              onPressed: () {},
+            Obx(
+              () {
+                final screenshotController =
+                    Get.find<ScreenshotControllerGetx>();
+                return CustomButton(
+                  icon: screenshotController.isConnected.value
+                      ? Icons.print
+                      : Icons.print_disabled,
+                  backgroundColor: screenshotController.isConnected.value
+                      ? AppColors.successColor
+                      : AppColors.errorColor,
+                  color: screenshotController.isConnected.value
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
+                  onPressed: () => Get.toNamed(AppRoutes.bluetoohConnect),
+                );
+              },
             ),
           ],
         ),

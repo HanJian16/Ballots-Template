@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/utils/index.dart';
 import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/screens/index.dart';
 import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:ballots_template_flutter/routes/app_routes.dart';
 import 'package:ballots_template_flutter/controllers/index.dart';
@@ -64,14 +63,14 @@ class SettingsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 25),
-                CustomBtn(
-                  text: 'Añadir logotipo',
-                  onPressed: () {
-                    Get.to(() => CompanyLogoUploadScreen());
-                  },
-                  status: 1,
-                ),
+                // const SizedBox(height: 25),
+                // CustomBtn(
+                //   text: 'Añadir logotipo',
+                //   onPressed: () {
+                //     Get.to(() => CompanyLogoUploadScreen());
+                //   },
+                //   status: 1,
+                // ),
                 const SizedBox(height: 20),
                 ...formFieldSettings.map(
                   (field) {

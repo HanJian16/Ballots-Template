@@ -1,22 +1,71 @@
-import 'package:ballots_template_flutter/controllers/index.dart';
-import 'package:ballots_template_flutter/routes/app_routes.dart';
-import 'package:ballots_template_flutter/theme/index.dart';
-import 'package:ballots_template_flutter/widgets/index.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 import 'package:ballots_template_flutter/db/index.dart';
+import 'package:ballots_template_flutter/theme/index.dart';
 import 'package:ballots_template_flutter/models/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
+import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class ListController extends GetxController {
   List<Client> listClients = <Client>[].obs;
   List<Product> listProducts = <Product>[].obs;
   List<Service> listServices = <Service>[].obs;
+  List<HistoryProduct> listHistoryProduct = <HistoryProduct>[].obs;
+  List<HistoryService> listHistoryService = <HistoryService>[].obs;
+  var filteredList = <dynamic>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     getClientsDb();
+  }
+
+  void filterList(String query, String type) {
+    if (query.isEmpty) {
+      if (type == 'client') {
+        filteredList.value = listClients;
+      } else if (type == 'product') {
+        filteredList.value = listProducts;
+      } else if (type == 'service') {
+        filteredList.value = listServices;
+      } else if (type == 'history-product') {
+        filteredList.value = listHistoryProduct;
+      } else if (type == 'history-service') {
+        filteredList.value = listHistoryService;
+      }
+    } else {
+      if (type == 'client') {
+        filteredList.value = listClients
+            .where((client) =>
+                client.name.toLowerCase().contains(query.toLowerCase()) ||
+                client.phone.toLowerCase().contains(query.toLowerCase()) ||
+                client.document.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else if (type == 'product') {
+        filteredList.value = listProducts
+            .where((product) =>
+                product.productName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else if (type == 'service') {
+        filteredList.value = listServices
+            .where((service) =>
+                service.description.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else if (type == 'history-product') {
+        filteredList.value = listHistoryProduct
+            .where((historyProduct) =>
+                historyProduct.id.toString().contains(query))
+            .toList();
+      } else if (type == 'history-service') {
+        filteredList.value = listHistoryService
+            .where((historyService) =>
+                historyService.id.toString().contains(query))
+            .toList();
+      }
+    }
   }
 
   Future<List<Client>> getClientsDb() async {
@@ -37,6 +86,18 @@ class ListController extends GetxController {
     return listServices;
   }
 
+  Future<List<HistoryProduct>> getHistoryProductsDb() async {
+    final historyProductDB = await getHistoryProducts();
+    listHistoryProduct.assignAll(historyProductDB);
+    return listHistoryProduct;
+  }
+
+  Future<List<HistoryService>> getHistoryServicesDb() async {
+    final historyServiceDB = await getHistoryServices();
+    listHistoryService.assignAll(historyServiceDB);
+    return listHistoryService;
+  }
+
   Future<void> onTapReubication(item, String type) async {
     if (type == 'client') {
       Get.toNamed(
@@ -51,6 +112,16 @@ class ListController extends GetxController {
     } else if (type == 'service') {
       Get.toNamed(
         AppRoutes.editService,
+        arguments: item.id,
+      );
+    } else if (type == 'history-product') {
+      Get.toNamed(
+        AppRoutes.productInvoice,
+        arguments: item.id,
+      );
+    } else if (type == 'history-service') {
+      Get.toNamed(
+        AppRoutes.serviceInvoice,
         arguments: item.id,
       );
     }

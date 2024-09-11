@@ -10,8 +10,7 @@ import 'package:ballots_template_flutter/routes/app_routes.dart';
 
 class InvoiceResources {
   static List<Map<String, dynamic>> get invoiceIcons {
-    final ScreenshotControllerGetx screenshotController =
-        Get.find<ScreenshotControllerGetx>();
+    final controller = Get.find<ScreenshotControllerGetx>();
     return [
       {
         'icon': Icons.share,
@@ -20,10 +19,16 @@ class InvoiceResources {
       },
       {
         'icon': Icons.print_disabled,
-        'onPressed': () {
-          screenshotController.captureWidget();
+        'onPressed': () async {
+          if (controller.isConnected.value == true) {
+            controller.printTicket();
+          } else {
+            Get.toNamed(AppRoutes.bluetoohConnect);
+          }
         },
-        'background': AppColors.errorColor,
+        'background': controller.isConnected.value == true
+            ? AppColors.successColor
+            : AppColors.errorColor,
       },
     ];
   }
@@ -61,6 +66,7 @@ class InvoiceResources {
         'icon': Icons.discount,
         'onPressed': () {
           final invoiceController = Get.find<InvoiceController>();
+          var totalPay = invoiceController.totalPay.value;
           final formKey = GlobalKey<FormState>();
           final editingController = TextEditingController();
           validate(String val) {
@@ -68,64 +74,68 @@ class InvoiceResources {
               return 'Debe ingresar un valor';
             } else if (invoiceController.checkbox.value == false &&
                 double.parse(editingController.text) > 100) {
-              return 'El descuento no puede ser mayor a 100%';
+              return 'El descuento no puede\nser mayor a 100%';
+            } else if (invoiceController.checkbox.value == true &&
+                double.parse(editingController.text) > totalPay) {
+              return 'El descuento no puede\nser mayor al total';
             }
             return null;
           }
 
           Get.defaultDialog(
-            title: 'Aplicar descuento',
-            titlePadding: const EdgeInsets.only(top: 20),
-            contentPadding: const EdgeInsets.all(20),
-            content: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  Obx(
-                    () {
-                      bool value = invoiceController.checkbox.value;
-                      onTap() {
-                        invoiceController.checkbox.value = !value;
-                      }
+              title: 'Aplicar descuento',
+              titlePadding: const EdgeInsets.only(top: 20),
+              contentPadding: const EdgeInsets.all(20),
+              content: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    Obx(
+                      () {
+                        bool value = invoiceController.checkbox.value;
+                        onTap() {
+                          invoiceController.checkbox.value = !value;
+                        }
 
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CheckBoxCustom(
-                            text: 'Cantidad',
-                            value: value,
-                            onTap: onTap,
-                          ),
-                          CheckBoxCustom(
-                            text: 'Porcentaje',
-                            value: !value,
-                            onTap: onTap,
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: editingController,
-                    decoration: const InputDecoration(
-                      hintText: 'Valor de descuento',
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CheckBoxCustom(
+                              text: 'Cantidad',
+                              value: value,
+                              onTap: onTap,
+                            ),
+                            CheckBoxCustom(
+                              text: 'Porcentaje',
+                              value: !value,
+                              onTap: onTap,
+                            )
+                          ],
+                        );
+                      },
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) => validate(value!),
-                  )
-                ],
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: editingController,
+                      decoration: const InputDecoration(
+                        hintText: 'Valor de descuento',
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) => validate(value!),
+                    )
+                  ],
+                ),
               ),
-            ),
-            onConfirm: () {
-              if (validateAndSaveForm(formKey)) {
-                invoiceController.descuento.value =
-                    double.parse(editingController.text);
-                Get.back();
-              }
-            },
-            textConfirm: 'Aplicar',
-          );
+              onConfirm: () {
+                if (validateAndSaveForm(formKey)) {
+                  invoiceController.descuento.value =
+                      double.parse(editingController.text);
+                  invoiceController.calculateDiscount();
+                  Get.back();
+                }
+              },
+              textConfirm: 'Aplicar',
+              buttonColor: AppColors.primaryColor);
         },
         'color': AppColors.blackColor
       },

@@ -58,11 +58,35 @@ class DatabaseHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS history (
+      CREATE TABLE IF NOT EXISTS historyProduct (
         id INTEGER PRIMARY KEY,
         storeId INTEGER,
+        productList TEXT,
+        clientId INTEGER,
+        total NUMERIC,
+        descuento NUMERIC,
+        totalPay NUMERIC,
+        observations TEXT,
         date TEXT,
-        total TEXT,
+        discountType TEXT,
+        isDeleted INTEGER DEFAULT 0,
+        Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS historyService (
+        id INTEGER PRIMARY KEY,
+        storeId INTEGER,
+        serviceList TEXT,
+        clientId INTEGER,
+        total NUMERIC,
+        descuento NUMERIC,
+        totalPay NUMERIC,
+        observations TEXT,
+        date TEXT,
+        discountType TEXT,
+        isDeleted INTEGER DEFAULT 0,
         Foreign Key (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
     ''');
@@ -75,6 +99,7 @@ class DatabaseHelper {
         productValue NUMERIC,
         storeId INTEGER,
         date TEXT,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
@@ -86,6 +111,7 @@ class DatabaseHelper {
         value NUMERIC,
         storeId INTEGER,
         date TEXT,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');
@@ -98,6 +124,7 @@ class DatabaseHelper {
         document TEXT,
         address TEXT,
         storeId INTEGER,
+        isDeleted INTEGER DEFAULT 0,
         FOREIGN KEY (storeId) REFERENCES store(id) ON DELETE CASCADE
       )
       ''');

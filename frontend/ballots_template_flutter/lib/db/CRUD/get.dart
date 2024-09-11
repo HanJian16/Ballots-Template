@@ -11,14 +11,33 @@ Future<Store?> getStore() async {
   return Store.fromMap(data);
 }
 
-Future<List<Map<String, dynamic>>> getHistory() async {
+Future<List<HistoryProduct>> getHistoryProducts() async {
   final db = await DatabaseHelper().database;
-  return await db.query('history');
+  final listData =
+      await db.query('historyProduct', where: 'isDeleted = ?', whereArgs: [0]);
+
+  final historyProducts =
+      listData.map((e) => HistoryProduct.fromMap(e)).toList();
+  return historyProducts;
+}
+
+Future<List<HistoryService>> getHistoryServices() async {
+  final db = await DatabaseHelper().database;
+  final listData =
+      await db.query('historyService', where: 'isDeleted = ?', whereArgs: [0]);
+
+  final historyServices =
+      listData.map((e) => HistoryService.fromMap(e)).toList();
+  return historyServices;
 }
 
 Future<List<Product>> getProducts() async {
   final db = await DatabaseHelper().database;
-  final listData = await db.query('product');
+  final listData = await db.query(
+    'product',
+    where: 'isDeleted = ?',
+    whereArgs: [0],
+  );
 
   final products = listData.map((e) => Product.fromMap(e)).toList();
   return products;
@@ -26,7 +45,8 @@ Future<List<Product>> getProducts() async {
 
 Future<List<Service>> getServices() async {
   final db = await DatabaseHelper().database;
-  final listData = await db.query('service');
+  final listData =
+      await db.query('service', where: 'isDeleted = ?', whereArgs: [0]);
 
   final services = listData.map((e) => Service.fromMap(e)).toList();
   return services;
@@ -34,7 +54,8 @@ Future<List<Service>> getServices() async {
 
 Future<List<Client>> getClients() async {
   final db = await DatabaseHelper().database;
-  final listData = await db.query('client');
+  final listData =
+      await db.query('client', where: 'isDeleted = ?', whereArgs: [0]);
 
   final clients = listData.map((e) => Client.fromMap(e)).toList();
   return clients;
@@ -74,4 +95,28 @@ Future<Service?> getServiceById(int id) async {
 
   // Si el resultado no está vacío, lo convierte en una instancia de Service.
   return result.isNotEmpty ? Service.fromMap(result.first) : null;
+}
+
+Future<HistoryProduct?> getHistoryProductById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'historyProduct',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+
+  // Si el resultado no está vacío, lo convierte en una instancia de HistoryProduct.
+  return result.isNotEmpty ? HistoryProduct.fromMap(result.first) : null;
+}
+
+Future<HistoryService?> getHistoryServiceById(int id) async {
+  final db = await DatabaseHelper().database;
+  final result = await db.query(
+    'historyService',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+
+  // Si el resultado no está vacío, lo convierte en una instancia de HistoryService.
+  return result.isNotEmpty ? HistoryService.fromMap(result.first) : null;
 }

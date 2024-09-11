@@ -13,16 +13,25 @@ class InvoicePreviewWidget extends StatelessWidget {
     super.key,
     required this.store,
     required this.category,
+    this.historyId,
+    this.isHistory = false,
   });
 
   final Store? store;
   final String category;
+  final int? historyId;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     final InvoiceController invoiceController = Get.find<InvoiceController>();
-    final ScreenshotControllerGetx screenshotController = Get.find<ScreenshotControllerGetx>();
+    final ScreenshotControllerGetx screenshotController =
+        Get.find<ScreenshotControllerGetx>();
+    invoiceController.type = category;
+    if (historyId != null) {
+      invoiceController.fillController(historyId!, category);
+    }
 
     return Screenshot(
       controller: screenshotController.screenshotController,
@@ -30,6 +39,7 @@ class InvoicePreviewWidget extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         width: double.infinity,
         decoration: BoxDecoration(
+          color: Colors.white,
           // color: AppColors.cardColorSecondary,
           border: Border.all(color: AppColors.blackColor, width: 0.8),
         ),
@@ -42,7 +52,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 const Divider(
                   color: AppColors.blackColor,
                 ),
-                const ClientInfoWidget(),
+                ClientInfoWidget(type: category),
                 const Divider(
                   color: AppColors.blackColor,
                 ),
@@ -53,20 +63,43 @@ class InvoicePreviewWidget extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
-                ListForInvoice(type: category),
+                ListForInvoice(
+                  type: category,
+                  isHistory: isHistory,
+                ),
                 Obx(
                   () {
+                    var discount = '';
+                    if (invoiceController.checkbox.value == true) {
+                      if (historyId != null) {
+                        invoiceController.updateDiscountTypeFromBD(
+                            invoiceController.checkbox.value,
+                            historyId!,
+                            category);
+                        if (invoiceController.discountType.value ==
+                            'Porcentaje') {
+                          discount =
+                              'Descuento: ${invoiceController.descuento.toStringAsFixed(0)}%';
+                        } else {
+                          discount =
+                              'Descuento: ${invoiceController.descuento}';
+                        }
+                      } else {
+                        discount = 'Descuento: ${invoiceController.descuento}';
+                      }
+                    } else {
+                      discount =
+                          'Descuento: ${invoiceController.descuento.toStringAsFixed(0)}%';
+                    }
                     return SizedBox(
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text('Total: ${invoiceController.total}'),
-                          Text('Descuento: ${invoiceController.descuento}'),
-                          Text(
-                            'Total a pagar: ${invoiceController.totalPay}',
-                            style: theme.titleLarge
-                          ),
+                          Text(discount),
+                          Text('Total a pagar: ${invoiceController.totalPay}',
+                              style: theme.titleLarge),
                         ],
                       ),
                     );
@@ -75,7 +108,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 Obx(
                   () {
                     final appear = invoiceController.boolObservations.value;
-      
+
                     return Container(
                       padding: appear
                           ? const EdgeInsets.symmetric(vertical: 20)
@@ -96,6 +129,7 @@ class InvoicePreviewWidget extends StatelessWidget {
                 if (store != null)
                   SignatureDisplayInfo(
                     store: store,
+                    historyId: historyId,
                   ),
               ],
             ),
@@ -110,8 +144,10 @@ class ListForInvoice extends StatelessWidget {
   const ListForInvoice({
     super.key,
     required this.type,
+    this.isHistory = false,
   });
   final String type;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +164,7 @@ class ListForInvoice extends StatelessWidget {
                     item: entry.value,
                     id: entry.key,
                     type: type,
+                    isHistory: isHistory,
                   );
                 }).toList()
               : listServices.asMap().entries.map((entry) {
@@ -135,6 +172,7 @@ class ListForInvoice extends StatelessWidget {
                     item: entry.value,
                     id: entry.key,
                     type: type,
+                    isHistory: isHistory,
                   );
                 }).toList(),
         );
@@ -149,10 +187,12 @@ class ListForInvoiceItem extends StatelessWidget {
     required this.id,
     required this.item,
     required this.type,
+    this.isHistory = false,
   });
   final Map item;
   final int id;
   final String type;
+  final bool? isHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -169,16 +209,17 @@ class ListForInvoiceItem extends StatelessWidget {
               item['name'],
               style: theme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-            IconButton(
-              onPressed: () {
-                if (type == 'product') {
-                  invoiceController.removeProductList(id);
-                } else if (type == 'service') {
-                  invoiceController.removeServiceList(id);
-                }
-              },
-              icon: const Icon(Icons.close),
-            )
+            if (isHistory == false)
+              IconButton(
+                onPressed: () {
+                  if (type == 'product') {
+                    invoiceController.removeProductList(id);
+                  } else if (type == 'service') {
+                    invoiceController.removeServiceList(id);
+                  }
+                },
+                icon: const Icon(Icons.close),
+              )
           ],
         ),
         Row(

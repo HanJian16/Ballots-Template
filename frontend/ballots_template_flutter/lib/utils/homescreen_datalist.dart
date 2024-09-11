@@ -55,15 +55,15 @@ getListTileData() {
         }, 'Lista de Productos / Servicios');
       }
     },
-    {
-      'title': 'Presupuestos',
-      'subtitle': 'Presupuestos de productos y servicios',
-      'icon': Icons.calculate_outlined,
-      "selected": true,
-      "onTap": () {
-        navigateToAnotherScreen(() {}, 'Presupuestos');
-      }
-    },
+    // {
+    //   'title': 'Presupuestos',
+    //   'subtitle': 'Presupuestos de productos y servicios',
+    //   'icon': Icons.calculate_outlined,
+    //   "selected": true,
+    //   "onTap": () {
+    //     navigateToAnotherScreen(() {}, 'Presupuestos');
+    //   }
+    // },
     {
       'title': 'Clientes',
       'subtitle': 'Lista de clientes',
@@ -80,7 +80,8 @@ getListTileData() {
       'icon': Icons.history,
       "selected": true,
       "onTap": () {
-        navigateToAnotherScreen(() {}, 'Historial');
+        navigateToAnotherScreen(
+            () => Get.toNamed(AppRoutes.history), 'Historial');
       }
     },
     {

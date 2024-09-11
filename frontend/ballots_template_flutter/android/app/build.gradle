@@ -51,11 +51,6 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
-
-     kotlinOptions {
-        jvmTarget = "1.8"
-        // Aquí puedes agregar configuraciones adicionales si es necesario.
-    }
 }
 
 flutter {

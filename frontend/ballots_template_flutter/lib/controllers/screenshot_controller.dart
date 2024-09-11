@@ -1,51 +1,178 @@
+import 'dart:io';
+
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:screenshot/screenshot.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
+
+import 'package:ballots_template_flutter/screens/index.dart';
+import 'package:ballots_template_flutter/widgets/index.dart';
+import 'package:ballots_template_flutter/controllers/index.dart';
 
 class ScreenshotControllerGetx extends GetxController {
+  var isConnected = false.obs;
+  var devices = [].obs;
+  var idDevice = Rx<int?>(null);
+
   ScreenshotController screenshotController = ScreenshotController();
+  BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
+  final invoiceController = Get.find<InvoiceController>();
 
-  Future<void> captureWidget() async {
-    var statusBluetoothConnect = await Permission.bluetoothConnect.request();
-    var statusBluetoothScan = await Permission.bluetoothScan.request();
-    var statusBluetoothAdvertise =
-        await Permission.bluetoothAdvertise.request();
+  @override
+  void onInit() {
+    super.onInit();
+    getBoolConnect();
+  }
 
-    if (statusBluetoothAdvertise.isGranted &&
-        statusBluetoothScan.isGranted &&
-        statusBluetoothConnect.isGranted) {
+  Future<bool> captureAndShare(int id, String category) async {
+    bool isShared = false;
+    try {
       final image = await screenshotController.capture();
       if (image != null) {
-        final pdf = pw.Document();
-        final pdfImage = pw.MemoryImage(
-          image, // La imagen capturada (_Uint8ArrayView)
-        );
-        pdf.addPage(
-          pw.Page(
-            // pageFormat: PdfPageFormat.a4, // Tamaño A4 para la página
-            build: (pw.Context context) {
-              return pw.Image(
-                pdfImage,
-                fit: pw.BoxFit.contain,
-                // width: PdfPageFormat.a4.width, // Ancho de la página A4
-                // height: PdfPageFormat.a4.height, // Alto de la página A4
-              ); // Colocar la imagen en el PDF a tamaño completo
-            },
-          ),
-        );
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = '${directory.path}/boleta-$id.png';
+        final imageFile = File(imagePath);
+        await imageFile.writeAsBytes(image);
+        final xFile =
+            XFile(imagePath, mimeType: 'image/png', name: 'boleta-$id.png');
+        final ShareResult response =
+            await Share.shareXFiles([xFile], text: 'Aquí tienes la boleta.');
 
-        // final output = await getTemporaryDirectory();
-        // final file = File("${output.path}/example.pdf");
-        // await file.writeAsBytes(await pdf.save());
-        await Printing.layoutPdf(
-          onLayout: (PdfPageFormat format) async => pdf.save(),
-        );
-      } else {
+        if (response.status == ShareResultStatus.dismissed) {
+          isShared = false;
+        } else if (response.status == ShareResultStatus.success) {
+          isShared = true;
+        } else {
+          isShared = false;
+        }
       }
-    } else {
+      return isShared;
+    } catch (e) {
+      NotificationHelper.show(
+        title: 'Error',
+        message: 'Error al imprimir el boleto',
+        isError: true,
+      );
+      return false;
+    }
+  }
+
+  void verifyBluetooh() async {
+    bool? isBluetoohOn = await bluetooth.isOn;
+
+    if (isBluetoohOn != null && isBluetoohOn == false) {
+      //? Si el bluietooh esta apagado pide permisos para encenderlo
+
+      //* Primero verifica si el permiso para acceder a bluetooh esta habilitado
+      PermissionStatus permissionStatus = await Permission.bluetooth.request();
+
+      if (permissionStatus.isGranted) {
+        //? Si el permiso esta habilitado se enciende el bluietooh
+        await FlutterBluePlus.turnOn();
+        getBoolConnect();
+      } else if (permissionStatus.isDenied) {
+        NotificationHelper.show(
+          title: 'Error',
+          message: 'Has denegado el acceso a Bluetooth',
+          isError: true,
+        );
+      }
+    }
+  }
+
+  void getBoolConnect() async {
+    final data = await bluetooth.isConnected;
+
+    devices.value = await bluetooth.getBondedDevices();
+
+    bluetooth.onStateChanged().listen((state) {
+      switch (state) {
+        case BlueThermalPrinter.CONNECTED:
+          isConnected.value = true;
+
+          break;
+        case BlueThermalPrinter.DISCONNECTED:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.DISCONNECT_REQUESTED:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.STATE_TURNING_OFF:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.STATE_OFF:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.STATE_ON:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.STATE_TURNING_ON:
+          isConnected.value = false;
+
+          break;
+        case BlueThermalPrinter.ERROR:
+          isConnected.value = false;
+
+          break;
+        default:
+          break;
+      }
+      if (data == true) isConnected.value = true;
+    });
+  }
+
+  void connect(device, int index) {
+    bluetooth.isConnected.then((isConnected) {
+      if (isConnected == false) {
+        final screenshotController = Get.find<ScreenshotControllerGetx>();
+        bluetooth.connect(device).catchError((error) {
+          screenshotController.isConnected.value = false;
+          idDevice.value = null;
+          NotificationHelper.show(
+            title: 'Error',
+            message: 'Hubo un error al conectar con la impresora térmica',
+            isError: true,
+          );
+        });
+        screenshotController.isConnected.value = true;
+        idDevice.value = index;
+        NotificationHelper.show(
+          title: 'Conectado',
+          message: 'Impresora térmica conectada',
+          isError: false,
+        );
+      }
+    });
+  }
+
+  void disconnect() {
+    bluetooth.disconnect();
+    isConnected.value = false;
+    idDevice.value = null;
+
+    NotificationHelper.show(
+      title: 'Desconectado',
+      message: 'Impresora térmica desconectada',
+      isError: true,
+    );
+  }
+
+  Future<bool> printTicket() async {
+    try {
+      TestPrint testPrint = TestPrint();
+      testPrint.sample();
+
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

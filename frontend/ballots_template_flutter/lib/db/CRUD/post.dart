@@ -28,23 +28,62 @@ Future<void> insertStore(
 Future<void> insertSignature(int storeId, Uint8List signatureBytes) async {
   final db = await DatabaseHelper().database;
   await db.update(
-    'store', 
-    {'signature': signatureBytes}, // Asegúrate de que la columna 'signature' exista en tu tabla
-    where: 'id = ?', 
+    'store',
+    {
+      'signature': signatureBytes
+    }, // Asegúrate de que la columna 'signature' exista en tu tabla
+    where: 'id = ?',
     whereArgs: [storeId],
   );
 }
 
-Future<void> insertHistory(
+Future<void> insertHistoryProduct(
   int storeId,
+  String productList,
+  int clientId,
+  double total,
+  double descuento,
+  double totalPay,
+  String observations,
   String date,
-  String total,
+  String discountType,
 ) async {
   final db = await DatabaseHelper().database;
-  await db.insert('history', <String, dynamic>{
+  await db.insert('historyProduct', <String, dynamic>{
     'storeId': storeId,
-    'date': date,
+    'productList': productList,
+    'clientId': clientId,
     'total': total,
+    'descuento': descuento,
+    'totalPay': totalPay,
+    'observations': observations,
+    'date': date,
+    'discountType': discountType,
+  });
+}
+
+Future<void> insertHistoryService(
+  int storeId,
+  String serviceList,
+  int clientId,
+  double total,
+  double descuento,
+  double totalPay,
+  String observations,
+  String date,
+  String discountType,
+) async {
+  final db = await DatabaseHelper().database;
+  await db.insert('historyService', <String, dynamic>{
+    'storeId': storeId,
+    'serviceList': serviceList,
+    'clientId': clientId,
+    'total': total,
+    'descuento': descuento,
+    'totalPay': totalPay,
+    'observations': observations,
+    'date': date,
+    'discountType': discountType,
   });
 }
 

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 class ClientInfoWidget extends StatelessWidget {
   const ClientInfoWidget({
     super.key,
+    required this.type,
   });
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class ClientInfoWidget extends StatelessWidget {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              'N° ${invoiceController.invoiceId.value}',
+              'N° ${type == 'product' ? invoiceController.invoiceProductId.value : invoiceController.invoiceServiceId.value}',
               style: theme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text('Cliente: ${client?.name ?? ''}', style: theme.bodySmall),

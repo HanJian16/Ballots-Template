@@ -7,10 +7,11 @@ import 'package:ballots_template_flutter/theme/index.dart';
 class AddItemBtn extends StatelessWidget {
   const AddItemBtn({
     super.key,
-    required this.onPress,
+    required this.onPress, this.title = ' Agregar',
   });
 
   final VoidCallback onPress;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class AddItemBtn extends StatelessWidget {
           children: [
             const Icon(Icons.add, color: Colors.white),
             Text(
-              ' Agregar',
+                title!,
               style: theme.headlineLarge?.copyWith(
                 color: AppColors.whiteColor,
                 fontSize: 14,

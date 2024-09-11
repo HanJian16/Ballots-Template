@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Get.put(SettingsController());
     Get.put(CompanyLogoController());
     Get.put(ScreenshotControllerGetx());
+    Get.put(ContactController());
   }
 
   @override
@@ -32,16 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final controller = Get.find<ListMenuController>();
     return ScreenContainer(
       title: 'Generador de Recibo',
-      appBarActions: const [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Icon(Icons.info_outline),
-        )
-      ],
       children: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
           children: [
             const HeaderHomeScreenBody(),
             const SizedBox(height: 20),

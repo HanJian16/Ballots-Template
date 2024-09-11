@@ -12,12 +12,24 @@ class ClientController extends GetxController {
   final phone = TextEditingController();
   final document = TextEditingController();
   final address = TextEditingController();
+  final namePhone = ''.obs;
+  final numberPhone = ''.obs;
 
   validationName(String value) {
     if (value.isEmpty) {
       return 'El nombre es requerido';
     }
     return null;
+  }
+
+  void updateNamePhone(String value) {
+    name.text = value;
+    namePhone.value = value;
+  }
+
+  void updateNumberPhone(String value) {
+    phone.text = value;
+    numberPhone.value = value;
   }
 
   validationPhone(String value) {
@@ -73,6 +85,8 @@ class ClientController extends GetxController {
     phone.text = client?.phone ?? '';
     document.text = client?.document ?? '';
     address.text = client?.address ?? '';
+    namePhone.value = client?.name ?? '';
+    numberPhone.value = client?.phone ?? '';
 
     return true;
   }
@@ -92,21 +106,34 @@ class ClientController extends GetxController {
     );
   }
 
-  void onSubmit() async {
+  void onSubmit({bool? addFromPhone}) async {
     try {
-      await insertClient(
-        name.text,
-        phone.text,
-        document.text,
-        address.text,
-        1,
-      );
+      if (addFromPhone == true) {
+        await insertClient(
+          namePhone.value,
+          numberPhone.value,
+          document.text,
+          address.text,
+          1,
+        );
+      } else {
+        await insertClient(
+          name.text,
+          phone.text,
+          document.text,
+          address.text,
+          1,
+        );
+      }
 
       NotificationHelper.show(
         title: 'Éxito',
         message: 'El cliente se ha guardado correctamente',
         isError: false,
       );
+
+      namePhone.value = '';
+      numberPhone.value = '';
 
       cleanController();
 
