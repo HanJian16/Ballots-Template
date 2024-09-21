@@ -29,6 +29,7 @@ class ContactController extends GetxController {
   var contacts = <ContactModel>[].obs;
   var selectedContact = Rxn<ContactModel>();
   final clientController = Get.find<ClientController>();
+  var filteredList = <dynamic>[].obs;
 
   @override
   void onInit() {
@@ -36,7 +37,23 @@ class ContactController extends GetxController {
     loadContacts();
   }
 
-  Future<void> loadContacts() async {
+  void filterListContacts(String query, String type) {
+    if (query.isEmpty) {
+      if (type == 'phone') {
+        filteredList.value = contacts;
+      }
+    } else {
+      if (type == 'phone') {
+        filteredList.value = contacts
+            .where((contact) =>
+                contact.name.toLowerCase().contains(query.toLowerCase()) ||
+                contact.phone.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    }
+  }
+
+  Future<List<ContactModel>> loadContacts() async {
     PermissionStatus status = await Permission.contacts.request();
     if (status.isGranted) {
       ContactService contactService = ContactService();
@@ -45,14 +62,15 @@ class ContactController extends GetxController {
       List<ContactModel> contactsConverted = contactsFlutter
           .map((contactMap) => ContactModel.fromMap(contactMap))
           .toList();
-      // var allContacts = await ContactsService.getContacts();
       contacts.value = contactsConverted;
+      return contactsConverted;
     } else {
       NotificationHelper.show(
         title: 'Error',
         message: 'No se pudo acceder a los contactos',
         isError: true,
       );
+      return [];
     }
   }
 
