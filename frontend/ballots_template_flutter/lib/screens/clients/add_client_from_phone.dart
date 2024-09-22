@@ -19,6 +19,7 @@ class AddClientFromPhoneScreen extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              controller: contactController.searchController,
               onChanged: (query) {
                 contactController.filterListContacts(query, 'phone');
               },
@@ -27,51 +28,87 @@ class AddClientFromPhoneScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Obx(() {
-              if (contactController.contacts.isEmpty) {
-                contactController.filteredList.value =
-                    contactController.contacts;
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                contactController.filteredList.value =
-                    contactController.contacts;
-                return Obx(
-                  () => Expanded(
-                    child: ListView.separated(
-                      itemCount: contactController.filteredList.length,
-                      itemBuilder: (context, index) {
-                        final contact = contactController.filteredList[index];
-                        return Card(
-                          child: ListTile(
-                            title: Text(contact.name),
-                            subtitle: Text(contact.phone != ''
-                                ? contact.phone
-                                : 'Sin número'),
-                            onTap: () {
-                              if (contact.phone != '') {
-                                contactController.selectContact(contact);
-                                Get.toNamed(AppRoutes.addClient,
-                                    arguments: true);
-                              } else {
-                                NotificationHelper.show(
-                                  title: 'Error',
-                                  message:
-                                      'El contacto no puede ser registrado sin número',
-                                  isError: true,
-                                );
-                              }
-                            },
-                            trailing: const Icon(Icons.arrow_right),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 20),
+            if (contactController.filteredList.isEmpty)
+              FutureBuilder(
+                future: contactController.loadContacts(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  contactController.filteredList.value =
+                      contactController.contacts;
+                  return Obx(
+                    () => Expanded(
+                      child: ListView.separated(
+                        itemCount: contactController.filteredList.length,
+                        itemBuilder: (context, index) {
+                          final contact = contactController.filteredList[index];
+                          return Card(
+                            child: ListTile(
+                              title: Text(contact.name),
+                              subtitle: Text(contact.phone != ''
+                                  ? contact.phone
+                                  : 'Sin número'),
+                              onTap: () {
+                                if (contact.phone != '') {
+                                  contactController.selectContact(contact);
+                                  Get.toNamed(AppRoutes.addClient,
+                                      arguments: true);
+                                } else {
+                                  NotificationHelper.show(
+                                    title: 'Error',
+                                    message:
+                                        'El contacto no puede ser registrado sin número',
+                                    isError: true,
+                                  );
+                                }
+                              },
+                              trailing: const Icon(Icons.arrow_right),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
+                      ),
                     ),
+                  );
+                },
+              ),
+            if (contactController.filteredList.isNotEmpty)
+              Obx(
+                () => Expanded(
+                  child: ListView.separated(
+                    itemCount: contactController.filteredList.length,
+                    itemBuilder: (context, index) {
+                      final contact = contactController.filteredList[index];
+                      return Card(
+                        child: ListTile(
+                          title: Text(contact.name),
+                          subtitle: Text(contact.phone != ''
+                              ? contact.phone
+                              : 'Sin número'),
+                          onTap: () {
+                            if (contact.phone != '') {
+                              contactController.selectContact(contact);
+                              Get.toNamed(AppRoutes.addClient, arguments: true);
+                            } else {
+                              NotificationHelper.show(
+                                title: 'Error',
+                                message:
+                                    'El contacto no puede ser registrado sin número',
+                                isError: true,
+                              );
+                            }
+                          },
+                          trailing: const Icon(Icons.arrow_right),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 20),
                   ),
-                );
-              }
-            }),
+                ),
+              ),
           ],
         ),
       ),

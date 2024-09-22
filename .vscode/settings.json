@@ -18,6 +18,7 @@
     "PGPASSWORD",
     "PGUSER",
     "postgres",
+    "Reubication",
     "RGBO",
     "sqflite",
     "sqlite",

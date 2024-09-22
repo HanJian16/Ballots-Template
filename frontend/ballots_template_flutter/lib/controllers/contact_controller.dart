@@ -1,4 +1,5 @@
 import 'package:ballots_template_flutter/models/index.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
@@ -30,12 +31,19 @@ class ContactController extends GetxController {
   var selectedContact = Rxn<ContactModel>();
   final clientController = Get.find<ClientController>();
   var filteredList = <dynamic>[].obs;
+  final searchController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     loadContacts();
   }
+
+  void clearSearch() {
+    searchController.clear();
+    filterListContacts('', 'phone');
+  }
+
 
   void filterListContacts(String query, String type) {
     if (query.isEmpty) {
@@ -63,6 +71,7 @@ class ContactController extends GetxController {
           .map((contactMap) => ContactModel.fromMap(contactMap))
           .toList();
       contacts.value = contactsConverted;
+      filteredList.value = contactsConverted;
       return contactsConverted;
     } else {
       NotificationHelper.show(
@@ -82,8 +91,10 @@ class ContactController extends GetxController {
     var phoneFormat = contact.phone.replaceFirst(RegExp(r'^\+\d{2}'), '');
     clientController.updateNumberPhone(phoneFormat);
     if (contact.phone != '') {
+      clearSearch();
     } else {
       clientController.phone.text = contact.phone;
+      clearSearch();
     }
   }
 }

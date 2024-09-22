@@ -136,6 +136,8 @@ class ListScreen extends StatelessWidget {
                       onPress: () async {
                         var status = await Permission.contacts.request();
                         if(status.isGranted) {
+                          // final contactController = Get.find<ContactController>();
+                          // if(contactController.filteredList.isEmpty) await contactController.loadContacts();
                           Get.toNamed(AppRoutes.addClientFromPhone);
                         } else {
                           NotificationHelper.show(
