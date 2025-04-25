@@ -7,7 +7,9 @@ environment:
   sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
-  blue_thermal_printer: ^1.2.3
+  # blue_thermal_printer: ^1.2.3
+  blue_thermal_printer:
+    path: plugins/blue_thermal_printer
   file_picker: ^8.1.2
   flutter:
     sdk: flutter
